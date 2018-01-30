@@ -1,5 +1,4 @@
 import Node from "./Node";
-import merge from "./util/propertyMerge";
 
 // Parser
 // ======
@@ -9,16 +8,15 @@ import merge from "./util/propertyMerge";
 // correct order of operations.
 // This is a simple recursive-descent parser based on [Wikipedia's example](https://en.wikipedia.org/wiki/Recursive_descent_parser).
 
-export default function parser(tokens, locals = {}) {
-    let p = new Parser(tokens, locals);
+export default function parser(tokens) {
+    let p = new Parser(tokens);
     return p.parse();
 };
 
 class Parser {
-    constructor(tokens = [], locals = {}) {
+    constructor(tokens = []) {
         this.cursor = 0;
         this.tokens = tokens;
-        this.locals = merge(locals, Math);
     }
 
     get currentToken() {
@@ -30,7 +28,7 @@ class Parser {
     }
 
     parse() {
-        this.preprocess();
+        //this.preprocess();
         let ast = this.sum();
         ast = ast.simplify();
 
@@ -44,12 +42,12 @@ class Parser {
         return ast;
     }
 
-    preprocess() {
+    //preprocess() {
         // This function used to contain procedures to remove whitespace
         // tokens and replace symbol tokens with functions, but that work
         // has been moved to the lexer in order to keep the parser more
         // lightweight.
-    }
+    //}
 
     /**
      * Accepts the current token if it matches the given type.
@@ -152,7 +150,7 @@ class Parser {
     val() {
         // Don't create a new node immediately, since we need to parse postfix
         // operators like factorials, which come after a value.
-        let node = 0;
+        let node = {};
 
         if (this.accept("TSYMBOL")) {
             node = new Node("SYMBOL", this.prevToken.value);

@@ -116,22 +116,7 @@ export default class Node {
             indent += indentString;
         }
 
-        // Format: `[TYPE] [value] ([numChildren])`
-        // OR
-        // `[TYPE] ([numChildren])`.
-        if (this.value) {
-            console.log(sprintf("%s%s %s (%s)",
-                indent,
-                this.type,
-                this.value.name || this.value,
-                this.children.length));
-        }
-        else {
-            console.log(sprintf("%s%s (%s)",
-                indent,
-                this.type,
-                this.children.length));
-        }
+        console.log(indent + this.toString());
 
         // Print each child.
         for (let i in this.children) {
@@ -160,7 +145,8 @@ export default class Node {
     }
 
     toString() {
-        return "Node[" + this.type + "," + this.value + "]";
+        let val = typeof this.value === "function" ? this.value.name : this.value;
+        return sprintf("%s %s[%s]", this.children.length, this.type, val);
     }
 }
 

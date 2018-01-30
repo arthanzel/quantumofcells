@@ -18,7 +18,11 @@ export default class Token {
         if (TRIVIAL_TOKENS.indexOf(this.type) >= 0) {
             return this.type;
         }
-        return this.type + "[" + this.value + "]";
+
+        // Does the value contain a function? If so, print a human-readable name.
+        let value = typeof this.value === "function" ? this.value.name : this.value;
+
+        return this.type + "[" + value + "]";
     }
 };
 

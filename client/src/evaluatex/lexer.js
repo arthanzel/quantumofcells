@@ -1,6 +1,7 @@
 import Token from "./Token";
 import {tokenPatterns} from "./Token";
 import merge from "./util/propertyMerge";
+import localFunctions from "./util/localFunctions";
 
 /**
  * The lexer reads a math expression and breaks it down into easily-digestible Tokens.
@@ -28,7 +29,7 @@ export default function lexer(equation, locals = {}) {
 class Lexer {
     constructor(buffer, locals) {
         this.buffer = buffer;
-        this.locals = merge(locals, Math);
+        this.locals = merge(locals, localFunctions);
         this.cursor = 0;
         this.tokens = [];
     }
@@ -42,10 +43,11 @@ class Lexer {
                 continue;
             }
             if (token.type === "TSYMBOL") {
-                // If the symbol represents things defined in either Math or
-                // the locals, transform them.
+                // Symbols will need to be looked up during the evaluation phase.
+                // If the symbol refers to things defined in either Math or
+                // the locals, compile them, to prevent slow lookups later.
                 if (typeof this.locals[token.value] === "function") {
-                    token = new Token("TFUNCTION", token.value);
+                    token = new Token("TFUNCTION", this.locals[token.value]);
                 }
                 else if (typeof this.locals[token.value] === "number") {
                     token = new Token("TNUMBER", this.locals[token.value]);

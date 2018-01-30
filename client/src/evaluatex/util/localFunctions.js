@@ -2,6 +2,8 @@
 Javascript's Math API omits some important mathematical functions. These are included here.
  */
 
+import merge from "./propertyMerge";
+
 let fact = function fact(a) {
     let result = 1;
 
@@ -39,4 +41,6 @@ let cot = function cot(x) {
     return 1 / Math.tan(x);
 };
 
-export { fact, frac, logn, rootn, sec, csc, cot };
+let locals = { fact, frac, logn, rootn, sec, csc, cot };
+let localFunctions = merge(Math, locals);
+export default localFunctions;
