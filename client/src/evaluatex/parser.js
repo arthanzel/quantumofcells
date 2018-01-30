@@ -1,5 +1,5 @@
 import Node from "./Node";
-import Token from "./Token";
+import merge from "./util/propertyMerge";
 
 // Parser
 // ======
@@ -18,7 +18,7 @@ class Parser {
     constructor(tokens = [], locals = {}) {
         this.cursor = 0;
         this.tokens = tokens;
-        this.locals = locals;
+        this.locals = merge(locals, Math);
     }
 
     get currentToken() {
