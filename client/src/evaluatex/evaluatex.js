@@ -1,10 +1,8 @@
-import Lexer from "./lexer";
-import Parser from "./parser";
-import * as localFunctions from "./util/localFunctions";
+import lexer from "./lexer";
+import parser from "./parser";
 
 export default function evaluatex(expression, locals = {}) {
-    let l = new Lexer(expression, locals);
-    let p = new Parser(l.tokens);
-    let ast = p.parse();
-    return function(_locals = {}) { ast.evaluate(_locals); }
+    let tokens = new lexer(expression, locals);
+    let ast = new parser(tokens);
+    return function(_locals = {}) { return ast.evaluate(_locals); }
 }

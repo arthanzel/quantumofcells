@@ -1,4 +1,5 @@
 import Node from "./Node";
+import { fact } from "./util/localFunctions";
 
 // Parser
 // ======
@@ -194,7 +195,7 @@ class Parser {
         }
 
         if (this.accept("TBANG")) {
-            let factNode = new Node("FACTORIAL");
+            let factNode = new Node("FUNCTION", fact);
             factNode.addChild(node);
             return factNode;
         }

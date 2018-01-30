@@ -1,7 +1,5 @@
 import { sprintf } from "sprintf-js";
 
-import { fact } from "./util/localFunctions";
-
 // Nodes that are allowed to have only one child. Nodes that have one child and are not in this list will be simplified during parsing.
 let UNARY_NODES = ["FACTORIAL", "FUNCTION", "INVERSE", "NEGATE"];
 
@@ -39,50 +37,53 @@ export default class Node {
      * Evaluates this Node and all child nodes recursively, returning the numerical result of this Node.
      */
     evaluate(locals) {
+        let result = 0;
+
         switch (this.type) {
-            case "FACTORIAL":
-                let arg = this.child.evaluate(locals);
-
-                if (arg < 0) {
-                    throw "Can't take the factorial of a negative number.";
-                }
-
-                return fact(i);
             case "FUNCTION":
                 let evaluatedChildren = [];
                 for (let i in this.children) {
                     evaluatedChildren.push(this.children[i].evaluate(locals));
                 }
-                return this.value.apply(this, evaluatedChildren);
+                result = this.value.apply(this, evaluatedChildren);
+                break;
             case "INVERSE":
-                return 1.0 / this.child.evaluate(locals);
+                result = 1.0 / this.child.evaluate(locals);
+                break;
             case "NEGATE":
-                return -this.child.evaluate(locals);
+                result = -this.child.evaluate(locals);
+                break;
             case "NUMBER":
-                return this.value;
+                result = this.value;
+                break;
             case "POWER":
-                return Math.pow(
+                result = Math.pow(
                     this.children[0].evaluate(locals),
                     this.children[1].evaluate(locals)
                 );
+                break;
             case "PRODUCT":
                 let product = 1;
                 for (let i in this.children) {
                     product *= this.children[i].evaluate(locals);
                 }
-                return product;
+                result = product;
+                break;
             case "SUM":
                 let sum = 0;
                 for (let i in this.children) {
                     sum += this.children[i].evaluate(locals);
                 }
-                return sum;
+                result = sum;
+                break;
             case "SYMBOL":
                 if (isFinite(locals[this.value])) {
                     return locals[this.value];
                 }
                 throw "Symbol " + this.value + " is undefined or not a number";
         }
+
+        return result;
     }
 
     /**
