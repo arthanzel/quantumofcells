@@ -23,7 +23,7 @@ describe("Evaluatex Parser", function() {
 
         tokens = lexer(eqns.quadratic);
         ast = parser(tokens);
-        assert.equal(ast.nodeCount, 19, "quadratic");
+        assert.equal(ast.nodeCount, 18, "quadratic");
 
         tokens = lexer(eqns.complexMultiplication);
         ast = parser(tokens);
@@ -31,7 +31,7 @@ describe("Evaluatex Parser", function() {
 
         tokens = lexer(eqns.trig);
         ast = parser(tokens);
-        assert.equal(ast.nodeCount, 12, "trig");
+        assert.equal(ast.nodeCount, 10, "trig");
 
         tokens = lexer(eqns.complete);
         ast = parser(tokens);

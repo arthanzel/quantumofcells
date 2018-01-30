@@ -45,16 +45,10 @@ class Parser {
     }
 
     preprocess() {
-        for (let i = 0; i < this.tokens.length; i++) {
-            let currentToken = this.tokens[i];
-
-            if (currentToken.type === "TSYMBOL") {
-                // Replace symbol tokens with function tokens if the symbol exists in the Math API or in the locals
-                if (typeof this.locals[currentToken.value] === "function") {
-                    this.tokens[i] = new Token("TFUNCTION", this.locals[currentToken.value]);
-                }
-            }
-        }
+        // This function used to contain procedures to remove whitespace
+        // tokens and replace symbol tokens with functions, but that work
+        // has been moved to the lexer in order to keep the parser more
+        // lightweight.
     }
 
     /**
@@ -127,17 +121,6 @@ class Parser {
             else if (this.accept("TLPAREN")) {
                 this.cursor--;
                 node.addChild(this.power());
-                // let multiplicand = this.sum();
-                // this.expect("TRPAREN");
-                // if (this.accept("TPOWER")) {
-                //     let power = new Node("POWER")
-                //         .addChild(multiplicand)
-                //         .addChild(this.power());
-                //     node.addChild(power);
-                // }
-                // else {
-                //     node.addChild(multiplicand);
-                // }
             }
             else if (this.accept("TSYMBOL") ||
                      this.accept("TNUMBER") ||
