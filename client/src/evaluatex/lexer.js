@@ -9,10 +9,10 @@ import { tokenPatterns } from "./Token";
  */
 export default function lexer(equation) {
     let l = new Lexer(equation);
-    let t = l.tokens;
+    l.lex();
 
     // Convert the array of tokens into a String - useful for testing.
-    t.toString = function() {
+    l.tokens.toString = function() {
         let tokenStrings = [];
         for (let token of t) {
             tokenStrings.push(token.toString());
@@ -20,7 +20,7 @@ export default function lexer(equation) {
         return tokenStrings.join(" ");
     };
 
-    return t;
+    return l.tokens;
 }
 
 class Lexer {
@@ -28,11 +28,16 @@ class Lexer {
         this.buffer = buffer;
         this.cursor = 0;
         this.tokens = [];
+    }
 
-        // Do lexing
+    lex() {
         while (this.hasNext()) {
             let token = this.next();
-            this.tokens.push(token);
+            if (token.type !== "TWS") {
+                // Whitespace tokens don't affect evaluation, so don't bother
+                // adding them to the token list.
+                this.tokens.push(token);
+            }
         }
     }
 
