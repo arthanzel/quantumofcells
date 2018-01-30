@@ -8,101 +8,219 @@ import Token from "./Token";
 // tree that represents the math to be evaluated, taking into account the
 // correct order of operations.
 // This is a simple recursive-descent parser based on [Wikipedia's example](https://en.wikipedia.org/wiki/Recursive_descent_parser).
-var Parser = module.exports = function(tokens, locals) {
-    this.locals = locals || {};
-    this.tokens = [];
-    this.cursor = 0;
 
-    // Strip whitespace from token list.
-    for (i in tokens) {
-        if (tokens[i].type != "TWS") {
-            this.tokens.push(tokens[i]);
-        }
-    }
-    this.preprocess(locals);
+export default function parser(tokens, locals = {}) {
+    let p = new Parser(tokens, locals);
+    return p.parse();
 };
 
-// This function applies some useful transformations to the token stream before it is parsed. This alleviates some work from the parser and keeps the parser and node code clean.
-Parser.prototype.preprocess = function(locals) {
-    for (i in this.tokens) {
-        var previous = this.tokens[i - 1] || null;
-        var current = this.tokens[i];
-        var next = this.tokens[i + 1] || null;
+class Parser {
+    constructor(tokens = [], locals = {}) {
+        this.cursor = 0;
+        this.tokens = tokens;
+        this.locals = locals;
+    }
 
-        // First step is to perform 1:1 replacements with tokens in the replacement table.
-        var key = current.type + ":" + current.value;
-        if (replacementTable[key]) {
-            this.tokens[i] = replacementTable[key];
-            continue;
+    get currentToken() {
+        return this.tokens[this.cursor];
+    }
+
+    get prevToken() {
+        return this.tokens[this.cursor - 1];
+    }
+
+    parse() {
+        this.preprocess();
+        let ast = this.sum();
+        ast = ast.simplify();
+
+        // Throw an exception if there are still tokens remaining after parsing
+        if (this.currentToken !== undefined) {
+            console.log(ast.printTree());
+            throw "Parsing error: Expected end of input, but got " + this.currentToken.type +
+            " " + this.currentToken.value;
         }
 
-        // Replace symbol tokens with function tokens if the symbol exists in the Math API or in the locals.
-        if (current.type == "TSYMBOL") {
-            if (typeof locals[current.value] == "function") {
-                this.tokens[i] = new Token("TFUNCTION", locals[current.value]);
+        return ast;
+    }
+
+    preprocess() {
+        for (let i = 0; i < this.tokens.length; i++) {
+            let currentToken = this.tokens[i];
+
+            if (currentToken.type === "TSYMBOL") {
+                // Replace symbol tokens with function tokens if the symbol exists in the Math API or in the locals
+                if (typeof this.locals[currentToken.value] === "function") {
+                    this.tokens[i] = new Token("TFUNCTION", this.locals[currentToken.value]);
+                }
             }
-            continue;
-        }
-
-        // Remove the slash in command tokens and convert to lower case.
-        if (current.type == "TCOMMAND") {
-            var fnName = current.value.substring(1).toLowerCase();
-            current.value = locals[fnName];
-            continue;
         }
     }
-};
 
-// The primary entry point of the parser - calling `parse()` will return a
-// full AST that represents the provided tokens.
-Parser.prototype.parse = function() {
-    var tree = this.orderExpression().simplify();
-
-    // Throw an exception if the expression looks fully parsed but still
-    // contains tokens.
-    if (this.current() != undefined) {
-        throw "Expected end of input, but got " + this.current().type +
-        " " + this.current().value;
+    /**
+     * Accepts the current token if it matches the given type.
+     * If it does, the cursor is incremented and this method returns true.
+     * If it doesn't, the cursor stays where it is and this method returns false.
+     * @param type Type of token to accept.
+     * @returns {boolean} True if the token was accepted.
+     */
+    accept(type) {
+        if (this.currentToken && this.currentToken.type === type) {
+            this.cursor++;
+            return true;
+        }
+        return false;
     }
 
-    return tree;
-};
-
-// Returns true if the token under the cursor matches the given type.
-// If it does, increments the cursor to the next token.
-// If it doesn't, the cursor stays where it is.
-Parser.prototype.accept = function(token) {
-    if (!this.current()) return false;
-
-    if (this.current().type == token) {
-        this.cursor++;
-        return true;
+    /**
+     * Accepts the current token if it matches the given type.
+     * If it does, the cursor is incremented.
+     * If it doesn't, an exception is raised.
+     * @param type
+     */
+    expect(type) {
+        if (!this.accept(type)) {
+            throw "Expected " + type + " but got " +
+            (this.currentToken ? this.currentToken.value : "end of input.");
+        }
     }
-    return false;
-};
 
-// Expects the next token under the cursor to match the given type.
-// If it does, increments the cursor to the next token.
-// If it doesn't, throws an exception.
-Parser.prototype.expect = function(token) {
-    if (!this.accept(token)) {
-        throw "Expected " + token + " but got " +
-            (this.current() ? this.current().value : "end of input.");
+    // Rules
+    // -----
+
+    /**
+     * Parses a math expression with
+     */
+    sum() {
+        let node = new Node("SUM");
+        node.addChild(this.product());
+
+        while (true) {
+            // Continue to accept chained addends
+            if (this.accept("TPLUS")) {
+                node.addChild(this.product());
+            }
+            else if (this.accept("TMINUS")) {
+                node.addChild(new Node("NEGATE").addChild(this.product()));
+            }
+            else {
+                break;
+            }
+        }
+
+        return node;
     }
-};
 
-// Returns the current token under the cursor.
-// This is the token that `accept()` will try to match.
-Parser.prototype.current = function() {
-    return this.tokens[this.cursor];
-};
+    product() {
+        let node = new Node("PRODUCT");
+        node.addChild(this.power());
 
-// Returns the previously-matched token.
-// Useful when you `accept()` a token and need to get its value later.
-Parser.prototype.prev = function() {
-    return this.tokens[this.cursor - 1];
-};
+        while (true) {
+            // Continue to accept chained multiplicands
 
+            if (this.accept("TTIMES")) {
+                node.addChild(this.power());
+            }
+            else if (this.accept("TDIVIDE")) {
+                node.addChild(new Node("INVERSE").addChild(this.power()));
+            }
+            else if (this.accept("TLPAREN")) {
+                let multiplicand = this.sum();
+                this.expect("TRPAREN");
+                if (this.accept("TPOWER")) {
+                    let power = new Node("POWER")
+                        .addChild(multiplicand)
+                        .addChild(this.power());
+                    node.addChild(power);
+                }
+                else {
+                    node.addChild(multiplicand);
+                }
+            }
+            else if (this.accept("TSYMBOL") ||
+                     this.accept("TNUMBER") ||
+                     this.accept("TFUNCTION")) {
+                this.cursor--;
+                node.addChild(this.power());
+            }
+            else {
+                break;
+            }
+        }
+
+        return node;
+    }
+
+    power() {
+        let node = new Node("POWER");
+        node.addChild(this.val());
+
+        // If a chained power is encountered (e.g. a ^ b ^ c), treat it like
+        // a ^ (b ^ c)
+        if (this.accept("TPOWER")) {
+            node.addChild(this.power());
+        }
+
+        return node;
+    }
+
+    val() {
+        // Don't create a new node immediately, since we need to parse postfix
+        // operators like factorials, which come after a value.
+        let node = 0;
+
+        if (this.accept("TSYMBOL")) {
+            node = new Node("SYMBOL", this.prevToken.value);
+        }
+        else if (this.accept("TNUMBER")) {
+            node = new Node("NUMBER", parseFloat(this.prevToken.value));
+        }
+        else if (this.accept("TFUNCTION")) {
+            node = new Node("FUNCTION", this.prevToken.value);
+
+            // Multi-param functions require parens and have commas
+            if (this.accept("TLPAREN")) {
+                node.addChild(this.sum());
+
+                while (this.accept("TCOMMA")) {
+                    node.addChild(this.sum());
+                }
+
+                this.expect("TRPAREN");
+            }
+
+            // Single-parameter functions don't need parens
+            else {
+                node.addChild(this.power());
+            }
+        }
+        else if (this.accept("TMINUS")) {
+            node = new Node("NEGATE").addChild(this.power());
+        }
+        else if (this.accept("TLPAREN")) {
+            node = this.sum();
+            this.expect("TRPAREN");
+        }
+        else if (this.accept("TABS")) {
+            node = new Node("FUNCTION", Math.abs);
+            node.addChild(this.sum());
+            this.expect("TABS");
+        }
+        else {
+            throw "Unexpected " + this.currentToken.type + ", token " + this.cursor;
+        }
+
+        if (this.accept("TBANG")) {
+            let factNode = new Node("FACTORIAL");
+            factNode.addChild(node);
+            return factNode;
+        }
+
+        return node;
+    }
+}
+
+/*
 // Non-terminal rules
 // ------------------
 
@@ -127,160 +245,41 @@ Parser.prototype.prev = function() {
 //     | '|' orderExpression '|'
 //     | val '!'
 // ```
-Parser.prototype.orderExpression = function() {
-    return this.sum();
-};
-
-// Parses sums or differences.
-Parser.prototype.sum = function() {
-    var node = new Node("SUM");
-    node.addChild(this.product());
-    
-    // The `while` loop allows expressions like `a + b - c` to be treated
-    // like `(a + b) - c`.
-    while (true) {
-        if (this.accept("TPLUS")) {
-            node.addChild(this.product());
-        }
-        else if (this.accept("TMINUS")) {
-            // To avoid implementing a special rule for differences, every
-            // term to be subtracted is simply wrapped in a node that takes
-            // the negative of its value when evaluated.
-            node.addChild(new Node("NEGATE").addChild(this.product()));
-        }
-        else {
-            break;
-        }
-    }
-
-    return node;
-};
-
-// Parses products and quotients.
-Parser.prototype.product = function() {
-    var node = new Node("PRODUCT");
-    node.addChild(this.power());
-    
-    while (true) {
-        if (this.accept("TTIMES")) {
-            node.addChild(this.power());
-        }
-        else if (this.accept("TDIVIDE")) {
-            // To avoid implementing a special rule for quotients, every
-            // term to be divided is simply wrapped in a node that takes
-            // the reciprocal of its value when evaluated.
-            node.addChild(new Node("INVERSE").addChild(this.power()));
-        }
-        else if (this.accept("TLPAREN")) {
-            node.addChild(this.orderExpression());
-            this.expect("TRPAREN");
-        }
-        else if (this.accept("TSYMBOL") ||
-                 this.accept("TNUMBER") ||
-                 this.accept("TFUNCTION")) {
-            this.cursor--;
-            node.addChild(this.power());
-        }
-        else {
-            break;
-        }
-    }
-    return node;
-};
-
-// Parses exponents.
-Parser.prototype.power = function() {
-    var node = new Node("POWER");
-    node.addChild(this.val());
-
-    // The `if` with recursion allows powers like `a ^ b ^ c` to be treated
-    // like a ^ (b ^ c), as they should be.
-    if (this.accept("TPOWER")) {
-        node.addChild(this.power());
-    }
-    return node;
-};
+*/
 
 // Parses values or nested expressions.
-Parser.prototype.val = function() {
+//Parser.prototype.val = function() {
     // Don't return new nodes immediately, since we need to parse
     // factorials, which come at the END of values.
-    var node = {};
+    //var node = {};
 
-    if (this.accept("TSYMBOL")) {
-        node = new Node("SYMBOL", this.prev().value);
-    }
-    else if (this.accept("TNUMBER")) {
-        node = new Node("NUMBER", parseFloat(this.prev().value));
-    }
-    else if (this.accept("TCOMMAND")) {
-        var prev = this.prev();
-        node = new Node("FUNCTION", prev.value);
 
-        for (var i = 0; i < arity[prev.value.name]; i++) {
-            node.addChild(this.val());
-        }
-    }
-    else if (this.accept("TFUNCTION")) {
-        node = new Node("FUNCTION", this.prev().value);
 
-        // Multi-param functions require parens and may have commas
-        if (this.accept("TLPAREN")) {
-            node.addChild(this.orderExpression());
-
-            while (this.accept("TCOMMA")) {
-                node.addChild(this.orderExpression());
-            }
-
-            this.expect("TRPAREN");
-        }
-
-        // Single-parameter functions don't need parens
-        else {
-            node.addChild(this.power());
-        }
-    }
 
     // Parse negative values like -42.
     // The lexer can't differentiate between a difference and a negative,
     // so that distinction is done here.
     // Notice the `power()` rule that comes after a negative sign so that
     // expressions like `-4^2` return -16 instead of 16.
-    else if (this.accept("TMINUS")) {
-        node = new Node("NEGATE");
-        node.addChild(this.power());
-    }
+
 
     // Parse nested expression with parentheses.
     // Notice that the parser expects an RPAREN token after the expression.
-    else if (this.accept("TLPAREN")) {
-        node = this.orderExpression();
-        this.expect("TRPAREN");
-    }
+
 
     // Parse absolute value.
     // Absolute values are contained in pipes (`|`) and are treated quite
     // like parens.
-    else if (this.accept("TABS")) {
-        node = new Node("FUNCTION", Math.abs);
-        node.addChild(this.orderExpression());
-        this.expect("TABS");
-    }
+
 
     // All parsing rules should have terminated or recursed by now.
     // Throw an exception if this is not the case.
-    else {
-        throw "Unexpected " + this.current().type + ", token " + this.cursor;
-    }
+
 
     // Process postfix operations like factorials.
-    
-    // Parse factorial.
-    if (this.accept("TBANG")) {
-        var factNode = new Node("FACTORIAL");
-        factNode.addChild(node);
-        return factNode;
-    }
 
-    return node;
-};
+    // Parse factorial.
+
+
+    //return node;
+//};

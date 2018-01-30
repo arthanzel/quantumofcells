@@ -14,8 +14,8 @@ export default function lexer(equation) {
     // Convert the array of tokens into a String - useful for testing.
     l.tokens.toString = function() {
         let tokenStrings = [];
-        for (let token of t) {
-            tokenStrings.push(token.toString());
+        for (let i = 0; i < l.tokens.length; i++) {
+            tokenStrings.push(l.tokens[i].toString());
         }
         return tokenStrings.join(" ");
     };
