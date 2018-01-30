@@ -11,7 +11,8 @@
           rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
           crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
     <style>
         html, body {
@@ -20,19 +21,30 @@
             margin: 0;
         }
 
+        h2 {
+
+        }
+
+        a {
+            color: #2980b9;
+        }
+        a:visited {
+            color: #794e91;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
         .headline {
             background: linear-gradient(#304050, #203040);
             border-bottom: 1px solid #102030;
             color: #f8fcff;
             font: oblique 600 30px "Open Sans";
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding: 20px;
             text-align: center;
             text-shadow: 1px 1px 3px #182028;
-        }
-
-        p {
-            margin: 10px 0px;
         }
 
         .banner {
@@ -40,6 +52,12 @@
             background-position: center bottom;
             background-size: cover;
             height: 500px;
+        }
+
+        .zebra:nth-child(even) {
+            background: #ecf3fa;
+            border: solid #bbb;
+            border-width: 1px 0;
         }
 
         .row {
@@ -52,6 +70,7 @@
             margin: 0 15px;
             padding: 10px 15px;
         }
+
         a.button:first-child {
             margin-left: 0;
         }
@@ -60,6 +79,7 @@
             background: #3080b8;
             color: white;
         }
+
         a.button.primary:hover {
             background: #2070a8;
             text-decoration: none;
@@ -69,38 +89,91 @@
             border: 1px solid #bbb;
             color: #555;
         }
+
         a.button.hollow:hover {
             border-color: #34495e;
             color: #34495e;
             text-decoration: none;
         }
+
+        .footer {
+            background: #304050;
+            color: #ccc;
+            font-size: 13px;
+            margin-top: 30px;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <!-- TODO: Interactive chart front-and-centre? -->
+<!-- TODO: Interactive chart front-and-centre? -->
 
-    <div class="headline">
-        Quantum of Cells
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-5">
-                <h1>Rapid prototyping of differential equations</h1>
-                <p>I have to push the pram a lot. I'm not a witch. Shut up! Knights of Ni, we are but simple travelers who seek the enchanter who lives beyond these woods. You can't expect to wield supreme power just 'cause some watery tart threw a sword at you!</p>
-            </div>
-            <div class="col">image</div>
-        </div>
-        <div class="row">
-            <div class="col-7">Image</div>
-            <div class="col">
-                <h2>Some stuff</h2>
-                <p>It's free, and always will be.</p>
-                <p>
-                    <a class="button primary" href="editor.html">Get started</a> or
-                    <a class="button hollow" href="#">Sign in</a>
-                </p>
+<div class="headline">
+    Quantum of Cells
+</div>
+<div>
+    <div class="zebra">
+        <div class="container">
+            <div class="row">
+                <div class="col-5">
+                    <h1>Rapid prototyping of differential equations</h1>
+                    <p>I have to push the pram a lot. I'm not a witch. Shut up!
+                        Knights of Ni, we are but simple travelers who seek the
+                        enchanter who lives beyond these woods. You can't expect
+                        to wield supreme power just 'cause some watery tart
+                        threw a sword at you!</p>
+                </div>
+                <div class="col">image
+                    <!-- TODO: Image of a fractal flower rising from the bottom border -->
+                </div>
             </div>
         </div>
     </div>
+    <div class="zebra">
+        <div class="container">
+            <div class="row">
+                <div class="col-7">Image
+                    <!-- TODO: Image of a mountain range, with its skyline fading into a function -->
+                </div>
+                <div class="col">
+                    <h2>Some stuff</h2>
+                    <p>Quantum of Cells was developed at the University of Ottawa to simulate genetic networks. Since then, it has grown into a practical tool for mocking up dynamical systems without having to mess with Mathematica or Matlab.</p>
+                    <p>Quantum of Cells is free, and always will be.</p>
+                    <p>
+                        <a class="button primary" href="editor.html">Get
+                            started</a> or
+                        <a class="button hollow" href="#">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="zebra">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 style="text-align: center;">Try it!</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <p>These are the <a
+                            href="https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations">Lotka-Volterra equations</a>, also known as the predator-prey model. Tweak the equations and constants and see how they affect the result on the right.</p>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col">One</div>
+                <div class="col">Two</div>
+                <div class="col">Three</div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
