@@ -8,3 +8,7 @@ clean:
 .PHONY: setup
 setup:
 	mkdir -p build
+
+.PHONY: test
+test:
+	npx mocha --require babel-register
