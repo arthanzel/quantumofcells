@@ -125,17 +125,19 @@ class Parser {
                 node.addChild(new Node("INVERSE").addChild(this.power()));
             }
             else if (this.accept("TLPAREN")) {
-                let multiplicand = this.sum();
-                this.expect("TRPAREN");
-                if (this.accept("TPOWER")) {
-                    let power = new Node("POWER")
-                        .addChild(multiplicand)
-                        .addChild(this.power());
-                    node.addChild(power);
-                }
-                else {
-                    node.addChild(multiplicand);
-                }
+                this.cursor--;
+                node.addChild(this.power());
+                // let multiplicand = this.sum();
+                // this.expect("TRPAREN");
+                // if (this.accept("TPOWER")) {
+                //     let power = new Node("POWER")
+                //         .addChild(multiplicand)
+                //         .addChild(this.power());
+                //     node.addChild(power);
+                // }
+                // else {
+                //     node.addChild(multiplicand);
+                // }
             }
             else if (this.accept("TSYMBOL") ||
                      this.accept("TNUMBER") ||

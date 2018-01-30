@@ -29,13 +29,12 @@ describe("Evaluatex Parser", function() {
         ast = parser(tokens);
         assert.equal(ast.nodeCount, 5, "complexMultiplication");
 
-        // tokens = lexer(eqns.trig);
-        // ast = parser(tokens);
-        // assert.equal(ast.nodeCount, 12, "trig");
+        tokens = lexer(eqns.trig);
+        ast = parser(tokens);
+        assert.equal(ast.nodeCount, 12, "trig");
 
         tokens = lexer(eqns.complete);
         ast = parser(tokens);
-        ast.printTree();
         assert.equal(ast.nodeCount, 18, "complete");
     });
 });
