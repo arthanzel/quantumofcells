@@ -1,5 +1,5 @@
-import Lexer from "./Lexer";
-import Parser from "./Parser";
+import Lexer from "./lexer";
+import Parser from "./parser";
 import * as localFunctions from "./util/localFunctions";
 
 export default function evaluatex(expression, locals = {}) {

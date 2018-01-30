@@ -117,9 +117,9 @@ Parser.prototype.prev = function() {
 // sum : product { ('+'|'-') product }
 // product : power { ('*'|'/') power }
 //         | power '(' orderExpression ')'
+// power : TODO power
 // val : SYMBOL
 //     | NUMBER
-//     | COMMAND { val }
 //     | FUNCTION '(' orderExpression { ',' orderExpression } ')'
 //     | '-' val
 //     | '(' orderExpression ')'
