@@ -11,4 +11,4 @@ setup:
 
 .PHONY: test
 test:
-	npx mocha --require babel-register ./test/*.js
+	npx mocha --require babel-register --recursive test
