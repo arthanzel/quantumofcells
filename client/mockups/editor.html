@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Quantum of Cells</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <style>
         html, body {
@@ -19,12 +20,18 @@
         }
 
         .sidebar {
-            background: #304050;
-            box-shadow: inset -7px 0 15px -5px #102030;
-            color: #f8fcff;
+            background: #e8ecee;
+            border-right: 1px solid #ccc;
+            box-shadow: inset -20px 0 15px -20px #d8d8d8;
             display: inline-block;
             height: 100%;
             width: 320px;
+        }
+
+        .sidebar .dark {
+            background: #304050;
+            box-shadow: inset -7px 0 15px -5px #102030;
+            color: #f8fcff;
         }
 
         .sidebar h1 {
@@ -43,8 +50,11 @@
 
         .navoptions {
         }
-        .navoptions:after {
+
+        .navoptions::after {
             clear: both;
+            content: "";
+            display: table;
         }
 
         .navoptions > a {
@@ -58,7 +68,7 @@
             padding: 18px;
             text-align: center;
             text-decoration: none;
-            width: 50%;
+            width: 33.33%;
         }
 
         .navoptions > a i {
@@ -72,7 +82,9 @@
     </style>
 </head>
 <body>
-    <div class="sidebar">
+<!--TODO: Sidebar should be a vflexbox-->
+<div class="sidebar">
+    <div class="dark">
         <h1>
             Quantum of Cells
             <a href="#"><i class="fa fa-bars"></i></a>
@@ -83,11 +95,17 @@
                 Project
             </a>
             <a href="#" class="active">
-                <i class="fa fa-cogs"></i><br>
+                <i class="fa fa-tasks"></i><br>
                 Equations
             </a>
+
+            <a href="#" class="active">
+                <i class="fa fa-cogs"></i><br>
+                Options
+            </a>
         </div>
-        **
     </div>
+    Content
+</div>
 </body>
 </html>
