@@ -8,7 +8,7 @@ describe("QOC Solver", function() {
         let eqn = "4";
         let data = solver(eqn, { x: 0 }, 2, 100);
         for (let i of data.data["0"]) {
-            console.log(i);
+            //console.log(i);
         }
     });
 });
