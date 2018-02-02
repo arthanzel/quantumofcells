@@ -19,36 +19,51 @@
             width: 100%;
         }
 
+        a {
+            text-decoration: none;
+        }
+
         .sidebar {
             background: #e8ecee;
             border-right: 1px solid #ccc;
             box-shadow: inset -20px 0 15px -20px #d8d8d8;
-            display: inline-block;
+            display: flex;
+            flex-direction: column;
             height: 100%;
             width: 320px;
         }
 
-        .sidebar .dark {
+        .sidebar header {
             background: #304050;
             box-shadow: inset -7px 0 15px -5px #102030;
             color: #f8fcff;
+            flex: 0 1 auto;
+        }
+
+        .sidebar-content {
+            flex: 1 1 auto;
+        }
+
+        .sidebar footer {
+            border-top: 1px solid #aaa;
+            flex: 0 1 auto;
+            font-size: 13px;
+            text-align: center;
+            padding: 10px;
         }
 
         .sidebar h1 {
             border-bottom: 1px solid #102030;
             color: #f8fcff;
-            font: oblique 600 28px "Open Sans";
+            font: oblique 600 20px "Open Sans";
             margin: 0;
-            padding: 20px;
+            padding: 10px 15px;
             text-shadow: 1px 1px 3px #182028;
         }
 
         .sidebar h1 a {
             color: #f8fcff;
             float: right;
-        }
-
-        .navoptions {
         }
 
         .navoptions::after {
@@ -65,26 +80,45 @@
             float: left;
             font-size: 13px;
             letter-spacing: 0.09em;
-            padding: 18px;
+            padding: 15px;
             text-align: center;
             text-decoration: none;
             width: 33.33%;
         }
 
         .navoptions > a i {
-            font-size: 28px;
+            font-size: 18px;
             padding-bottom: 10px;
         }
 
         .navoptions > a.active {
             background: linear-gradient(#384858, #283848);
         }
+
+        .equations-container {
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        .sidebar h2 {
+            color: #2070a8;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 15px 0px 5px 0px;
+            text-align: center
+        }
+        .sidebar h2:first-child { margin-top: 5px; }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
     </style>
 </head>
 <body>
 <!--TODO: Sidebar should be a vflexbox-->
-<div class="sidebar">
-    <div class="dark">
+<section class="sidebar">
+    <header class="dark">
         <h1>
             Quantum of Cells
             <a href="#"><i class="fa fa-bars"></i></a>
@@ -104,8 +138,25 @@
                 Options
             </a>
         </div>
+    </header>
+    <div class="sidebar-content equations-container">
+        <div class="equations-scroller">
+            <h2>Equations</h2>
+            <div class="equations-list">
+                <table>
+                    <tr>
+                        <td>S</td>
+                        <td>c*R - a*S*I</td>
+                    </tr>
+                </table>
+            </div>
+            <h2>Constants</h2>
+            <div class="constants-list">
+
+            </div>
+        </div>
     </div>
-    Content
-</div>
+    <footer>Hello, Martin. <a href="#">Not you?</a></footer>
+</section>
 </body>
 </html>
