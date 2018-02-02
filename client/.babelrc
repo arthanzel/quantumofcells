@@ -1,6 +1,16 @@
 {
-  "presets": ["env"],
+  "presets": [
+    "env",
+    "react"
+  ],
   "plugins": [
-    ["resolver", { "resolveDirs": ["src"] }]
+    [
+      "resolver",
+      {
+        "resolveDirs": [
+          "src"
+        ]
+      }
+    ]
   ]
 }

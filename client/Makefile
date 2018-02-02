@@ -1,5 +1,5 @@
 build/qoc.js : setup
-	npx webpack src/index.js build/qoc.js
+	npx webpack
 
 .PHONY: clean
 clean:
@@ -12,3 +12,7 @@ setup:
 .PHONY: test
 test:
 	npx mocha --require babel-register --recursive test
+
+.PHONY: watch
+watch:
+	npx webpack --watch
