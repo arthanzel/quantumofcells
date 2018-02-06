@@ -1,0 +1,5 @@
+.qoc-app-container {
+    align-content: stretch;
+    display: flex;
+    height: 100%;
+}
