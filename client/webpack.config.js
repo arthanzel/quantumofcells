@@ -1,4 +1,7 @@
-var path = require("path");
+const path = require("path");
+
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const extractCSS = new ExtractTextPlugin("build/qoc.css");
 
 module.exports = {
     entry: "./src/index.js",
@@ -17,12 +20,15 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"]
+                use: extractCSS.extract(["css-loader"])
             },
             {
                 test: /\.styl$/,
-                use: ["style-loader", "css-loader", "stylus-loader"]
+                use: extractCSS.extract(["css-loader", "stylus-loader"])
             }
         ]
-    }
+    },
+    plugins: [
+        extractCSS
+    ]
 };
