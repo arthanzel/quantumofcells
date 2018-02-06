@@ -3,5 +3,10 @@
     <JSCodeStyleSettings>
       <option name="SPACE_BEFORE_FUNCTION_LEFT_PARENTH" value="false" />
     </JSCodeStyleSettings>
+    <codeStyleSettings language="Stylus">
+      <indentOptions>
+        <option name="INDENT_SIZE" value="4" />
+      </indentOptions>
+    </codeStyleSettings>
   </code_scheme>
 </component>
