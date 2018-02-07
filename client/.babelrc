@@ -1,16 +1,17 @@
 {
-  "presets": [
-    "env",
-    "react"
-  ],
-  "plugins": [
-    [
-      "resolver",
-      {
-        "resolveDirs": [
-          "src"
-        ]
-      }
+    "presets": [
+        "env",
+        "react"
+    ],
+    "plugins": [
+        [
+            "resolver",
+            {
+                "resolveDirs": [
+                    "src"
+                ]
+            }
+        ],
+        "transform-class-properties"
     ]
-  ]
 }
