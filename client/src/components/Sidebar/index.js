@@ -3,6 +3,7 @@ import React from "react";
 import "./Sidebar.styl"
 import LoginBox from "../LoginBox";
 import TabToolbox from "../TabToolbox";
+import EquationList from "../EquationList"
 
 export default class Sidebar extends React.Component {
     render() {
@@ -15,11 +16,13 @@ export default class Sidebar extends React.Component {
             </header>
 
             <TabToolbox
-                titles={["Projects", "Equations"]}
-                contents={[]}
-            />
+                titles={["Projects", "Equations", "Settings"]}
+            >
+                <p>Projects</p>
+                <EquationList/>
+            </TabToolbox>
 
-            <LoginBox />
+            <LoginBox/>
         </div>
     }
 }

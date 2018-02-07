@@ -21,7 +21,7 @@ export default class TabToolbox extends React.Component {
 
         return <div className="qoc-tab-toolbox">
             <nav>{ links }</nav>
-            <section className="content">foo</section>
+            <section className="content">{ this.props.children[this.state.selectedIndex] }</section>
         </div>
     }
 
