@@ -15,6 +15,7 @@ export default class TabToolbox extends React.Component {
     render() {
         const links = this.props.titles.map((val, idx) => {
             return <a href="#"
+                      key={idx}
                       className={this.state.selectedIndex === idx ? "active" : ""}
                       onClick={() => this.onNavigate(idx)}>{ val }</a>;
         });
