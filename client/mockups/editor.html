@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Quantum of Cells</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -23,11 +24,17 @@
             text-decoration: none;
         }
 
+        .container {
+            height: 100%;
+            display: flex;
+        }
+
         .sidebar {
             background: #e8ecee;
             border-right: 1px solid #ccc;
             box-shadow: inset -20px 0 15px -20px #d8d8d8;
             display: flex;
+            flex: 0 0 auto;
             flex-direction: column;
             height: 100%;
             width: 320px;
@@ -113,10 +120,32 @@
             border: 1px solid #ccc;
             border-collapse: collapse;
         }
+
+        .sidebar input {
+            display: block;
+            font: 300 14px "Open Sans";
+            padding: 5px 7px;
+            width: 100%;
+        }
+
+        .sidebar-content {
+            text-align: center;
+        }
+
+        .sidebar button {
+            background: #2070a8;
+            border: 0;
+            border-radius: 3px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 10px 15px;
+            margin: 15px;
+        }
     </style>
 </head>
 <body>
-<!--TODO: Sidebar should be a vflexbox-->
+<div class="container">
 <section class="sidebar">
     <header class="dark">
         <h1>
@@ -143,20 +172,24 @@
         <div class="equations-scroller">
             <h2>Equations</h2>
             <div class="equations-list">
-                <table>
-                    <tr>
-                        <td>S</td>
-                        <td>c*R - a*S*I</td>
-                    </tr>
-                </table>
+                <input type="text" value="S = c*R - a*S*I">
+                <input type="text" value="I = a*S*I - b*I">
+                <input type="text" value="R = b*I - c*R">
             </div>
             <h2>Constants</h2>
             <div class="constants-list">
-
+                <input type="text" value="a = 1">
+                <input type="text" value="b = 2">
+                <input type="text" value="c = 3">
             </div>
+            <button class="btn primary">Simulate</button>
         </div>
     </div>
     <footer>Hello, Martin. <a href="#">Not you?</a></footer>
 </section>
+    <div class="graph">
+        <img src="../r/graph.jpg" height="100%" width="100%" alt="">
+    </div>
+</div>
 </body>
 </html>
