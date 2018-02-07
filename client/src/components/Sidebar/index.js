@@ -18,6 +18,7 @@ export default class Sidebar extends React.Component {
             <TabToolbox titles={["Projects", "Equations", "Settings"]}>
                 <p>Projects</p>
                 <EquationList/>
+                <p>Settings</p>
             </TabToolbox>
 
             <LoginBox/>
