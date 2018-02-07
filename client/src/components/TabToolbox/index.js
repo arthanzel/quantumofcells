@@ -2,28 +2,25 @@ import React from "react";
 
 import "./TabToolbox.styl";
 
-let me = {};
 export default class TabToolbox extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { selectedIndex: 0 };
-        me = this;
+        this.state = {selectedIndex: 0};
     }
 
-    onNavigate(index) {
-        me.setState({ selectedIndex: index });
-    }
+    onNavigate = (index) => {
+        this.setState({selectedIndex: index});
+    };
 
     render() {
+        const links = this.props.titles.map((val, idx) => {
+            return <a href="#"
+                      className={this.state.selectedIndex === idx ? "active" : ""}
+                      onClick={() => this.onNavigate(idx)}>{ val }</a>;
+        });
+
         return <div className="qoc-tab-toolbox">
-            <nav>
-                <a href="#"
-                   className={this.state.selectedIndex === 0 ? "active" : ""}
-                   onClick={() => this.onNavigate(0)}>Projects</a>
-                <a href="#"
-                   className={this.state.selectedIndex === 1 ? "active" : ""}
-                   onClick={() => this.onNavigate(1)}>Equations</a>
-            </nav>
+            <nav>{ links }</nav>
             <section className="content">foo</section>
         </div>
     }
