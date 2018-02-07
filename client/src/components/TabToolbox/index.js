@@ -24,6 +24,4 @@ export default class TabToolbox extends React.Component {
             <section className="content">{ this.props.children[this.state.selectedIndex] }</section>
         </div>
     }
-
-    // Tab pages should be <section>
 }
