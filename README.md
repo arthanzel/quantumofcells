@@ -22,7 +22,6 @@ Here's a list of features that (supposedly) will be complete soon:
 Here's a list of features that might be implemented at some point. Maybe.
 
 - Rendering parametric plots of two variables
--
 
 ## Technology
 
