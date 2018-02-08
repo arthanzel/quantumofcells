@@ -24,6 +24,7 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "babel-plugin-resolver": "^1.1.0",
     "lodash": "^4.17.4",
     "react": "^16.2.0",

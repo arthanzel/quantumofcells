@@ -1,6 +1,10 @@
 build/qoc.js : setup
 	npx webpack
 
+.PHONY: babel
+babel:
+	npx babel src -d build/lib
+
 .PHONY: clean
 clean:
 	rm build/*
