@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { describe, it } from "mocha"
 
-import solver from "solver";
+import solver from "qoc/solver";
 
 describe("QOC Solver", function() {
     it("should solve differential equations", function() {

@@ -33,7 +33,7 @@ export default class EquationBox extends React.Component {
             <div className="expression">
                 <input type="text" value={this.state.expression} onChange={this.onChangeExpression}/>
             </div>
-            <i className="fa fa-trash"></i>
+            <i className="fa fa-trash" onClick={this.props.onDelete} />
         </div>
     }
 }
