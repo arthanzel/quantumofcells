@@ -1,0 +1,37 @@
+.qoc-sidebar {
+    box-shadow: 0 0 10px #aaa;
+    display: flex;
+    flex-basis: 300px;
+    flex-direction: column;
+    margin-right: 8px;
+    max-width: 300px;
+
+    h1 {
+        background: linear-gradient(#384858, #283848);
+        border-bottom: 1px solid #102030;
+        color: #f8fcff;
+        font: oblique 600 20px "Open Sans";
+        margin: 0;
+        padding: 10px 15px;
+        text-shadow: 1px 1px 3px #182028;
+
+        a {
+            color: #f8fcff;
+            float: right;
+        }
+    }
+
+    & > *:not(header) {
+        // Putting a border on the right of the dark header looks misaligned by a pixel.
+        // Don't do that.
+        border-right: 1px solid #b8b8b8;
+    }
+
+    & > header, & > footer {
+        flex: 0 0 auto;
+    }
+
+    & > section, & > div {
+        flex: 1 0 auto;
+    }
+}

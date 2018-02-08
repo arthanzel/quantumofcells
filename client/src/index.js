@@ -1,16 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-class Equation extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+import QOCApplication from "components/QOCApplication";
 
-    render() {
-        return <div>
-            Equation { this.props.body }
-        </div>;
-    }
-}
+import "index.styl"
 
-ReactDOM.render(<Equation body="2+4" />, document.getElementById("react-root"));
+ReactDOM.render(<QOCApplication />, document.getElementById("qoc-app-container"));

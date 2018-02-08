@@ -1,4 +1,7 @@
-var path = require("path");
+const path = require("path");
+
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const extractCSS = new ExtractTextPlugin("build/qoc.css");
 
 module.exports = {
     entry: "./src/index.js",
@@ -9,12 +12,23 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 include: path.resolve(__dirname, "src"),
                 use: {
                     loader: "babel-loader"
                 }
+            },
+            {
+                test: /\.css$/,
+                use: extractCSS.extract(["css-loader"])
+            },
+            {
+                test: /\.styl$/,
+                use: extractCSS.extract(["css-loader", "stylus-loader"])
             }
         ]
-    }
+    },
+    plugins: [
+        extractCSS
+    ]
 };

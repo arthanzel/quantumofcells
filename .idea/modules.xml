@@ -4,6 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
       <module fileurl="file://$PROJECT_DIR$/qoc-csi3540.iml" filepath="$PROJECT_DIR$/qoc-csi3540.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server.iml" filepath="$PROJECT_DIR$/.idea/modules/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server_integrationTest.iml" filepath="$PROJECT_DIR$/.idea/modules/server_integrationTest.iml" group="server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server_main.iml" filepath="$PROJECT_DIR$/.idea/modules/server_main.iml" group="server" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/server_test.iml" filepath="$PROJECT_DIR$/.idea/modules/server_test.iml" group="server" />
     </modules>
   </component>
 </project>
