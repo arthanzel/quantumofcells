@@ -1,11 +1,13 @@
 import { createStore } from "redux";
 
+import * as examples from "./examples";
 import rootReducer from "reducers";
 
-const initialState = {
+let initialState = {
     equations: [],
     parameters: []
 };
+initialState = Object.assign(initialState, examples.sir);
 
 const store = createStore(rootReducer, initialState);
 export default store;
