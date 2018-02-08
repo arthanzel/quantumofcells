@@ -1,7 +1,11 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
+    <HTMLCodeStyleSettings>
+      <option name="HTML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+    </HTMLCodeStyleSettings>
     <JSCodeStyleSettings>
       <option name="SPACE_BEFORE_FUNCTION_LEFT_PARENTH" value="false" />
+      <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
     </JSCodeStyleSettings>
     <codeStyleSettings language="JSON">
       <indentOptions>
