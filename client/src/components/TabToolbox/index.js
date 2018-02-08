@@ -5,7 +5,7 @@ import "./TabToolbox.styl";
 export default class TabToolbox extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {selectedIndex: 0};
+        this.state = {selectedIndex: props.selectedIndex || 0};
     }
 
     onNavigate = (index) => {

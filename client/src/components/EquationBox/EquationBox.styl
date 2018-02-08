@@ -1,0 +1,42 @@
+.equationBox {
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    flex-direction: row;
+
+    i {
+        padding: 0 5px;
+        margin: auto;
+    }
+
+    &:last-child {
+        border-bottom: 1px solid #ddd;
+    }
+
+    & > .symbol {
+        background: #faa;
+        border-right: 1px solid #ddd;
+        flex: 0 1 auto;
+        input {
+            font: 400 20px "Open Sans";
+            padding: 5px 0;
+            text-align: center;
+        }
+    }
+
+    & > .expression {
+        background: #afa;
+        flex: 1 1 auto;
+        input {
+            font: 300 14px "Open Sans";
+            padding: 0 5px;
+        }
+    }
+
+    input {
+        border: 0;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+    }
+}
