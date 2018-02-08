@@ -10,17 +10,22 @@ export default function(equations = [], action) {
             copy.push({ symbol: "", expression: "", id: uid() });
             return copy;
         case actions.DELETE_EQUATION:
-            // TODO: Use filter instead of indexes
-            copy = equations.slice();
-            copy.splice(action.index, 1);
-            return copy;
-        case actions.EDIT_EQUATION:
-            // TODO: Use map instead of indexes
-            copy = equations.slice();
-            copy[action.index] = action.equation;
-            return copy;
+            return equations.filter(eqn => {
+                return eqn.id !== action.id;
+            });
         case actions.LOAD_EQUATIONS:
             return action.equations;
+        case actions.UPDATE_EQUATION:
+            return equations.filter(eqn => {
+               if (action.id && eqn.id === action.id) {
+                   return {
+                       symbol: action.symbol || eqn.symbol,
+                       expression: action.expression || eqn.expression,
+                       id: action.id
+                   };
+               }
+               return eqn;
+            });
         default:
             return equations;
     }

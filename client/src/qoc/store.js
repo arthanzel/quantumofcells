@@ -3,7 +3,8 @@ import { createStore } from "redux";
 import rootReducer from "reducers";
 
 const initialState = {
-    equations: []
+    equations: [],
+    parameters: []
 };
 
 const store = createStore(rootReducer, initialState);
