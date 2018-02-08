@@ -1,27 +1,40 @@
+borderColor = #ddd;
+
+.equationList {
+    background: white;
+}
+
 .equationBox {
     background: white;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid borderColor;
     display: flex;
     flex-direction: row;
 
     i {
+        cursor: pointer;
         padding: 0 5px;
         margin: auto;
     }
 
     &:last-child {
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid borderColor;
     }
 
     & > .symbol {
         background: #faa;
-        border-right: 1px solid #ddd;
+        //border-right: 1px solid borderColor;
         flex: 0 1 auto;
         input {
-            font: 400 20px "Open Sans";
+            font: 400 16px "Open Sans";
             padding: 5px 0;
             text-align: center;
         }
+    }
+
+    & > .equals {
+        cursor: default;
+        font-weight: 300;
+        padding: 5px 3px 5px 0;
     }
 
     & > .expression {

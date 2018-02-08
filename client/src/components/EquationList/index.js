@@ -31,14 +31,11 @@ export default class EquationList extends React.Component {
         }
     }
 
+    onAdd = () => {
+        store.dispatch({ type: actions.ADD_EQUATION });
+    };
+
     onDelete = (index) => {
-        /*
-        FIXME
-        the delete isn't working because the key is bound to the array index.
-        When you delete an equation, another element replaces into that key.
-        This makes React think that the item didn't change and it doesn't update the UI.
-        Fix: Give equations an id on creation.
-         */
         store.dispatch({ type: actions.DELETE_EQUATION, index: index });
     };
 
@@ -64,7 +61,20 @@ export default class EquationList extends React.Component {
 
         return <div>
             <h2>Equations</h2>
-            {eqnBoxes}
+            <a href="#" onClick={this.onAdd}>Add Equation</a>
+            <div className="equationList">
+                {eqnBoxes}
+            </div>
+
+            <h2>Parameters</h2>
+            <div className="equationList">
+                <EquationBox symbol="S" expression="0.95" />
+                <EquationBox symbol="I" expression="0.05" />
+                <EquationBox symbol="R" expression="0" />
+                <EquationBox symbol="a" expression="0.016" />
+                <EquationBox symbol="b" expression="0.2" />
+                <EquationBox symbol="c" expression="0.01" />
+            </div>
         </div>
     }
 }

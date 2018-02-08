@@ -28,8 +28,9 @@ export default class EquationBox extends React.Component {
     render() {
         return <div className="equationBox">
             <div className="symbol">
-                <input type="text" maxLength="2" size="3" value={this.state.symbol} onChange={this.onChangeSymbol}/>
+                <input type="text" maxLength="2" size="4" value={this.state.symbol} onChange={this.onChangeSymbol}/>
             </div>
+            <div className="equals">=</div>
             <div className="expression">
                 <input type="text" value={this.state.expression} onChange={this.onChangeExpression}/>
             </div>
