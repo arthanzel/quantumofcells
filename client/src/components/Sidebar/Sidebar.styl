@@ -1,11 +1,18 @@
+sidebarWidth = 320px;
+
+.qoc-sidebar-container {
+    display: flex;
+    flex: 0 0 auto;
+}
+
 .qoc-sidebar {
     background: #e8ecee;
     box-shadow: 0 0 10px #aaaab8;
     display: flex;
-    flex-basis: 320px;
+    flex: 0 0 sidebarWidth;
     flex-direction: column;
     margin-right: 8px;
-    max-width: 320px;
+    width: sidebarWidth;
 
     h1 {
         background: linear-gradient(lighten(#283848, 3%), #283848);
