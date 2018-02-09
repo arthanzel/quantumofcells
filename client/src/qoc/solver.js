@@ -1,6 +1,15 @@
 import evaluatex from "evaluatex/evaluatex";
 
-export default function parse(eqns, initials, time, resolution, locals = {}) {
+/**
+ *
+ * @param eqns Map of differential equations.
+ * @param initials Map of initial values and parameters.
+ * @param time How many time units to run the simulation.
+ * @param resolution How many calculations per time unit. Higher is more accurate, but slower.
+ * @param locals Map of any constant values to be compiled into the function
+ * @returns {{ts: *[], data: {}}}
+ */
+export default function solver(eqns, initials, time, resolution, locals = {}) {
     // Clone objects to avoid side-effects
     eqns = Object.assign({}, eqns);
     let vars = Object.assign({}, initials);

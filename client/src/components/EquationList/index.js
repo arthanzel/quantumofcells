@@ -1,13 +1,11 @@
 import React from "react";
-import postal from "postal";
 
 import actions from "reducers/actions";
+import simulate from "qoc/simulator";
 import store from "qoc/store";
 
 import EquationBox from "../EquationBox";
 import "./EquationList.styl";
-
-const qocChannel = postal.channel("qoc");
 
 export default class EquationList extends React.Component {
     constructor(props) {
@@ -49,9 +47,7 @@ export default class EquationList extends React.Component {
     // endregion
 
     onSimulate = () => {
-        qocChannel.publish("simulate", {
-            data: "data goes here"
-        });
+        simulate();
     };
 
     render() {
