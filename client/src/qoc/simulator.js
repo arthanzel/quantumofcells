@@ -19,10 +19,6 @@ export default function simulate() {
         parameters[param.symbol] = parseFloat(param.expression);
     }
 
-    console.log(equations);
-    console.log(parameters);
-
     const result = solve(equations, parameters, 10, 250, parameters);
-    console.log(result);
     return result;
 };
