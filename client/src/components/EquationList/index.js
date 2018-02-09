@@ -1,10 +1,12 @@
 import React from "react";
+import postal from "postal";
 
 import actions from "reducers/actions";
 import store from "qoc/store";
-import uid from "qoc/uid";
 
 import EquationBox from "../EquationBox";
+
+const qocChannel = postal.channel("qoc");
 
 export default class EquationList extends React.Component {
     constructor(props) {
@@ -27,27 +29,37 @@ export default class EquationList extends React.Component {
         }
     }
 
-    onAdd() {
+    // region Equation events
+
+    onAddEquation() {
         store.dispatch({ type: actions.ADD_EQUATION });
     }
 
-    onDelete(id) {
+    onDeleteEquation(id) {
         store.dispatch({ type: actions.DELETE_EQUATION, id: id });
     }
 
-    onUpdate(id, symbol, expression) {
+    onUpdateEquation(id, symbol, expression) {
         store.dispatch({
             type: actions.UPDATE_EQUATION, id: id, symbol: symbol, expression: expression
         })
     }
+
+    // endregion
+
+    onSimulate = () => {
+        qocChannel.publish("simulate", {
+            data: "data goes here"
+        });
+    };
 
     render() {
         const equationBoxes = this.state.equations.map(eqn => {
             return <EquationBox symbol={eqn.symbol}
                                 expression={eqn.expression}
                                 key={eqn.id}
-                                onUpdate={(sym, expr) => this.onUpdate(eqn.id, sym, expr)}
-                                onDelete={() => this.onDelete(eqn.id)}
+                                onUpdate={(sym, expr) => this.onUpdateEquation(eqn.id, sym, expr)}
+                                onDelete={() => this.onDeleteEquation(eqn.id)}
                                 validatable={true} />;
         });
         const parameterBoxes = this.state.parameters.map(param => {
@@ -59,7 +71,7 @@ export default class EquationList extends React.Component {
 
         return <div>
             <h2>Equations</h2>
-            <a href="#" onClick={this.onAdd}>Add Equation</a>
+            <a href="#" onClick={this.onAddEquation}>Add Equation</a>
             <div className="equationList">
                 {equationBoxes}
             </div>
@@ -67,6 +79,9 @@ export default class EquationList extends React.Component {
             <h2>Constants</h2>
             <div className="parameterList">
                 {parameterBoxes}
+            </div>
+            <div>
+                <a href="#" onClick={this.onSimulate}>Simulate</a>
             </div>
         </div>
     }

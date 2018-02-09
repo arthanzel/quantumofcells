@@ -36,8 +36,8 @@ export default class EquationBox extends React.Component {
     };
 
     update = () => {
-        if (this.props.onUpdate !== undefined) {
-            this.props.onUpdate(this.state.symbol, this.state.expression);
+        if (this.props.onUpdateEquation !== undefined) {
+            this.props.onUpdateEquation(this.state.symbol, this.state.expression);
         }
 
         this.queueValidation();
@@ -48,10 +48,8 @@ export default class EquationBox extends React.Component {
             evaluatex(this.state.expression);
             evaluatex(this.state.symbol);
             this.setState({ hasError: false });
-            console.log("validated " + this.state.expression);
         }
         catch (e) {
-            console.log("did not validate " + this.state.expression);
             this.setState({ hasError: true });
         }
     };
@@ -66,7 +64,7 @@ export default class EquationBox extends React.Component {
             <div className="expression">
                 <input type="text" value={this.state.expression} onChange={this.onChangeExpression}/>
             </div>
-            <i className="fa fa-trash" onClick={this.props.onDelete} />
+            <i className="fa fa-trash" onClick={this.props.onDeleteEquation} />
         </div>
     }
 }
