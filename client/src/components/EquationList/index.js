@@ -47,12 +47,14 @@ export default class EquationList extends React.Component {
                                 expression={eqn.expression}
                                 key={eqn.id}
                                 onUpdate={(sym, expr) => this.onUpdate(eqn.id, sym, expr)}
-                                onDelete={() => this.onDelete(eqn.id)} />;
+                                onDelete={() => this.onDelete(eqn.id)}
+                                validatable={true} />;
         });
         const parameterBoxes = this.state.parameters.map(param => {
             return <EquationBox symbol={param.symbol}
                                 expression={param.expression}
-                                key={param.id} />
+                                key={param.id}
+                                validatable={true} />
         });
 
         return <div>
@@ -62,7 +64,7 @@ export default class EquationList extends React.Component {
                 {equationBoxes}
             </div>
 
-            <h2>Parameters</h2>
+            <h2>Constants</h2>
             <div className="parameterList">
                 {parameterBoxes}
             </div>

@@ -2,9 +2,19 @@ borderColor = #ddd;
 
 .equationBox {
     background: white;
+    border-left: 3px solid transparent;
     border-top: 1px solid borderColor;
     display: flex;
     flex-direction: row;
+
+    &.error {
+        border-left-color: red;
+        padding-left: -10px;
+        .expression input {
+            text-decoration: underline;
+            text-decoration-color: red;
+        }
+    }
 
     i {
         cursor: pointer;
@@ -18,7 +28,6 @@ borderColor = #ddd;
 
     & > .symbol {
         background: #faa;
-        //border-right: 1px solid borderColor;
         flex: 0 1 auto;
         input {
             font: 400 16px "Open Sans";
