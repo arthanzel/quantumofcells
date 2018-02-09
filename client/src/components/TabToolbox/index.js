@@ -1,11 +1,6 @@
 import React from "react";
-import postal from "postal";
-
-import actions from "reducers/actions";
 
 import "./TabToolbox.styl";
-
-const qocChannel = postal.channel("qoc");
 
 export default class TabToolbox extends React.Component {
     constructor(props) {
@@ -13,12 +8,10 @@ export default class TabToolbox extends React.Component {
         this.state = { selectedIndex: props.selectedIndex || 0 };
     }
 
-    componentDidMount() {
-        this.subscription = qocChannel.subscribe("sidebar", (data) => {
-            if (data.type === actions.MAXIMIZE_SIDEBAR) {
-                this.setState({ selectedIndex: data.index });
-            }
-        });
+    componentWillReceiveProps(next) {
+        if (next.selectedIndex !== this.state.selectedIndex) {
+            this.setState({ selectedIndex: next.selectedIndex });
+        }
     }
 
     onNavigate = (index) => {

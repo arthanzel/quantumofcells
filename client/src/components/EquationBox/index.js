@@ -20,6 +20,10 @@ export default class EquationBox extends React.Component {
         this.queueValidation();
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.validationTimeout);
+    }
+
     onChangeSymbol = (e) => {
         this.setState({ symbol: e.target.value }, this.update);
     };
@@ -36,8 +40,8 @@ export default class EquationBox extends React.Component {
     };
 
     update = () => {
-        if (this.props.onUpdateEquation !== undefined) {
-            this.props.onUpdateEquation(this.state.symbol, this.state.expression);
+        if (this.props.onUpdate !== undefined) {
+            this.props.onUpdate(this.state.symbol, this.state.expression);
         }
 
         this.queueValidation();
@@ -64,7 +68,7 @@ export default class EquationBox extends React.Component {
             <div className="expression">
                 <input type="text" value={this.state.expression} onChange={this.onChangeExpression}/>
             </div>
-            <i className="fa fa-trash" onClick={this.props.onDeleteEquation} />
+            <i className="fa fa-trash" onClick={this.props.onDelete} />
         </div>
     }
 }
