@@ -5,6 +5,7 @@ import actions from "reducers/actions";
 import store from "qoc/store";
 
 import EquationBox from "../EquationBox";
+import "./EquationList.styl";
 
 const qocChannel = postal.channel("qoc");
 
@@ -69,19 +70,29 @@ export default class EquationList extends React.Component {
                                 validatable={true} />
         });
 
-        return <div>
-            <h2>Equations</h2>
-            <a href="#" onClick={this.onAddEquation}>Add Equation</a>
-            <div className="equationList">
-                {equationBoxes}
-            </div>
+        return <div className="equationContainer">
+            <section>
+                <header>
+                    <h2>Equations</h2>
+                    <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddEquation}>Add Equation</a>
+                </header>
+                <div className="equationList">
+                    {equationBoxes}
+                </div>
+            </section>
 
-            <h2>Constants</h2>
-            <div className="parameterList">
-                {parameterBoxes}
-            </div>
-            <div>
-                <a href="#" onClick={this.onSimulate}>Simulate</a>
+            <section>
+                <header>
+                    <h2>Constants</h2>
+                    <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddEquation}>Add Constant</a>
+                </header>
+                <div className="parameterList">
+                    {parameterBoxes}
+                </div>
+            </section>
+
+            <div className="controls">
+                <a href="#" className="btn btn-primary" onClick={this.onSimulate}>Simulate</a>
             </div>
         </div>
     }

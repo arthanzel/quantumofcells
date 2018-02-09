@@ -3,9 +3,10 @@ borderColor = #ddd;
 .equationBox {
     background: white;
     border-left: 3px solid transparent;
-    border-top: 1px solid borderColor;
+    //border-top: 1px solid borderColor;
     display: flex;
     flex-direction: row;
+    margin-bottom: 1px;
 
     &.error {
         border-left-color: red;
@@ -23,11 +24,10 @@ borderColor = #ddd;
     }
 
     &:last-child {
-        border-bottom: 1px solid borderColor;
+        //border-bottom: 1px solid borderColor;
     }
 
     & > .symbol {
-        background: #faa;
         flex: 0 1 auto;
         input {
             font: 400 16px "Open Sans";
@@ -43,7 +43,6 @@ borderColor = #ddd;
     }
 
     & > .expression {
-        background: #afa;
         flex: 1 1 auto;
         input {
             font: 300 14px "Open Sans";
@@ -52,6 +51,7 @@ borderColor = #ddd;
     }
 
     input {
+        background: transparent;
         border: 0;
         box-sizing: border-box;
         height: 100%;
