@@ -2,9 +2,10 @@ import React from "react";
 
 import MiniSidebar from "../MiniSidebar";
 import TabToolbox from "../TabToolbox";
-import EquationList from "../EquationList"
+import EquationList from "../EquationList";
+import SettingsPanel from "../SettingsPanel";
 import LoginBox from "../LoginBox";
-import "./Sidebar.styl"
+import "./Sidebar.styl";
 
 export default class Sidebar extends React.Component {
     constructor(props) {
@@ -45,7 +46,7 @@ export default class Sidebar extends React.Component {
                 <TabToolbox titles={["Projects", "Equations", "Settings"]} selectedIndex={this.state.selectedIndex}>
                     <p>Projects</p>
                     <EquationList />
-                    <p>Settings</p>
+                    <SettingsPanel />
                 </TabToolbox>
 
                 <LoginBox />
