@@ -12,7 +12,9 @@ module.exports = {
     output: {
         filename: "build/[name].js"
     },
-
+    devServer: {
+        contentBase: "."
+    },
     module: {
         rules: [
             {

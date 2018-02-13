@@ -17,6 +17,6 @@ setup:
 test:
 	npx mocha --require babel-register --recursive test
 
-.PHONY: watch
-watch:
-	npx webpack --watch
+.PHONY: run
+run:
+	npx webpack-dev-server
