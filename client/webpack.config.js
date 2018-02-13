@@ -4,9 +4,12 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const extractCSS = new ExtractTextPlugin("build/qoc.css");
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: {
+        qoc: "./src/index.js",
+        callback: "./src/callback.js"
+    },
     output: {
-        filename: "build/qoc.js"
+        filename: "build/[name].js"
     },
 
     module: {

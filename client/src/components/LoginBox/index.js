@@ -1,25 +1,27 @@
 import React from "react";
-import { WebAuth } from "auth0-js";
+
+import { getProfile, isLoggedIn } from "qoc/authHelper";
+import webAuth from "qoc/webAuth";
 
 import "./LoginBox.styl";
 
 export default class LoginBox extends React.Component {
     login() {
-        let webAuth = new WebAuth({
-            domain: "qoc.auth0.com",
-            clientID: "IIlRrl3lLjVaHqJezrqVN3C3YoM1x5Fw",
-            redirectUri: window.location.href
-        });
-        console.log("webauth", webAuth);
-        webAuth.authorize({
-            responseType: "token id_token"
-        });
+        webAuth.authorize();
     }
 
     render() {
-        return <footer>
-            Hello, Martin.&nbsp;
-            <a href="#" onClick={this.login}>Not you?</a>
-        </footer>
+        const profile = getProfile();
+        if (isLoggedIn()) {
+            return <footer>
+                Hello, {profile.given_name}.&nbsp;
+                <a href="#" onClick={this.login}>Not you?</a>
+            </footer>
+        }
+        else {
+            return <footer>
+                <a href="#" onClick={this.login}>Log in to save your projects</a>
+            </footer>
+        }
     }
 }
