@@ -1,8 +1,8 @@
 import webAuth from "qoc/webAuth";
 
 webAuth.parseHash((err, result) => {
-    window.localStorage.setItem("accessToken", JSON.stringify(result.accessToken));
-    window.localStorage.setItem("idToken", JSON.stringify(result.idToken));
+    window.localStorage.setItem("accessToken", result.accessToken);
+    window.localStorage.setItem("idToken", result.idToken);
     window.localStorage.setItem("idPayload", JSON.stringify(result.idTokenPayload));
     let date = new Date();
     date.setSeconds(date.getSeconds() + result.expiresIn);
