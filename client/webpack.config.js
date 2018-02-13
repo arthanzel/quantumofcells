@@ -5,8 +5,9 @@ const extractCSS = new ExtractTextPlugin("build/qoc.css");
 
 module.exports = {
     entry: {
-        qoc: "./src/index.js",
-        callback: "./src/callback.js"
+        qoc: "./src/qoc.js",
+        callback: "./src/callback.js",
+        landing: "./src/landing.js"
     },
     output: {
         filename: "build/[name].js"

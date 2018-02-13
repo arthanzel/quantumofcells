@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import QOCApplication from "components/QOCApplication";
 import { getProfile, isLoggedIn } from "qoc/authHelper";
 
-import "index.styl"
+import "qoc.styl"
 
 // Create the Redux store
 import "qoc/store";
