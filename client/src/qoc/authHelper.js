@@ -13,5 +13,5 @@ export function getProfile() {
 }
 
 export function isLoggedIn() {
-    return new Date() - getExpiration() < 0;
+    return new getExpiration() - new Date() > 0;
 }

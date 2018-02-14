@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import QOCApplication from "components/QOCApplication";
-import { getProfile, isLoggedIn } from "qoc/authHelper";
+import { getExpiration, getProfile, isLoggedIn } from "qoc/authHelper";
+import webAuth from "qoc/webAuth";
 
 import "qoc.styl"
 
@@ -19,4 +20,22 @@ else {
     console.log("Not logged in.");
 }
 
-// TODO: Check the token expiry every 60 seconds and do silent auths via checkSession()
+
+function checkLogin(force) {
+    const leeway = 5 * 60 * 10000; // 5 minutes
+    if (isLoggedIn()) {
+        const expiresIn = getExpiration() - new Date(); // Milliseconds
+        console.log("Expires in ", expiresIn);
+        if (expiresIn < leeway || force === true) {
+            console.log("Re-authenticate!");
+            webAuth.checkSession({}, (err, result) => {
+                console.log(err);
+                console.log(result);
+                // TODO: Logout on error
+            });
+        }
+    }
+}
+setInterval(checkLogin, 10000);
+window.checkLogin = checkLogin;
+checkLogin();

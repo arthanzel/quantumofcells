@@ -1,6 +1,10 @@
 import webAuth from "qoc/webAuth";
 
 webAuth.parseHash((err, result) => {
+    if (err) {
+        console.log(err);
+    }
+
     window.localStorage.setItem("accessToken", result.accessToken);
     window.localStorage.setItem("idToken", result.idToken);
     window.localStorage.setItem("idPayload", JSON.stringify(result.idTokenPayload));
