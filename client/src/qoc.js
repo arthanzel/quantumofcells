@@ -29,8 +29,9 @@ function checkLogin(force) {
         if (expiresIn < leeway || force === true) {
             console.log("Re-authenticate!");
             webAuth.checkSession({}, (err, result) => {
-                console.log(err);
-                console.log(result);
+                console.log("reauth error", err);
+                console.log("reauth result", result);
+                // TODO: Persist login
                 // TODO: Logout on error
             });
         }

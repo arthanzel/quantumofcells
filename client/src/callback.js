@@ -11,5 +11,5 @@ webAuth.parseHash((err, result) => {
     let date = new Date();
     date.setSeconds(date.getSeconds() + result.expiresIn);
     window.localStorage.setItem("expires", date.toUTCString());
-    window.location.href = "http://localhost:8080/editor.html";
+    window.location.href = "http://lvh.me:8080/editor.html";
 })

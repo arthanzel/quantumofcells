@@ -19,4 +19,4 @@ test:
 
 .PHONY: run
 run:
-	npx webpack-dev-server
+	npx webpack-dev-server --public lvh.me
