@@ -40,3 +40,6 @@ function checkLogin(force) {
 setInterval(checkLogin, 10000);
 window.checkLogin = checkLogin;
 checkLogin();
+
+import channel from "qoc/channel";
+console.log(channel);

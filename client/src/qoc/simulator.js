@@ -1,9 +1,6 @@
-import postal from "postal";
-
+import channel from "qoc/channel";
 import solve from "qoc/solver";
 import store from "qoc/store";
-
-const qocChannel = postal.channel("qoc");
 
 export default function simulate() {
     const state = store.getState();
@@ -20,5 +17,8 @@ export default function simulate() {
     }
 
     const result = solve(equations, parameters, 10, 250, parameters);
+
+    channel.publish(channel.SIMULATE, { solution: result });
+
     return result;
 };

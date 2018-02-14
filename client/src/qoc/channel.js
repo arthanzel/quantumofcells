@@ -1,3 +1,7 @@
 import postal from "postal";
 
-export default postal.channel("qoc");
+let c = postal.channel("qoc");
+export default c;
+
+// Define message types right on the channel for convenience
+c.SIMULATE = "SIMULATE";

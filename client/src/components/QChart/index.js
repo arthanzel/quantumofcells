@@ -1,21 +1,20 @@
 import React from "react";
-import postal from "postal"
+
+import channel from "qoc/channel";
 
 import "./QChart.styl";
-
-const qocChannel = postal.channel("qoc");
 
 export default class QChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {}
+            solution: {}
         }
     }
 
     componentDidMount() {
-        this.subscription = qocChannel.subscribe("simulate", (data, envelope) => {
-            this.setState({ data: data });
+        this.subscription = channel.subscribe(channel.SIMULATE, (data, envelope) => {
+            this.setState({ solution: data });
         });
     }
 
@@ -25,7 +24,9 @@ export default class QChart extends React.Component {
 
     render() {
         return <div className="qChart">
-            {this.state.data.toString()}
+            <textarea style={{width: "100%", height: "100%"}} value={JSON.stringify(this.state.solution, null, 4)}>
+
+            </textarea>
         </div>
     }
 }
