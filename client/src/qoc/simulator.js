@@ -18,7 +18,7 @@ export default function simulate() {
 
     const result = solve(equations, parameters, 10, 250, parameters);
 
-    channel.publish(channel.SIMULATE, { solution: result });
+    channel.publish(channel.SIMULATE, result);
 
     return result;
 };
