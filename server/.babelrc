@@ -1,15 +1,5 @@
 {
     "presets": [
         "env"
-    ],
-    "plugins": [
-        [
-            "resolver",
-            {
-                "resolveDirs": [
-                    "src"
-                ]
-            }
-        ]
     ]
 }
