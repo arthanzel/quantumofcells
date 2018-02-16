@@ -1,22 +1,25 @@
 {
-  "name": "qoc-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bootstrap.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.16.2"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-plugin-resolver": "^1.1.0",
-    "babel-preset-env": "^1.6.1"
-  }
+    "name": "qoc-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "bootstrap.js",
+    "scripts": {
+        "build": "babel src -d build"
+        "start": "node bootstrap.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+
+        "heroku-postbuild": "npm build"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.16.2",
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-plugin-resolver": "^1.1.0",
+        "babel-preset-env": "^1.6.1"
+    },
+    "devDependencies": {
+    }
 }
