@@ -2,11 +2,3 @@
 .idea/**/tasks.xml
 .idea/**/watcherTasks.xml
 .idea/libraries
-
-build
-
-server/build
-server/out
-server/.gradle
-
-**/node_modules/**
