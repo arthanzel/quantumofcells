@@ -8,7 +8,13 @@ This file is invoked by the Node interpreter, and so must be written in ES5.
  */
 
 if (process.env.NODE_ENV === "production") {
-    require("./build/server");
+    console.log("Running in production");
+    try {
+        require("./build/server");
+    }
+    catch (e) {
+        console.log("Can't find build/server.js!");
+    }
 }
 else {
     console.log("Quantum of Cells API running in development mode");
