@@ -8,7 +8,7 @@
         "start": "node bootstrap.js",
         "test": "echo \"Error: no test specified\" && exit 1",
 
-        "heroku-postbuild": "npm build"
+        "heroku-postbuild": "npm run build"
     },
     "keywords": [],
     "author": "",
