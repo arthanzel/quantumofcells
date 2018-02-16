@@ -14,6 +14,7 @@ if (process.env.NODE_ENV === "production") {
     }
     catch (e) {
         console.log("Can't find build/server.js!");
+        console.log(e);
     }
 }
 else {
