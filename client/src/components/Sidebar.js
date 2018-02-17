@@ -1,11 +1,11 @@
 import React from "react";
 
-import MiniSidebar from "../MiniSidebar";
-import TabToolbox from "../TabToolbox";
-import ProjectList from "../ProjectList";
-import EquationList from "../EquationList";
-import SettingsPanel from "../SettingsPanel";
-import LoginBox from "../LoginBox";
+import MiniSidebar from "./MiniSidebar";
+import TabToolbox from "./TabToolbox";
+import ProjectList from "./ProjectList";
+import EquationList from "./EquationList";
+import SettingsPanel from "./SettingsPanel";
+import LoginBox from "./LoginBox";
 import "./Sidebar.styl";
 
 export default class Sidebar extends React.Component {

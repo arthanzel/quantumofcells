@@ -4,7 +4,7 @@ import actions from "reducers/actions";
 import simulate from "qoc/simulator";
 import store from "qoc/store";
 
-import EquationBox from "../EquationBox";
+import EquationBox from "./EquationBox";
 import "./EquationList.styl";
 
 export default class EquationList extends React.Component {
