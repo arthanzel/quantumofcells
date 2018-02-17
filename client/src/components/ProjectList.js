@@ -1,6 +1,8 @@
 import React from "react";
 import request from "superagent";
 
+import { accessToken } from "qoc/authHelper";
+
 export default class ProjectList extends React.Component {
     componentDidMount() {
         /*
@@ -14,7 +16,7 @@ export default class ProjectList extends React.Component {
 
         // TODO: Hardcoded URL
         request.get("http://lvh.me:5000/projects")
-            .set("Authorization", "Bearer " + window.localStorage.getItem("accessToken"))
+            .set("Authorization", "Bearer " + accessToken())
             .then((res) => {
 
             })
@@ -25,7 +27,7 @@ export default class ProjectList extends React.Component {
 
     onAddProject = () => {
         request.post("http://lvh.me:5000/projects")
-            .set("Authorization", "Bearer " + window.localStorage.getItem("accessToken"))
+            .set("Authorization", "Bearer " + accessToken())
             .then((res) => {
                 console.log(res.body);
             })

@@ -3,6 +3,13 @@ import store from "./store";
 import webAuth from "./webAuth";
 
 /**
+ * Returns the current access token.
+ */
+export function accessToken() {
+    return store.getState().user.accessToken;
+}
+
+/**
  * Checks whether the user's current session is still valid.
  * If it is, this function returns true.
  * If the user's session is valid but about to expire within the next 5 minutes, a reauthentication is triggered.

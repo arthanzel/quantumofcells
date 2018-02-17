@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 
 import QOCApplication from "components/QOCApplication";
 import { checkSession, login } from "qoc/authHelper";
-import webAuth from "qoc/webAuth";
 
 // TODO: If debug
 import "qoc/debugActions";
@@ -23,5 +22,5 @@ if (ls.getItem("auth0")) {
     login(json.accessToken, json.expireDate, json.idTokenPayload.given_name);
 }
 
-setInterval(checkSession, 10000);
+setInterval(checkSession, 60 * 1000); // 60 seconds
 checkSession();
