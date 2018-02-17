@@ -7,7 +7,7 @@ const app = express();
 const checkJwt = jwt({
     audience: process.env.AUTH_AUDIENCE,
     issuer: process.env.AUTH_ISSUER,
-    algorithms: ["RSA256"],
+    algorithms: ["RS256"],
 
     secret: jwksRsa.expressJwtSecret({
         cache: true,
