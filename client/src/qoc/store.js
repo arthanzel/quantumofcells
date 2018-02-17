@@ -19,13 +19,19 @@ import rootReducer from "reducers";
             ...
         ],
         resolution: Integer,
-        time: Decimal
+        time: Decimal,
+        user: {
+            accessToken: String,
+            expireDate: Date,
+            name: String
+        }
     }
  */
 
 let initialState = {
     equations: [],
-    parameters: []
+    parameters: [],
+    user: {}
 };
 initialState = Object.assign(initialState, examples.sir);
 

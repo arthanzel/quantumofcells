@@ -5,11 +5,8 @@ webAuth.parseHash((err, result) => {
         console.log(err);
     }
 
-    window.localStorage.setItem("accessToken", result.accessToken);
-    window.localStorage.setItem("idToken", result.idToken);
-    window.localStorage.setItem("idPayload", JSON.stringify(result.idTokenPayload));
-    let date = new Date();
-    date.setSeconds(date.getSeconds() + result.expiresIn);
-    window.localStorage.setItem("expires", date.toUTCString());
+    result.expireDate = new Date();
+    result.expireDate.setSeconds(result.expireDate.getSeconds() + result.expiresIn);
+    window.localStorage.setItem("auth0", JSON.stringify(result));
     window.location.href = "http://lvh.me:8080/editor.html";
 })
