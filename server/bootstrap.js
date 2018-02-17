@@ -7,6 +7,15 @@ In development, babel-register is used to load ES6 files on the fly.
 This file is invoked by the Node interpreter, and so must be written in ES5.
  */
 
+// Try to set environment variables
+const configResult = require("dotenv").config();
+if (configResult.error && process.env.NODE_ENV !== "production") {
+    // Production won't have the .env file
+    console.error("Couldn't set environment variables.");
+    console.error(configResult.error);
+}
+
+// Start the server
 if (process.env.NODE_ENV === "production") {
     console.log("Running in production");
     try {
@@ -18,7 +27,7 @@ if (process.env.NODE_ENV === "production") {
     }
 }
 else {
-    console.log("Quantum of Cells API running in development mode");
+    console.log("Running in development mode");
     require("babel-register");
     require("./src/server");
 }
