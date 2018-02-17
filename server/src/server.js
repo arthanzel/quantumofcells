@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 
-import projectsRouter from "./routes/project";
+import projectsRouter from "./routes/projectsRouter";
 
 // Connect to database
 mongoose.connect(`mongodb://${ process.env.DB_URI }`, {

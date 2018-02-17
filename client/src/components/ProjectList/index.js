@@ -23,11 +23,22 @@ export default class ProjectList extends React.Component {
             });
     }
 
+    onAddProject = () => {
+        request.post("http://lvh.me:5000/projects")
+            .set("Authorization", "Bearer " + window.localStorage.getItem("accessToken"))
+            .then((res) => {
+                console.log(res.body);
+            })
+            .catch((err) =>{
+
+            });
+    };
+
     render() {
         return <div>
             <header>
                 <h2>Projects</h2>
-                <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddEquation}>Add Equation</a>
+                <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddProject}>Add Equation</a>
             </header>
         </div>
     }
