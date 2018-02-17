@@ -16,17 +16,17 @@ export default class ProjectList extends React.Component {
         request.get("http://lvh.me:5000/projects")
             .set("Authorization", "Bearer " + window.localStorage.getItem("accessToken"))
             .then((res) => {
-                console.log(res);
+
             })
             .catch((err) =>{
-                console.log(err);
+
             });
     }
 
     render() {
         return <div>
             <header>
-                <h2>Equations</h2>
+                <h2>Projects</h2>
                 <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddEquation}>Add Equation</a>
             </header>
         </div>

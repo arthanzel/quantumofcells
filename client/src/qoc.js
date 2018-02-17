@@ -25,7 +25,6 @@ function checkLogin(force) {
     const leeway = 5 * 60 * 1000; // 5 minutes
     if (isLoggedIn()) {
         const expiresIn = getExpiration() - new Date(); // Milliseconds
-        console.log("Expires in ", expiresIn);
         if (expiresIn < leeway || force === true) {
             console.log("Re-authenticate!");
             webAuth.checkSession({}, (err, result) => {
@@ -40,6 +39,3 @@ function checkLogin(force) {
 setInterval(checkLogin, 10000);
 window.checkLogin = checkLogin;
 checkLogin();
-
-import channel from "qoc/channel";
-console.log(channel);
