@@ -2,6 +2,7 @@ import React from "react";
 
 import MiniSidebar from "../MiniSidebar";
 import TabToolbox from "../TabToolbox";
+import ProjectList from "../ProjectList";
 import EquationList from "../EquationList";
 import SettingsPanel from "../SettingsPanel";
 import LoginBox from "../LoginBox";
@@ -44,7 +45,7 @@ export default class Sidebar extends React.Component {
                 </header>
 
                 <TabToolbox titles={["Projects", "Equations", "Settings"]} selectedIndex={this.state.selectedIndex}>
-                    <p>Projects</p>
+                    <ProjectList />
                     <EquationList />
                     <SettingsPanel />
                 </TabToolbox>

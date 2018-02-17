@@ -22,7 +22,7 @@ else {
 
 
 function checkLogin(force) {
-    const leeway = 5 * 60 * 10000; // 5 minutes
+    const leeway = 5 * 60 * 1000; // 5 minutes
     if (isLoggedIn()) {
         const expiresIn = getExpiration() - new Date(); // Milliseconds
         console.log("Expires in ", expiresIn);
