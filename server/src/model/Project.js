@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const schema = mongoose.Schema({
     name: String,
-    user: String
+    user: { type: String, index: true }
 });
 
 export default mongoose.model("Project", schema);

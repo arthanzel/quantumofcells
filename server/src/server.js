@@ -5,6 +5,9 @@ import mongoose from "mongoose";
 import projectsRouter from "./routes/projectsRouter";
 
 // Connect to database
+if (process.env.NODE_ENV !== "production") {
+    mongoose.set("debug", true);
+}
 mongoose.connect(`mongodb://${ process.env.DB_URI }`, {
     user: process.env.DB_USER,
     pass: process.env.DB_PASSWORD
