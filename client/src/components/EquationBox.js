@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import evaluatex from "evaluatex/evaluatex"
 
@@ -6,7 +7,23 @@ import "./EquationBox.styl";
 
 const VALIDATION_TIMEOUT_MS = 1000;
 
+const propTypes = {
+
+};
+
 export default class EquationBox extends React.Component {
+    static defaultProps = {
+        symbol: "",
+        expression: "",
+        validate: false
+    };
+
+    static propTypes = {
+        symbol: PropTypes.string,
+        expression: PropTypes.string,
+        validate: PropTypes.bool
+    };
+
     constructor(props) {
         super(props);
         this.state = {

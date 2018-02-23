@@ -39,6 +39,7 @@ export default class EquationList extends React.Component {
     }
 
     onUpdateEquation(id, symbol, expression) {
+        console.log("editing");
         store.dispatch({
             type: actions.UPDATE_EQUATION, id: id, symbol: symbol, expression: expression
         });
