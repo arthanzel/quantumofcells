@@ -1,5 +1,3 @@
-import { sprintf } from "sprintf-js";
-
 // Nodes that are allowed to have only one child. Nodes that have one child and are not in this list will be simplified during parsing.
 let UNARY_NODES = ["FACTORIAL", "FUNCTION", "INVERSE", "NEGATE"];
 
@@ -147,7 +145,7 @@ export default class Node {
 
     toString() {
         let val = typeof this.value === "function" ? this.value.name : this.value;
-        return sprintf("%s %s[%s]", this.children.length, this.type, val);
+        return `${ this.children.length } ${ this.type } [${ val }]`;
     }
 }
 
