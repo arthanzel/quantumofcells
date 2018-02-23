@@ -8,6 +8,11 @@ borderColor = #ddd;
     flex-direction: row;
     margin-bottom: 1px;
 
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px #888;
+    background: linear-gradient(white, darken(white, 1.5%));
+
     &.error {
         border-left-color: red;
         padding-left: -10px;
@@ -56,5 +61,11 @@ borderColor = #ddd;
         box-sizing: border-box;
         height: 100%;
         width: 100%;
+
+        &:focus {
+            // Remove the highlight
+            border: 0;
+            outline: 0;
+        }
     }
 }
