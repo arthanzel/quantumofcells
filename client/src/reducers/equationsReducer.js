@@ -19,8 +19,8 @@ export default function(equations = [], action) {
             return equations.map(eqn => {
                 if (action.id && eqn.id === action.id) {
                     return {
-                        symbol: action.symbol || eqn.symbol,
-                        expression: action.expression || eqn.expression,
+                        symbol: action.symbol !== undefined ? action.symbol : eqn.symbol,
+                        expression: action.expression !== undefined ? action.expression : eqn.expression,
                         id: action.id
                     };
                 }

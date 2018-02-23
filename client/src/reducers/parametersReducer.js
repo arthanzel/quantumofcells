@@ -19,8 +19,8 @@ export default function(parameters = [], action) {
             return parameters.map(param => {
                 if (action.id && param.id === action.id) {
                     return {
-                        symbol: action.symbol || param.symbol,
-                        expression: action.expression || param.expression,
+                        symbol: action.symbol !== undefined ? action.symbol : param.symbol,
+                        expression: action.expression !== undefined ? action.expression : param.expression,
                         id: action.id
                     };
                 }
