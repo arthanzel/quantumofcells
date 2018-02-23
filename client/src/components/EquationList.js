@@ -53,6 +53,26 @@ export default class EquationList extends React.Component {
 
     // endregion
 
+    // region Parameter events
+
+    onAddParameter() {
+        store.dispatch({ type: actions.ADD_PARAM });
+    }
+
+    onChangeParameterExpression(id, expression) {
+        store.dispatch({ type: actions.UPDATE_PARAM, id: id, expression: expression });
+    }
+
+    onChangeParameterSymbol(id, symbol) {
+        store.dispatch({ type: actions.UPDATE_PARAM, id: id, symbol: symbol });
+    }
+
+    onDeleteParameter(id) {
+        store.dispatch({ type: actions.DELETE_PARAM, id: id });
+    }
+
+    // endregion
+
     onSimulate = () => {
         simulate();
     };
@@ -71,6 +91,9 @@ export default class EquationList extends React.Component {
             return <EquationBox symbol={param.symbol}
                                 expression={param.expression}
                                 key={param.id}
+                                onChangeSymbol={(sym) => this.onChangeParameterSymbol(param.id, sym)}
+                                onChangeExpression={(expr) => this.onChangeParameterExpression(param.id, expr)}
+                                onDelete={() => this.onDeleteParameter(param.id)}
                                 validate={true} />
         });
 
@@ -88,7 +111,7 @@ export default class EquationList extends React.Component {
             <section>
                 <header>
                     <h2>Constants</h2>
-                    <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddEquation}>Add Constant</a>
+                    <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddParameter}>Add Constant</a>
                 </header>
                 <div className="parameterList">
                     {parameterBoxes}
