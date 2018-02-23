@@ -1,10 +1,11 @@
 {
     "name": "qoc-server",
     "version": "1.0.0",
-    "description": "",
+    "description": "Quantum of Cells API Server",
     "main": "bootstrap.js",
     "scripts": {
         "build": "babel src -d build",
+        "monitor": "nodemon bootstrap.js",
         "start": "node bootstrap.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "heroku-postbuild": "npm run build"
