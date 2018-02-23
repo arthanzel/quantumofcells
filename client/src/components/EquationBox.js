@@ -10,12 +10,9 @@ const VALIDATION_TIMEOUT_MS = 1000;
 export default class EquationBox extends React.Component {
     static defaultProps = {
         expression: "",
-        onChangeExpression: function() {
-        },
-        onChangeSymbol: function() {
-        },
-        onDelete: function() {
-        },
+        onChangeExpression: () => undefined,
+        onChangeSymbol: () => undefined,
+        onDelete: () => undefined,
         symbol: "",
         validate: false
     };
