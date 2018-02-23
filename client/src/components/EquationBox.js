@@ -42,8 +42,11 @@ export default class EquationBox extends React.Component {
         clearTimeout(this.validationTimeout);
     }
 
-    componentWillUpdate() {
-        this.queueValidation();
+    componentWillReceiveProps(nextProps) {
+        if (this.props.symbol !== nextProps.symbol ||
+            this.props.expression !== nextProps.expression) {
+            this.queueValidation();
+        }
     }
 
     queueValidation = () => {
