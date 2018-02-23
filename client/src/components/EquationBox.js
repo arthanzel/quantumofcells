@@ -76,7 +76,7 @@ export default class EquationBox extends React.Component {
                 <input type="text" value={this.props.expression}
                        onChange={(e) => this.props.onChangeExpression(e.target.value)} />
             </div>
-            <FontAwesomeIcon icon="trash" className="icon" onClick={this.props.onDelete} />
+            <FontAwesomeIcon icon="times" className="icon" onClick={this.props.onDelete} />
         </div>
     }
 }
