@@ -1,4 +1,6 @@
 import React from "react";
+import Icon from "@fortawesome/react-fontawesome";
+import { GoogleCharts } from "google-charts";
 
 import channel from "qoc/channel";
 import simulate from "qoc/simulator";
@@ -16,12 +18,18 @@ export default class QChart extends React.Component {
     componentDidMount() {
         this.subscription = channel.subscribe(channel.SIMULATE, (data) => {
             this.setState({ solution: data });
+
+            GoogleCharts.load(this.drawChart);
         });
     }
 
     componentWillUnmount() {
         this.subscription.unsubscribe();
     }
+
+    drawChart = () => {
+        console.log("drawing", this.state.solution);
+    };
 
     simulate() {
         simulate();
@@ -30,20 +38,22 @@ export default class QChart extends React.Component {
     render() {
         let inner;
         if (this.state.solution.data === undefined) {
-            inner = <div className="empty">
-                <h1>Run a simulation to see results</h1>
-                <p>Punch in some equations in the <strong>Equations</strong> panel on the left and click <button className="btn btn-primary" onClick={this.simulate}>Simulate</button></p>
-                <p>Need help? Look at the <a href="#">sample projects</a> or <a href="#">read the docs</a>.</p>
+            return <div className="qChart">
+                <div className="empty">
+                    <h1>Run a simulation to see results</h1>
+                    <p>Punch in some equations in the <strong>Equations</strong> panel on the left and click <button
+                        className="btn btn-primary" onClick={this.simulate}>Simulate</button></p>
+                    <p>Need help? Look at the <a href="#">sample projects</a> or <a href="#">read the docs</a>.</p>
+                </div>
             </div>
         }
         else {
-            inner = <textarea style={{width: "100%", height: "100%"}} value={JSON.stringify(this.state.solution, null, 4)}>
-
-            </textarea>
+            return <div className="qChart">
+                <div className="empty">
+                    <h1><Icon icon="cog" pulse /></h1>
+                    <p>Crunching the numbers...</p>
+                </div>
+            </div>
         }
-
-        return <div className="qChart">
-            {inner}
-        </div>
     }
 }

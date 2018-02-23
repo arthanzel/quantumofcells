@@ -46,6 +46,7 @@
         "@fortawesome/react-fontawesome": "0.0.17",
         "auth0-js": "^9.2.2",
         "cuid": "^2.1.0",
+        "google-charts": "^1.0.0",
         "postal": "^2.0.5",
         "prop-types": "^15.6.0",
         "react": "^16.2.0",
