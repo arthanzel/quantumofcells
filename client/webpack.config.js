@@ -2,6 +2,7 @@ const path = require("path");
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const extractCSS = new ExtractTextPlugin("build/qoc.css");
+const UglifyJSPlugin = require ("uglifyjs-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -15,7 +16,7 @@ module.exports = {
     devServer: {
         contentBase: "."
     },
-    devtool: "cheap-eval-source-map",
+    //devtool: "cheap-eval-source-map",
     module: {
         rules: [
             {
@@ -36,6 +37,7 @@ module.exports = {
         ]
     },
     plugins: [
-        extractCSS
+        extractCSS,
+        //new UglifyJSPlugin()
     ]
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "@fortawesome/react-fontawesome";
 
 import "./MiniSidebar.styl";
 
@@ -18,7 +19,7 @@ export default class MiniSidebar extends React.Component {
     render() {
         const icons = this.props.icons.map((icon, idx) => {
             return <a href="#" key={idx} onClick={() => this.props.onSelect(idx)}>
-                <i className={`fa ${icon}`} />
+                <Icon icon={icon} />
             </a>
         });
         const cls = this.state.hidden ? "hidden" : "";

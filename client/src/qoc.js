@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import "qoc/icons";
 import QOCApplication from "components/QOCApplication";
 import { checkSession, login } from "qoc/authHelper";
 

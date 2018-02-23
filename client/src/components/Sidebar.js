@@ -1,4 +1,5 @@
 import React from "react";
+import Icon from "@fortawesome/react-fontawesome";
 
 import MiniSidebar from "./MiniSidebar";
 import TabToolbox from "./TabToolbox";
@@ -34,13 +35,15 @@ export default class Sidebar extends React.Component {
 
         return <div className="qoc-sidebar-container">
             <MiniSidebar hidden={hideMiniSidebar}
-                         icons={["fa-folder-open", "fa-tasks", "fa-gears"]}
+                         icons={["folder-open", "chart-line", "cog"]}
                          onSelect={this.onMiniSidebarSelect} />
             <div className={`qoc-sidebar ${ cls }`}>
                 <header>
                     <h1>
                         Quantum of Cells
-                        <a href="#" onClick={this.onHide}><i className="fa fa-bars" /></a>
+                        <a href="#" onClick={this.onHide}>
+                            <Icon icon="bars" />
+                        </a>
                     </h1>
                 </header>
 
