@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "@fortawesome/react-fontawesome";
-import { GoogleCharts } from "google-charts";
+import HighCharts from "highcharts";
+import cuid from "cuid";
 
 import channel from "qoc/channel";
 import simulate from "qoc/simulator";
@@ -10,6 +11,7 @@ import "./QChart.styl";
 export default class QChart extends React.Component {
     constructor(props) {
         super(props);
+        this.elementId = "chart-" + cuid();
         this.state = {
             solution: {}
         }
@@ -17,9 +19,7 @@ export default class QChart extends React.Component {
 
     componentDidMount() {
         this.subscription = channel.subscribe(channel.SIMULATE, (data) => {
-            this.setState({ solution: data });
-
-            GoogleCharts.load(this.drawChart);
+            this.setState({ solution: data }, this.drawChart);
         });
     }
 
@@ -28,7 +28,15 @@ export default class QChart extends React.Component {
     }
 
     drawChart = () => {
-        console.log("drawing", this.state.solution);
+        // TODO: Make this format the default for the solver
+        const series = [];
+        for (let symbol in this.state.solution.series) {
+            series.push({ name: symbol, data: this.state.solution.series[symbol] });
+        }
+
+        HighCharts.chart(this.elementId, {
+            series: series
+        });
     };
 
     simulate() {
@@ -38,7 +46,7 @@ export default class QChart extends React.Component {
     render() {
         let inner;
         if (this.state.solution.data === undefined) {
-            return <div className="qChart">
+            return <div className="qChart" id={this.elementId}>
                 <div className="empty">
                     <h1>Run a simulation to see results</h1>
                     <p>Punch in some equations in the <strong>Equations</strong> panel on the left and click <button
@@ -48,11 +56,11 @@ export default class QChart extends React.Component {
             </div>
         }
         else {
-            return <div className="qChart">
-                <div className="empty">
-                    <h1><Icon icon="cog" pulse /></h1>
-                    <p>Crunching the numbers...</p>
-                </div>
+            return <div className="qChart" id={this.elementId}>
+                {/*<div className="empty">*/}
+                    {/*<h1><Icon icon="cog" pulse /></h1>*/}
+                    {/*<p>Crunching the numbers...</p>*/}
+                {/*</div>*/}
             </div>
         }
     }

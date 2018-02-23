@@ -7,7 +7,7 @@ import evaluatex from "evaluatex/evaluatex";
  * @param time How many time units to run the simulation.
  * @param resolution How many calculations per time unit. Higher is more accurate, but slower.
  * @param locals Map of any constant values to be compiled into the function
- * @returns {{ts: *[], data: {}}}
+ * @returns {{ts: *[], series: {}}}
  */
 export default function solver(eqns, initials, time, resolution, locals = {}) {
     // Clone objects to avoid side-effects
@@ -59,5 +59,5 @@ export default function solver(eqns, initials, time, resolution, locals = {}) {
         vars = newVars;
     }
 
-    return { ts: ts, data: data };
+    return { ts: ts, series: data };
 };
