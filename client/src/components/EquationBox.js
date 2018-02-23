@@ -7,30 +7,31 @@ import "./EquationBox.styl";
 
 const VALIDATION_TIMEOUT_MS = 1000;
 
-const propTypes = {
-
-};
-
 export default class EquationBox extends React.Component {
     static defaultProps = {
-        symbol: "",
         expression: "",
+        onChangeExpression: function() {
+        },
+        onChangeSymbol: function() {
+        },
+        onDelete: function() {
+        },
+        symbol: "",
         validate: false
     };
 
     static propTypes = {
-        symbol: PropTypes.string,
         expression: PropTypes.string,
+        onChangeExpression: PropTypes.func,
+        onChangeSymbol: PropTypes.func,
+        onDelete: PropTypes.func,
+        symbol: PropTypes.string,
         validate: PropTypes.bool
     };
 
     constructor(props) {
         super(props);
-        this.state = {
-            symbol: this.props.symbol || "",
-            expression: this.props.expression || "",
-            hasError: false
-        };
+        this.state = { hasError: false };
     }
 
     componentDidMount() {
@@ -41,33 +42,21 @@ export default class EquationBox extends React.Component {
         clearTimeout(this.validationTimeout);
     }
 
-    onChangeSymbol = (e) => {
-        this.setState({ symbol: e.target.value }, this.update);
-    };
-
-    onChangeExpression = (e) => {
-        this.setState({ expression: e.target.value }, this.update);
-    };
+    componentWillUpdate() {
+        this.queueValidation();
+    }
 
     queueValidation = () => {
-        if (this.props.validatable) {
+        if (this.props.validate) {
             clearTimeout(this.validationTimeout);
             this.validationTimeout = setTimeout(this.validate, VALIDATION_TIMEOUT_MS);
         }
     };
 
-    update = () => {
-        if (this.props.onUpdate !== undefined) {
-            this.props.onUpdate(this.state.symbol, this.state.expression);
-        }
-
-        this.queueValidation();
-    };
-
     validate = () => {
         try {
-            evaluatex(this.state.expression);
-            evaluatex(this.state.symbol);
+            evaluatex(this.props.expression);
+            evaluatex(this.props.symbol); // TODO: Symbol should match a regex, not pass evaluatex()
             this.setState({ hasError: false });
         }
         catch (e) {
@@ -76,14 +65,15 @@ export default class EquationBox extends React.Component {
     };
 
     render() {
-        let validationClass = this.state.hasError ? "error" : "";
-        return <div className={`equationBox ${validationClass}`}>
+        return <div className={`equationBox ${this.state.hasError ? "error" : ""}`}>
             <div className="symbol">
-                <input type="text" maxLength="2" size="4" value={this.state.symbol} onChange={this.onChangeSymbol}/>
+                <input type="text" maxLength="2" size="4" value={this.props.symbol}
+                       onChange={(e) => this.props.onChangeSymbol(e.target.value)} />
             </div>
             <div className="equals">=</div>
             <div className="expression">
-                <input type="text" value={this.state.expression} onChange={this.onChangeExpression}/>
+                <input type="text" value={this.props.expression}
+                       onChange={(e) => this.props.onChangeExpression(e.target.value)} />
             </div>
             <i className="fa fa-trash" onClick={this.props.onDelete} />
         </div>

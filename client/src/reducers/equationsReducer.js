@@ -20,7 +20,7 @@ export default function(equations = [], action) {
                 if (action.id && eqn.id === action.id) {
                     return {
                         symbol: action.symbol || eqn.symbol,
-                        expression: action.expression,
+                        expression: action.expression || eqn.expression,
                         id: action.id
                     };
                 }

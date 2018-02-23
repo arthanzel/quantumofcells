@@ -10,11 +10,16 @@ import "./EquationList.styl";
 export default class EquationList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = store.getState();
+        const state = store.getState();
+        this.state = {
+            equations: state.equations,
+            parameters: state.parameters
+        };
     }
 
     componentDidMount() {
         this.unsubscribe = store.subscribe(() => {
+            // TODO: check equality?
             this.setState({
                 equations: store.getState().equations,
                 parameters: store.getState().parameters
@@ -34,15 +39,16 @@ export default class EquationList extends React.Component {
         store.dispatch({ type: actions.ADD_EQUATION });
     }
 
-    onDeleteEquation(id) {
-        store.dispatch({ type: actions.DELETE_EQUATION, id: id });
+    onChangeExpression(id, expression) {
+        store.dispatch({ type: actions.UPDATE_EQUATION, id: id, expression: expression });
     }
 
-    onUpdateEquation(id, symbol, expression) {
-        console.log("editing");
-        store.dispatch({
-            type: actions.UPDATE_EQUATION, id: id, symbol: symbol, expression: expression
-        });
+    onChangeSymbol(id, symbol) {
+        store.dispatch({ type: actions.UPDATE_EQUATION, id: id, symbol: symbol });
+    }
+
+    onDeleteEquation(id) {
+        store.dispatch({ type: actions.DELETE_EQUATION, id: id });
     }
 
     // endregion
@@ -56,15 +62,16 @@ export default class EquationList extends React.Component {
             return <EquationBox symbol={eqn.symbol}
                                 expression={eqn.expression}
                                 key={eqn.id}
-                                onUpdate={(sym, expr) => this.onUpdateEquation(eqn.id, sym, expr)}
+                                onChangeSymbol={(sym) => this.onChangeSymbol(eqn.id, sym)}
+                                onChangeExpression={(expr) => this.onChangeExpression(eqn.id, expr)}
                                 onDelete={() => this.onDeleteEquation(eqn.id)}
-                                validatable={true} />;
+                                validate={true} />;
         });
         const parameterBoxes = this.state.parameters.map(param => {
             return <EquationBox symbol={param.symbol}
                                 expression={param.expression}
                                 key={param.id}
-                                validatable={true} />
+                                validate={true} />
         });
 
         return <div className="equationContainer">
