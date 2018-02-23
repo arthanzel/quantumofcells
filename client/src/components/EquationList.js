@@ -28,7 +28,7 @@ export default class EquationList extends React.Component {
     }
 
     componentWillUnmount() {
-        if (this.unsubscribe !== undefined) {
+        if (this.unsubscribe) {
             this.unsubscribe();
         }
     }

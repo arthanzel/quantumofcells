@@ -14,11 +14,17 @@ export default class LoginBox extends React.Component {
     }
 
     componentDidMount() {
-        this.sub = store.subscribe(() => {
+        this.unsubscribe = store.subscribe(() => {
             if (this.state.name !== store.getState().user.name) {
                 this.setState({ name: store.getState().user.name });
             }
         });
+    }
+
+    componentWillUnmount() {
+        if (this.unsubscribe) {
+            this.unsubscribe();
+        }
     }
 
     login() {
