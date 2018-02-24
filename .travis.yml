@@ -1,6 +1,7 @@
 language: node_js
+node_js: node
 env:
   - PROJECT=client
   - PROJECT=server
 install: cd $PROJECT && npm install
-script: cd $PROJECT && npm run build
+script: npm run build
