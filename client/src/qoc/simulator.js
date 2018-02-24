@@ -3,6 +3,7 @@ import solve from "qoc/solver";
 import store from "qoc/store";
 
 export default function simulate() {
+    // TODO: Separate constants from initial values
     const state = store.getState();
 
     // We have an array of objects that represent equations and parameters.
@@ -16,7 +17,9 @@ export default function simulate() {
         parameters[param.symbol] = parseFloat(param.expression);
     }
 
-    const result = solve(equations, parameters, 10, 250, parameters);
+    console.log(equations);
+    console.log(parameters);
+    const result = solve(equations, parameters, 10, 250);
 
     channel.publish(channel.SIMULATE, result);
 

@@ -46,7 +46,8 @@ export default function solver(eqns, initials, time, resolution, locals = {}) {
         let t = step / resolution;
         ts.push(t);
 
-        let newVars = { t: t };
+        const newVars = Object.assign(vars);
+        newVars.t = t;
 
         for (let v in eqns) {
             let fn = eqns[v];
