@@ -5,10 +5,18 @@ import "qoc/icons";
 import QOCApplication from "components/QOCApplication";
 import { checkSession, login } from "qoc/authHelper";
 
-// TODO: If debug
-import "qoc/debugActions";
+if (process.env.DEBUG) {
+    console.log("Debug mode! Importing debug methods.")
+    require("./qoc/debugActions");
+}
 
 import "qoc.styl"
+
+// Ensure environment is good
+if (process.env.EDITOR_URL === undefined ||
+    process.env.REDIRECT_URI === undefined) {
+    console.error("Missing environment variables! Did you forget to copy .env.defaults to .env ?")
+}
 
 // Create the Redux store
 import store from "qoc/store";

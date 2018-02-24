@@ -1,8 +1,11 @@
 const path = require("path");
 
+const Dotenv = require("dotenv-webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const extractCSS = new ExtractTextPlugin("build/qoc.css");
 const UglifyJSPlugin = require ("uglifyjs-webpack-plugin");
+
+const env = process.env.NODE_ENV;
 
 module.exports = {
     entry: {
@@ -38,6 +41,9 @@ module.exports = {
     },
     plugins: [
         extractCSS,
+        new Dotenv({
+            path: env === "production" ? "./.env.production" : ".env"
+        })
         //new UglifyJSPlugin()
     ]
 };
