@@ -10,7 +10,9 @@
         "start": "webpack-dev-server --public lvh.me",
         "test": "mocha --require babel-register --recursive test",
         "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook"
+        "build-storybook": "build-storybook",
+
+        "prebuild": "npm run clean"
     },
     "author": "Martin Hanzel",
     "license": "MIT",
