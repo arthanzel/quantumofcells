@@ -1,6 +1,8 @@
 # csi3540-project
 Term project for CSI3540
 
+[![Build Status](https://travis-ci.org/arthanzel/csi3540-project.svg?branch=master)](https://travis-ci.org/arthanzel/csi3540-project)
+
 ## What is Quantum of Cells?
 
 Quantum of Cells, or QoC, is a nifty differential equation solver. You plug your equations in a box, click a button, and QoC will evaluate them and print out a graph of the solution.
