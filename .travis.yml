@@ -15,6 +15,6 @@ deploy:
   keep-history: false
   on:
     branch: master
-    condition: "$PROJECT = client"
+    condition: $PROJECT = client
   local-dir: client
   verbose: true
