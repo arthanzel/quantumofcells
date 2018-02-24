@@ -3,33 +3,37 @@ import evaluatex from "evaluatex/evaluatex";
 /**
  *
  * @param eqns Map of differential equations.
- * @param initials Map of initial values and parameters.
+ * @param variables Map of initial values and variables.
  * @param time How many time units to run the simulation.
  * @param resolution How many calculations per time unit. Higher is more accurate, but slower.
- * @param locals Map of any constant values to be compiled into the function
+ * @param constants Map of any constant values to be compiled into the function.
  * @returns {{ts: *[], series: {}}}
  */
-export default function solver(eqns, initials, time, resolution, locals = {}) {
+export default function solver(eqns, variables, time, resolution, constants = {}) {
+    // Variables may vary over the course of the simulation.
+    // Constants do not; they are compiled into the AST.
+
     // Clone objects to avoid side-effects
     eqns = Object.assign({}, eqns);
-    let vars = Object.assign({}, initials);
+    let vars = Object.assign({}, variables);
     if (!vars.t) {
         vars.t = 0;
     }
 
     if (typeof eqns === "string") {
+        // If only one equation is given as a string
         eqns = { x: eqns };
     }
 
     // Compile equations
     for (let v in eqns) {
-        if (!vars[v]) {
+        if (vars[v] === undefined) {
             // Set initial condition to zero if it is missing.
             // TODO: emit a warning
             vars[v] = 0;
         }
 
-        eqns[v] = evaluatex(eqns[v], locals);
+        eqns[v] = evaluatex(eqns[v], constants);
     }
 
     // Set up the data structure.

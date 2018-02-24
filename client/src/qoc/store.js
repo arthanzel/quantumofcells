@@ -31,6 +31,8 @@ import rootReducer from "reducers";
 let initialState = {
     equations: [],
     parameters: [],
+    resolution: 100,
+    time: 50,
     user: {}
 };
 initialState = Object.assign(initialState, examples.sir);
