@@ -8,8 +8,9 @@ script: npm run build
 deploy:
   provider: pages
   skip-cleanup: true
-  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard
+  github-token: "$github-token"  # Set in travis-ci.org dashboard
   keep-history: false
   on:
     branch: master
+    condition: "$PROJECT = client"
   local-dir: client
