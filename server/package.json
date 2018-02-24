@@ -7,7 +7,7 @@
         "build": "babel src -d build",
         "monitor": "nodemon bootstrap.js",
         "start": "node bootstrap.js",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "echo \"Server: no test specified\" && exit 0",
         "heroku-postbuild": "npm run build"
     },
     "keywords": [],
