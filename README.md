@@ -41,13 +41,7 @@ Quantum of Cells runs separate client and server applications. They communicate 
 
 ## Building
 
-### Client
-
-    git clone https://github.com/arthanzel/csi3540-project.git
-    cd csi3540-project/client
-    npm install --dev
-    make (or) npx webpack
-    open index.html
+See client/README.md and server/README.md for building instructions
 
 # Notes
 
