@@ -5,3 +5,11 @@ env:
   - PROJECT=server
 install: cd $PROJECT && npm install
 script: npm run build
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard
+  keep-history: false
+  on:
+    branch: master
+  local-dir: client
