@@ -5,7 +5,7 @@ cwd=$(pwd)
 cd "$root/client"
 git checkout gh-pages
 git merge master
-npm run build
+NODE_ENV=production npm run build
 git add .
 git commit -m "Deployment $(date)"
 cd ..
