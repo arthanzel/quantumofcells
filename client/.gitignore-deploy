@@ -1,5 +1,5 @@
 *
 
-!build
-!r
+!build/*
+!r/*
 !*.html
