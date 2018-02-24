@@ -14,7 +14,7 @@ deploy:
   github-token: $GITHUB_TOKEN
   keep-history: false
   on:
-    branch: master
+    branch: deploy
     condition: $PROJECT = client
   local-dir: client
   verbose: true
