@@ -6,7 +6,8 @@ env:
 install: cd $PROJECT && npm install
 script: npm run build
 before_deploy:
-  - cd client && rm -rf .gitignore node_modules
+  - pwd
+  - rm -rf .gitignore node_modules
 deploy:
   provider: pages
   skip-cleanup: true
