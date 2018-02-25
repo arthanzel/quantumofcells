@@ -24,6 +24,10 @@ app.use(cors({
     origin: process.env.CORS_ORIGIN
 }));
 
+app.get("/", (req, res) => {
+    res.json({ message: "Quantum of Cells API server" });
+});
+
 app.use("/projects", projectsRouter);
 
 // Error handlers

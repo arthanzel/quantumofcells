@@ -11,12 +11,20 @@ script:
   - npm test
 before_deploy: mv .gitignore-deploy .gitignore
 deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: false
-  on:
-    branch: deploy
-    condition: $PROJECT = client
-  local-dir: client
-  verbose: true
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    keep-history: false
+    on:
+      branch: deploy
+      condition: $PROJECT = client
+    local-dir: client
+    verbose: true
+  - provider: heroku
+    skip_cleanup: true
+    api_key: "$HEROKU_API_KEY"
+    app: qoc
+    on:
+      branch: deploy
+      condition: $PROJECT = server
+      # run: npm run db:migrate
