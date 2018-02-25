@@ -19,15 +19,17 @@ if (configResult.error && process.env.NODE_ENV !== "production") {
 if (process.env.NODE_ENV === "production") {
     console.log("Running in production");
     try {
-        require("./build/server");
+        const app = require("./build/server");
+        app.default.start();
     }
     catch (e) {
-        console.log("Can't find build/server.js!");
+        console.log("Can't find build/app.js!");
         console.log(e);
     }
 }
 else {
     console.log("Running in development mode");
     require("babel-register");
-    require("./src/server");
+    const app = require("./src/app");
+    app.default.start();
 }

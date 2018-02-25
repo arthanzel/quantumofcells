@@ -7,13 +7,14 @@
         "build": "babel src -d build",
         "monitor": "nodemon bootstrap.js",
         "start": "node bootstrap.js",
-        "test": "echo \"Server: no test specified\" && exit 0",
+        "test": "mocha --require babel-register --recursive test",
         "heroku-postbuild": "npm run build"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "async": "^2.6.0",
         "babel-cli": "^6.26.0",
         "babel-core": "^6.26.0",
         "babel-preset-env": "^1.6.1",
@@ -25,6 +26,9 @@
         "mongoose": "^5.0.6"
     },
     "devDependencies": {
-        "nodemon": "^1.15.0"
+        "chai": "^4.1.2",
+        "mocha": "^5.0.1",
+        "nodemon": "^1.15.0",
+        "superagent": "^3.8.2"
     }
 }
