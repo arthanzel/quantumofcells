@@ -13,16 +13,16 @@ export default function solver(eqns, variables, time, resolution, constants = {}
     // Variables may vary over the course of the simulation.
     // Constants do not; they are compiled into the AST.
 
+    if (typeof eqns === "string") {
+        // If only one equation is given as a string
+        eqns = { x: eqns };
+    }
+
     // Clone objects to avoid side-effects
     eqns = Object.assign({}, eqns);
     let vars = Object.assign({}, variables);
     if (!vars.t) {
         vars.t = 0;
-    }
-
-    if (typeof eqns === "string") {
-        // If only one equation is given as a string
-        eqns = { x: eqns };
     }
 
     // Compile equations
