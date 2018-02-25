@@ -6,7 +6,9 @@ env:
 install:
   - cd $PROJECT
   - npm install
-script: NODE_ENV=production npm run build
+script:
+  - NODE_ENV=production npm run build
+  - npm test
 before_deploy: mv .gitignore-deploy .gitignore
 deploy:
   provider: pages
