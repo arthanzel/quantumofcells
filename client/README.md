@@ -16,4 +16,18 @@ IntelliJ IDEA Setup
 
 ### Run/Debug Configurations
 
+#### Client Test
+- Type: Mocha
+- Working Directory: `client`
+- Extra Mocha options: `--require babel-register`
+- Test directory: `test`
+- Include subdirectories: Checked
+
+#### Client Start
+
+- Type: npm
+- Package.json: `client/package.json`
+- Command: `start`
+
+
 ### File Hierarchy
