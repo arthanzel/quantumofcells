@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { describe, it } from "mocha"
 
-import lexer from "evaluatex/Lexer";
+import lexer from "evaluatex/lexer";
 import eqns from "../testEquations";
 
 describe("Evaluatex Lexer", function() {
