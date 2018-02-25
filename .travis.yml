@@ -9,7 +9,7 @@ install:
 script:
   - NODE_ENV=production npm run build
   - npm test
-before_deploy: mv .gitignore-deploy .gitignore
+before_deploy: mv .gitignore-deploy .gitignore || true # suppress error silently
 deploy:
   - provider: pages
     skip-cleanup: true
