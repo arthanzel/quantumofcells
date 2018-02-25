@@ -1,11 +1,16 @@
 language: node_js
 node_js: node
+services:
+  - mongodb
 env:
   - PROJECT=client
   - PROJECT=server
 install:
   - cd $PROJECT
   - npm install
+before_script:
+  - sleep 3 # Give Mongo some time to initialize. https://docs.travis-ci.com/user/database-setup/#MongoDB
+  - mongo qocdb-test --eval 'db.createUser({ user:"travis", pwd:"test", roles:["readWrite"] });'
 script:
   - NODE_ENV=production npm run build
   - npm test
