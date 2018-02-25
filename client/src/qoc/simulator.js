@@ -27,7 +27,6 @@ export default function simulate(errorCallback) {
     });
 
     // TODO: Solver should run in a worker
-    console.log(state);
     const result = solve(
         equationsMap,
         initialValuesMap,
