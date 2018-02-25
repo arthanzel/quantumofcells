@@ -1,5 +1,14 @@
+# Github Pages Deployment .gitignore
+# Any file that should be deployed to Github Pages needs to be whitelisted here.
+
+# Ignore all except for whitelist
 /*
+
+# Whitelist
+# =========
+# The '!' indicates that the pattern should be exempt from the above 'ignore all' rule.
 
 !/build
 !/r
 !*.html
+!/favicon.ico
