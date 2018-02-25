@@ -8,6 +8,7 @@ import { checkSession, login } from "qoc/authHelper";
 if (process.env.DEBUG) {
     console.log("Debug mode! Importing debug methods.")
     require("./qoc/debugActions");
+    document.title = "DEV " + document.title;
 }
 
 import "qoc.styl"
