@@ -14,9 +14,6 @@ export default function checkJwt(req, res, next) {
             jwksUri: process.env.AUTH_JWKS_URI
         })
     });
-
-    if (process.env.NODE_ENV === "development") {
-        // TODO Allow a test user who doesn't need to be authenticated
-    }
+    
     jwtMiddleware(req, res, next);
 }
