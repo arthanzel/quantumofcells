@@ -61,7 +61,7 @@ function setupPaths() {
 
     // Error handlers
     app.get("/test-500", (req, res) => {
-        throw "Test error";
+        throw "Testing 500 handler. This error is deliberate.";
     });
     app.use((req, res, next) => {
         res.status(404).json({ error: "404 Not Found" });
