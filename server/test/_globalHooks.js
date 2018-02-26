@@ -14,7 +14,7 @@ before(function(done) {
         path: ".env.test"
     });
     auth(() => {
-        console.log("Authenticated with " + auth());
+        console.log("Authenticated user " + token().sub);
         app.start(() => {
             bootstrap(done);
         });
