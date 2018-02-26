@@ -10,7 +10,9 @@ export default router;
 router.use(checkJwt);
 
 router.get("/", (req, res) => {
-    res.json("list projects");
+    Project.find({ user: req.user.sub }).lean().exec((err, docs) => {
+        res.json({ projects: docs })
+    });
 });
 
 router.get("/:id", checkOwnership(Project), (req, res) => {

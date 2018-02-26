@@ -15,8 +15,9 @@ before(function(done) {
     });
     auth(() => {
         console.log("Authenticated with " + auth());
-        bootstrap(); // TODO: async?
-        app.start(done);
+        app.start(() => {
+            bootstrap(done);
+        });
     })
 });
 
@@ -24,7 +25,7 @@ after (function(done) {
     app.stop(done);
 });
 
-describe("The test harness", function(done) {
+describe("The test harness", function() {
     it("should access protected endpoints", function(done) {
         // Auth tokens have the format [header].[body].[checksum]
         assert.equal(auth().split(".").length, 3);

@@ -51,12 +51,19 @@ export default function bootstrap(done) {
         ]
     });
 
-    Project.insertMany([oscillator, lotka, mixing], (err) => {
+    console.log("DB Boostrap: Starting");
+    Project.insertMany([mixing, oscillator, lotka], (err) => {
         if (err && err.code === 11000) {
             // E11000 indicates duplicate key
             // This means that the docs are already in the db.
             console.warn("DB Bootstrap: database already contains documents for user " + jwt.sub);
         }
-        done();
+        else {
+            console.log("DB Bootstrap: populated database with sample data");
+        }
+
+        if (typeof done === "function") {
+            done();
+        }
     });
 };
