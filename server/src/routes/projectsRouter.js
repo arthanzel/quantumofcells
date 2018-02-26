@@ -10,7 +10,7 @@ export default router;
 router.use(checkJwt);
 
 router.get("/", (req, res) => {
-    Project.find({ user: req.user.sub }).lean().exec((err, docs) => {
+    Project.find({ user: req.user.sub }).sort({ name: 1 }).lean().exec((err, docs) => {
         res.json({ projects: docs })
     });
 });
@@ -20,7 +20,15 @@ router.get("/:id", checkOwnership(Project), (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    res.json("create project");
+    Project.create({ name: req.body.name, user: req.user.sub }, (err, doc) => {
+        if (err) {
+            res.status(500).send({ error: "Error while creating project." });
+            console.error(err);
+        }
+        else {
+            res.send(doc.toJSON());
+        }
+    });
 });
 
 router.put("/projects/:id", (req, res) => {

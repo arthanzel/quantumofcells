@@ -5,7 +5,6 @@ import request from "superagent";
 
 import app from "../src/app";
 import auth from "./util/auth";
-import bootstrap from "./_bootstrap";
 import token from "./util/token";
 import prefix from "./util/prefix";
 
@@ -14,10 +13,9 @@ before(function(done) {
         path: ".env.test"
     });
     auth(() => {
-        console.log("Authenticated user " + token().sub);
-        app.start(() => {
-            bootstrap(done);
-        });
+        global.USER = token();
+        console.log("Authenticated user " + USER.sub);
+        app.start(done);
     })
 });
 

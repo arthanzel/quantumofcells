@@ -1,11 +1,14 @@
 import "async";
 
-import token from "./util/token";
+import token from "./token";
 
-import Project from "../src/model/Project";
-import Equation from "../src/model/Equation";
+import Project from "../../src/model/Project";
+import Equation from "../../src/model/Equation";
 
-export default function bootstrap(done) {
+const bootstrap = {};
+export default bootstrap;
+
+bootstrap.setup = function bootstrapSetup(done) {
     const jwt = token();
 
     const oscillator = new Project({
@@ -58,10 +61,17 @@ export default function bootstrap(done) {
             // This means that the docs are already in the db.
             console.warn("DB Bootstrap: database already contains documents for user " + jwt.sub);
         }
-        else {
-            console.log("DB Bootstrap: populated database with sample data");
-        }
 
+        if (typeof done === "function") {
+            done();
+        }
+    });
+};
+
+bootstrap.restore = function bootstrapRestore(done) {
+    const jwt = token();
+
+    Project.remove({ user: jwt.sub }, (err, docs) => {
         if (typeof done === "function") {
             done();
         }

@@ -1,4 +1,5 @@
 import async from "async";
+import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
@@ -11,7 +12,7 @@ let server;
 
 app.start = function(done) {
     // Connect to database
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.DEBUG) {
         mongoose.set("debug", true);
     }
     mongoose.connect(`mongodb://${ process.env.DB_URI }`, {
@@ -49,6 +50,7 @@ app.stop = function(done) {
 };
 
 function setupPaths() {
+    app.use(bodyParser.json());
     app.use(cors({
         origin: process.env.CORS_ORIGIN
     }));
