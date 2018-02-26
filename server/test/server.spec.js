@@ -2,7 +2,7 @@ import { assert } from "chai";
 import { describe, it, before } from "mocha"
 import request from "superagent";
 
-import prefix from "../src/util/prefix";
+import prefix from "./util/prefix";
 
 describe("QOC API Server", function() {
     it("should start", function(done) {

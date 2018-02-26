@@ -1,15 +1,36 @@
+import { assert } from "chai";
 import dotenv from "dotenv";
-import { before, after } from "mocha";
+import { describe, it, before, after } from "mocha";
+import request from "superagent";
 
 import app from "../src/app";
+import auth from "./util/auth";
+import prefix from "./util/prefix";
 
 before(function(done) {
     dotenv.config({
         path: ".env.test"
     });
-    app.start(done);
+    auth(() => {
+        console.log("Authenticated");
+        app.start(done);
+    })
 });
 
 after (function(done) {
     app.stop(done);
+});
+
+describe("The test harness", function(done) {
+    it("should access protected endpoints", function(done) {
+        // Auth tokens have the format [header].[body].[checksum]
+        assert.equal(auth().split(".").length, 3);
+
+        request.get(prefix("/projects"))
+            .set("Authorization", "Bearer " + auth())
+            .then((res) => {
+                assert.equal(res.status, 200);
+                done();
+            });
+    });
 });
