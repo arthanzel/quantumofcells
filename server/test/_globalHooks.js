@@ -5,6 +5,7 @@ import request from "superagent";
 
 import app from "../src/app";
 import auth from "./util/auth";
+import token from "./util/token";
 import prefix from "./util/prefix";
 
 before(function(done) {
@@ -32,5 +33,11 @@ describe("The test harness", function(done) {
                 assert.equal(res.status, 200);
                 done();
             });
+    });
+
+    it("should decode JWTs", function() {
+        const jwt = token();
+        assert.equal(jwt.iss, process.env.AUTH_ISSUER);
+        assert.equal(jwt.aud, process.env.AUTH_AUDIENCE);
     });
 });
