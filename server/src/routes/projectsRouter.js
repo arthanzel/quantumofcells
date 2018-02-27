@@ -7,7 +7,10 @@ import Project from "../model/Project";
 const router = express.Router();
 export default router;
 
+// Require login
 router.use(checkJwt);
+
+// REST API
 
 router.get("/", (req, res) => {
     Project.find({ user: req.user.sub }).sort({ name: 1 }).lean().exec((err, docs) => {

@@ -10,6 +10,10 @@ const app = express();
 export default app;
 let server;
 
+/**
+ * Starts the API server.
+ * @param done Function called once the server has started and is listening to connections.
+ */
 app.start = function(done) {
     // Connect to database
     if (process.env.DEBUG) {
@@ -25,8 +29,6 @@ app.start = function(done) {
         console.error(err);
     });
 
-    //setupPaths();
-
     if (process.env.PORT === undefined) {
         process.env.PORT = "5000";
         console.warn("PORT not specified. Defaulting to 5000.");
@@ -34,10 +36,16 @@ app.start = function(done) {
 
     setupPaths();
 
-    server = app.listen(process.env.PORT, done);
-    console.log(`Listening on ${process.env.PORT}`);
+    server = app.listen(process.env.PORT, () => {
+        console.log(`Listening on ${process.env.PORT}`);
+        done();
+    });
 };
 
+/**
+ * Stops the API server.
+ * @param done Function called once the server has stopped.
+ */
 app.stop = function(done) {
     // The binding is necessary, otherwise `this` is undefined.
     async.series([

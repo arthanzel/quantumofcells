@@ -5,9 +5,17 @@ import token from "./token";
 import Project from "../../src/model/Project";
 import Equation from "../../src/model/Equation";
 
+/**
+ * Functions for setting up and tearing down test data in the database.
+ */
 const bootstrap = {};
 export default bootstrap;
 
+/**
+ * Inserts some test data into the database.
+ * This function should be called before each test case.
+ * @param done Callback for when the operation completes.
+ */
 bootstrap.setup = function bootstrapSetup(done) {
     const jwt = token();
 
@@ -68,6 +76,11 @@ bootstrap.setup = function bootstrapSetup(done) {
     });
 };
 
+/**
+ * Removes test data from the database and restores the database to the pre-test state.
+ * This function is intended to be called after every test case.
+ * @param done Callback for when the database restore operation completes.
+ */
 bootstrap.restore = function bootstrapRestore(done) {
     const jwt = token();
 

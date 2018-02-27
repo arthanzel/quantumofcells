@@ -11,7 +11,7 @@ Copy `.env.defaults` to `.env` and fill in your database credentials.
 
     npm start
     
-This runs a development server at `http://lvh.me` (or `localhost`) on whichever port is specified in the `.env` file.
+This runs a development server on whichever port is specified in the `.env` file.
 
 If you want changes to the code to take effect without a restart, run `npm run monitor` instead of `npm start`.
 
