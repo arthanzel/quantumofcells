@@ -1,5 +1,3 @@
-import "async";
-
 import token from "./token";
 
 import Project from "../../src/model/Project";
@@ -17,9 +15,15 @@ export default bootstrap;
  * @param done Callback for when the operation completes.
  */
 bootstrap.setup = function bootstrapSetup(done) {
+    bootstrap.restore(() => { doSetup(done); });
+};
+
+function doSetup(done) {
     const jwt = token();
 
-    const oscillator = new Project({
+    const projectsToAdd = [];
+
+    projectsToAdd.push(new Project({
         name: "Harmonic Oscillator",
         user: jwt.sub,
         equations: [
@@ -31,8 +35,8 @@ bootstrap.setup = function bootstrapSetup(done) {
             new Equation({ symbol: "X", expression: "-1" }),
             new Equation({ symbol: "k", expression: "1" })
         ]
-    });
-    const lotka = new Project({
+    }));
+    projectsToAdd.push(new Project({
         name: "Lotka-Volterra",
         user: jwt.sub,
         equations: [
@@ -47,8 +51,8 @@ bootstrap.setup = function bootstrapSetup(done) {
             new Equation({ symbol: "c", expression: "1" }),
             new Equation({ symbol: "d", expression: "1" })
         ]
-    });
-    const mixing = new Project({
+    }));
+    projectsToAdd.push(new Project({
         name: "Mixing Problem",
         user: jwt.sub,
         equations: [
@@ -60,19 +64,24 @@ bootstrap.setup = function bootstrapSetup(done) {
             new Equation({ symbol: "c", expression: "0.7" }),
             new Equation({ symbol: "v", expression: "500" }),
         ]
-    });
+    }));
+    projectsToAdd.push(new Project({
+        name: "Another User's Project",
+        user: "another user"
+    }));
 
     console.log("DB Boostrap: Starting");
-    Project.insertMany([mixing, oscillator, lotka], (err) => {
+    Project.insertMany(projectsToAdd, (err) => {
         if (err && err.code === 11000) {
             // E11000 indicates duplicate key
             // This means that the docs are already in the db.
-            console.warn("DB Bootstrap: database already contains documents for user " + jwt.sub);
+            console.error("DB Bootstrap: database already contains documents");
         }
 
         if (err) {
             console.error("Boostrap failed!");
             console.error(err);
+            throw err;
         }
 
         if (typeof done === "function") {
@@ -89,7 +98,7 @@ bootstrap.setup = function bootstrapSetup(done) {
 bootstrap.restore = function bootstrapRestore(done) {
     const jwt = token();
 
-    Project.remove({ user: jwt.sub }, (err, docs) => {
+    Project.remove({ $or: [{ user: "another user" }, { user: jwt.sub }] }, (err, docs) => {
         if (typeof done === "function") {
             done();
         }
