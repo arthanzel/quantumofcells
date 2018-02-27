@@ -1,11 +1,11 @@
 import React from "react";
 
 import actions from "reducers/actions";
-import simulate from "qoc/simulator";
 import store from "qoc/store";
 
 import EquationBox from "./EquationBox";
 import "./EquationList.styl";
+import SimulateButton from "./SimulateButton";
 
 export default class EquationList extends React.Component {
     constructor(props) {
@@ -73,10 +73,6 @@ export default class EquationList extends React.Component {
 
     // endregion
 
-    onSimulate = () => {
-        simulate();
-    };
-
     render() {
         const equationBoxes = this.state.equations.map(eqn => {
             return <EquationBox symbol={eqn.symbol}
@@ -118,9 +114,7 @@ export default class EquationList extends React.Component {
                 </div>
             </section>
 
-            <div className="controls">
-                <a href="#" className="btn btn-primary" onClick={this.onSimulate}>Simulate</a>
-            </div>
+            <SimulateButton />
         </div>
     }
 }

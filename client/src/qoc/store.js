@@ -32,7 +32,8 @@ let initialState = {
     equations: [],
     parameters: [],
     resolution: 100,
-    time: 50,
+    startTime: 0,
+    endTime: 10,
     user: {}
 };
 initialState = Object.assign(initialState, examples.sir);
