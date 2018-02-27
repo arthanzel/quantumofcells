@@ -70,6 +70,11 @@ bootstrap.setup = function bootstrapSetup(done) {
             console.warn("DB Bootstrap: database already contains documents for user " + jwt.sub);
         }
 
+        if (err) {
+            console.error("Boostrap failed!");
+            console.error(err);
+        }
+
         if (typeof done === "function") {
             done();
         }

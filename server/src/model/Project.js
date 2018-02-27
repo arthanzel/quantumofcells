@@ -1,13 +1,6 @@
 import mongoose from "mongoose";
 
-/**
- * An Equation represents a symbol-expression pair, with the symbol being the left-hand side and the expression being
- * the right-hand side of an equation.
- */
-const equationSchema = mongoose.Schema({
-    symbol: String,
-    expression: String
-});
+import { equationSchema } from "./Equation";
 
 /**
  * A Project represents a dynamical system. It is composed of equations, parameters, and variables that specify how
