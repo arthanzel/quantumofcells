@@ -2,9 +2,11 @@ import cuid from "cuid";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "./LabeledInput.styl";
+import "./LabeledNumberInput.styl";
 
-export default class LabeledInput extends React.Component {
+export default class LabeledNumberInput extends React.Component {
+    // TODO: Add min/max props
+
     static defaultProps = {
         name: "",
         label: "",
@@ -18,7 +20,7 @@ export default class LabeledInput extends React.Component {
         label: PropTypes.string,
         onChange: PropTypes.func,
         unit: PropTypes.string,
-        value: PropTypes.string
+        value: PropTypes.number
     };
 
     constructor(props) {
@@ -32,7 +34,7 @@ export default class LabeledInput extends React.Component {
                 <label htmlFor={this.id}>{this.props.label}:</label>
             </div>
             <div className="expression">
-            <input type="text"
+            <input type="number"
                    id={this.id}
                    name={this.props.name}
                    onChange={this.props.onChange}

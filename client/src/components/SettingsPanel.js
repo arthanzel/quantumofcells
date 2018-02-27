@@ -1,7 +1,7 @@
 import React from "react";
 
 import actions from "reducers/actions";
-import LabeledInput from "./LabeledInput";
+import LabeledNumberInput from "./LabeledNumberInput";
 import SimulateButton from "./SimulateButton";
 import store from "qoc/store";
 
@@ -12,7 +12,8 @@ export default class SettingsPanel extends React.Component {
         this.state = {
             startTime: state.startTime,
             endTime: state.endTime,
-            resolution: state.resolution };
+            resolution: state.resolution
+        };
     }
 
     componentDidMount() {
@@ -38,10 +39,6 @@ export default class SettingsPanel extends React.Component {
 
     onChange = (e) => {
         const value = parseInt(e.target.value);
-        if (isNaN(value)) {
-            return;
-        }
-
         if (e.target.name === "startTime") {
             store.dispatch({ type: actions.SET_START_TIME, value: value })
         }
@@ -56,9 +53,9 @@ export default class SettingsPanel extends React.Component {
     render() {
         return <div>
             <h2>Settings</h2>
-            <LabeledInput label="Start Time" value={"" + this.state.startTime} name="startTime" onChange={this.onChange} />
-            <LabeledInput label="End Time" value={"" + this.state.endTime} name="endTime" onChange={this.onChange} />
-            <LabeledInput label="Resolution" value={"" + this.state.resolution} unit="samples/time" name="resolution" onChange={this.onChange} />
+            <LabeledNumberInput label="Start Time" value={this.state.startTime} name="startTime" onChange={this.onChange} />
+            <LabeledNumberInput label="End Time" value={this.state.endTime} name="endTime" onChange={this.onChange} />
+            <LabeledNumberInput label="Resolution" value={this.state.resolution} unit="samples/time" name="resolution" onChange={this.onChange} />
 
             <SimulateButton />
         </div>
