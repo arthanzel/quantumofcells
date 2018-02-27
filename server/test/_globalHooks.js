@@ -19,7 +19,7 @@ before(function(done) {
     })
 });
 
-after (function(done) {
+after(function(done) {
     app.stop(done);
 });
 
