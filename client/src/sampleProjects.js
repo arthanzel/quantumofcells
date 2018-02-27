@@ -19,7 +19,9 @@ sampleProjects.harmonicOscillator = {
         { symbol: "V", expression: "0" },
         { symbol: "X", expression: "-1" },
         { symbol: "k", expression: "1" }
-    ]
+    ],
+    resolution: 100,
+    time: 25
 };
 
 sampleProjects.logisticGrowth = {};
