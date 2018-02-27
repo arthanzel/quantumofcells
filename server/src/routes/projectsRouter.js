@@ -18,8 +18,15 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", checkOwnership(Project), (req, res) => {
-    res.json("show project");
+router.get("/:id", (req, res) => {
+    Project.findOne({ _id: req.params.id, user: req.user.sub }).lean().exec((err, doc) => {
+        if (err || !doc) {
+            res.status(404).send({ error: "Can't find project with id " + req.params.id })
+        }
+        else {
+            res.json({ project: doc });
+        }
+    });
 });
 
 router.post("/", (req, res) => {
