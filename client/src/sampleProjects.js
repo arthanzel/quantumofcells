@@ -12,11 +12,11 @@ sampleProjects.geneticNetwork2 = {
 sampleProjects.harmonicOscillator = {
     name: "Harmonic Oscillator",
     equations: [
-        { symbol: "F", expression: "-k*X" },
-        { symbol: "X", expression: "F" }
+        { symbol: "V", expression: "-k*X" },
+        { symbol: "X", expression: "V" }
     ],
     parameters: [
-        { symbol: "F", expression: "0" },
+        { symbol: "V", expression: "0" },
         { symbol: "X", expression: "-1" },
         { symbol: "k", expression: "1" }
     ]
@@ -51,4 +51,18 @@ sampleProjects.mixingProblem = {
         { symbol: "c", expression: "0.7" },
         { symbol: "v", expression: "500" },
     ]
+};
+
+sampleProjects.trampoline = {
+    name: "Trampoline",
+    equations: [
+        { symbol: "V", expression: "-9.81 + max(0, -k * Y)" },
+        { symbol: "Y", expression: "V" }
+    ],
+    parameters: [
+        { symbol: "V", expression: "0" },
+        { symbol: "Y", expression: "-0.5" }
+    ],
+    resolution: 100,
+    time: 10
 };
