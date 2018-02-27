@@ -5,15 +5,18 @@ import request from "superagent";
 
 import app from "../src/app";
 import auth from "./util/auth";
-import token from "./util/token";
 import prefix from "./util/prefix";
+import decode from "jwt-decode";
 
 before(function(done) {
     dotenv.config({
         path: ".env.test"
     });
     auth(() => {
-        global.USER = token();
+        // Many tests need easy access to these two objects, so global-scope them for simplicity.
+        global.ACCESS_TOKEN = auth();
+        global.USER = decode(ACCESS_TOKEN);
+
         console.log("Authenticated user " + USER.sub);
         app.start(done);
     })
@@ -37,8 +40,7 @@ describe("The test harness", function() {
     });
 
     it("should decode JWTs", function() {
-        const jwt = token();
-        assert.equal(jwt.iss, process.env.AUTH_ISSUER);
-        assert.equal(jwt.aud, process.env.AUTH_AUDIENCE);
+        assert.equal(USER.iss, process.env.AUTH_ISSUER);
+        assert.equal(USER.aud, process.env.AUTH_AUDIENCE);
     });
 });

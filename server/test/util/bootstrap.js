@@ -1,5 +1,3 @@
-import token from "./token";
-
 import Project from "../../src/model/Project";
 import Equation from "../../src/model/Equation";
 
@@ -15,17 +13,17 @@ export default bootstrap;
  * @param done Callback for when the operation completes.
  */
 bootstrap.setup = function bootstrapSetup(done) {
-    bootstrap.restore(() => { doSetup(done); });
+    // Remove any stray artifacts e.g. from aborted tests
+    bootstrap.restore(() => {
+        doSetup(done);
+    });
 };
 
 function doSetup(done) {
-    const jwt = token();
-
     const projectsToAdd = [];
-
     projectsToAdd.push(new Project({
         name: "Harmonic Oscillator",
-        user: jwt.sub,
+        user: USER.sub,
         equations: [
             new Equation({ symbol: "F", expression: "-k*X" }),
             new Equation({ symbol: "X", expression: "F" })
@@ -38,7 +36,7 @@ function doSetup(done) {
     }));
     projectsToAdd.push(new Project({
         name: "Lotka-Volterra",
-        user: jwt.sub,
+        user: USER.sub,
         equations: [
             new Equation({ symbol: "X", expression: "a*X - b*X*Y" }),
             new Equation({ symbol: "Y", expression: "c*X*Y - d*Y" })
@@ -54,7 +52,7 @@ function doSetup(done) {
     }));
     projectsToAdd.push(new Project({
         name: "Mixing Problem",
-        user: jwt.sub,
+        user: USER.sub,
         equations: [
             new Equation({ symbol: "X", expression: "c * k - X / v * k" })
         ],
@@ -70,7 +68,6 @@ function doSetup(done) {
         user: "another user"
     }));
 
-    console.log("DB Boostrap: Starting");
     Project.insertMany(projectsToAdd, (err) => {
         if (err && err.code === 11000) {
             // E11000 indicates duplicate key
@@ -96,9 +93,7 @@ function doSetup(done) {
  * @param done Callback for when the database restore operation completes.
  */
 bootstrap.restore = function bootstrapRestore(done) {
-    const jwt = token();
-
-    Project.remove({ $or: [{ user: "another user" }, { user: jwt.sub }] }, (err, docs) => {
+    Project.remove({ $or: [{ user: "another user" }, { user: USER.sub }] }, (err, docs) => {
         if (typeof done === "function") {
             done();
         }

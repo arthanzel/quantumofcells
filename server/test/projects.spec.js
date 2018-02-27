@@ -3,7 +3,6 @@ import async from "async";
 import { describe, it, beforeEach, afterEach } from "mocha";
 import request from "superagent";
 
-import auth from "./util/auth";
 import bootstrap from "./util/bootstrap";
 import prefix from "./util/prefix";
 
@@ -15,7 +14,7 @@ describe("Projects routes", function() {
 
     it("Should list projects", function(done) {
         request.get(prefix("/projects"))
-            .set("Authorization", "Bearer " + auth())
+            .set("Authorization", "Bearer " + ACCESS_TOKEN)
             .then((res) => {
                 const projects = res.body.projects;
                 assert.equal(res.status, 200);
@@ -33,7 +32,7 @@ describe("Projects routes", function() {
 
     it("Should create projects and drop non-schema fields", function(done) {
         request.post(prefix("/projects"))
-            .set("Authorization", "Bearer " + auth())
+            .set("Authorization", "Bearer " + ACCESS_TOKEN)
             .send({ name: "A New Project", time: 9, equations: { symbol: "v", expression: "x" } })
             .then((res) => {
                 assert.equal(res.status, 200);
@@ -54,7 +53,7 @@ describe("Projects routes", function() {
             assert.isNull(err);
             assert.isNotNull(doc);
             request.get(prefix("/projects/" + doc._id))
-                .set("Authorization", "Bearer " + auth())
+                .set("Authorization", "Bearer " + ACCESS_TOKEN)
                 .then((res) => {
                     const project = res.body.project;
                     assert.equal(res.status, 200);
@@ -72,7 +71,7 @@ describe("Projects routes", function() {
             assert.isNull(err);
             assert.isNotNull(doc);
             request.get(prefix("/projects/" + doc._id))
-                .set("Authorization", "Bearer " + auth())
+                .set("Authorization", "Bearer " + ACCESS_TOKEN)
                 .catch((err) => {
                     assert.equal(err.status, 404);
                     done();
@@ -82,7 +81,7 @@ describe("Projects routes", function() {
 
     it("Should throw a 404 if a project doesn't exist", function(done) {
         request.get(prefix("/projects/doesNotExist"))
-            .set("Authorization", "Bearer " + auth())
+            .set("Authorization", "Bearer " + ACCESS_TOKEN)
             .catch((err) => {
                 assert.equal(err.status, 404);
                 done();
