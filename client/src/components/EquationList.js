@@ -114,7 +114,9 @@ export default class EquationList extends React.Component {
                 </div>
             </section>
 
-            <SimulateButton />
+            <div className="controls">
+                <SimulateButton />
+            </div>
         </div>
     }
 }

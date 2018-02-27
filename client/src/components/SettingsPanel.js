@@ -10,8 +10,7 @@ export default class SettingsPanel extends React.Component {
         super(props);
         const state = store.getState();
         this.state = {
-            startTime: state.startTime,
-            endTime: state.endTime,
+            time: state.time,
             resolution: state.resolution
         };
     }
@@ -19,11 +18,8 @@ export default class SettingsPanel extends React.Component {
     componentDidMount() {
         this.unsubscribe = store.subscribe(() => {
             const s = store.getState();
-            if (this.state.startTime !== s.startTime) {
-                this.setState({ startTime: s.startTime });
-            }
-            if (this.state.endTime !== s.endTime) {
-                this.setState({ endTime: s.endTime });
+            if (this.state.time !== s.time) {
+                this.setState({ time: s.time });
             }
             if (this.state.resolution !== s.resolution) {
                 this.setState({ resolution: s.resolution });
@@ -39,11 +35,8 @@ export default class SettingsPanel extends React.Component {
 
     onChange = (e) => {
         const value = parseInt(e.target.value);
-        if (e.target.name === "startTime") {
-            store.dispatch({ type: actions.SET_START_TIME, value: value })
-        }
-        else if (e.target.name === "endTime") {
-            store.dispatch({ type: actions.SET_END_TIME, value: value })
+        if (e.target.name === "time") {
+            store.dispatch({ type: actions.SET_TIME, value: value })
         }
         else if (e.target.name === "resolution") {
             store.dispatch({ type: actions.SET_RESOLUTION, value: value })
@@ -51,20 +44,15 @@ export default class SettingsPanel extends React.Component {
     };
 
     render() {
-        return <div>
-            <h2>Settings</h2>
+        return <div className="equationContainer">
+            <header>
+                <h2>Settings</h2>
+            </header>
             <LabeledNumberInput
-                label="Start Time"
-                value={this.state.startTime}
-                name="startTime"
+                label="Time"
+                value={this.state.time}
+                name="time"
                 min={0}
-                max={this.state.endTime}
-                onChange={this.onChange} />
-            <LabeledNumberInput
-                label="End Time"
-                value={this.state.endTime}
-                name="endTime"
-                min={this.state.startTime}
                 onChange={this.onChange} />
             <LabeledNumberInput
                 label="Resolution"
@@ -73,7 +61,9 @@ export default class SettingsPanel extends React.Component {
                 name="resolution"
                 onChange={this.onChange} />
 
-            <SimulateButton />
+            <div className="controls">
+                <SimulateButton />
+            </div>
         </div>
     }
 }

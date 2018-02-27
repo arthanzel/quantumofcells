@@ -30,8 +30,8 @@ export default function simulate(errorCallback) {
     const result = solve(
         equationsMap,
         initialValuesMap,
-        state.time || 50,
-        state.resolution || 100,
+        state.time,
+        state.resolution,
         constantsMap);
 
     channel.publish(channel.SIMULATE, result);

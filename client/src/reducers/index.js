@@ -9,8 +9,7 @@ export default combineReducers({
     equations: equationsReducer,
     parameters: parametersReducer,
     resolution: simpleNumberReducer(actions.SET_RESOLUTION),
-    startTime: simpleNumberReducer(actions.SET_START_TIME),
-    endTime: simpleNumberReducer(actions.SET_END_TIME),
+    time: simpleNumberReducer(actions.SET_TIME),
     user: authReducer
 });
 

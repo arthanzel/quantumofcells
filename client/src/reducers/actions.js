@@ -12,7 +12,6 @@ export default {
     LOGIN: "LOGIN",
     LOGOUT: "LOGOUT",
 
-    SET_START_TIME: "SET_START_TIME",
-    SET_END_TIME: "SET_END_TIME",
+    SET_TIME: "SET_TIME",
     SET_RESOLUTION: "SET_RESOLUTION"
 };
