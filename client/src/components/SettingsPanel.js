@@ -53,9 +53,25 @@ export default class SettingsPanel extends React.Component {
     render() {
         return <div>
             <h2>Settings</h2>
-            <LabeledNumberInput label="Start Time" value={this.state.startTime} name="startTime" onChange={this.onChange} />
-            <LabeledNumberInput label="End Time" value={this.state.endTime} name="endTime" onChange={this.onChange} />
-            <LabeledNumberInput label="Resolution" value={this.state.resolution} unit="samples/time" name="resolution" onChange={this.onChange} />
+            <LabeledNumberInput
+                label="Start Time"
+                value={this.state.startTime}
+                name="startTime"
+                min={0}
+                max={this.state.endTime}
+                onChange={this.onChange} />
+            <LabeledNumberInput
+                label="End Time"
+                value={this.state.endTime}
+                name="endTime"
+                min={this.state.startTime}
+                onChange={this.onChange} />
+            <LabeledNumberInput
+                label="Resolution"
+                value={this.state.resolution}
+                unit="samples/time"
+                name="resolution"
+                onChange={this.onChange} />
 
             <SimulateButton />
         </div>

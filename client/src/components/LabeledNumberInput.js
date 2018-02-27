@@ -10,6 +10,8 @@ export default class LabeledNumberInput extends React.Component {
     static defaultProps = {
         name: "",
         label: "",
+        max: Infinity,
+        min: -Infinity,
         onChange: () => undefined,
         unit: "",
         value: "",
@@ -18,6 +20,8 @@ export default class LabeledNumberInput extends React.Component {
     static propTypes = {
         name: PropTypes.string,
         label: PropTypes.string,
+        max: PropTypes.number,
+        min: PropTypes.number,
         onChange: PropTypes.func,
         unit: PropTypes.string,
         value: PropTypes.number
@@ -36,6 +40,8 @@ export default class LabeledNumberInput extends React.Component {
             <div className="expression">
             <input type="number"
                    id={this.id}
+                   max={this.props.max}
+                   min={this.props.min}
                    name={this.props.name}
                    onChange={this.props.onChange}
                    value={this.props.value} />
