@@ -6,44 +6,40 @@
     box-shadow: 0 1px 1px #aaa
     display: flex;
     flex-direction: row;
+    height: 32px;
     margin: 5px;
+    padding: 0 5px;
+
+    & > .label {
+        flex: 0 0 auto;
+        font: 600 14px "Open Sans";
+        margin-right: 5px;
+
+        label {
+            margin: 0;
+        }
+    }
 
     & > .expression {
         flex: 1 1 auto;
         input {
-        }
-    }
-
-    input {
-        background: transparent;
-        border: 0;
-        box-sizing: border-box;
-        display: block;
-        height: 100%;
-        padding: 0 5px;
-        width: 100%;
-
-        &:focus {
-            // Remove the highlight
+            background: transparent;
             border: 0;
-            outline: 0;
+            box-sizing: border-box;
+            display: block;
+            height: 100%;
+            padding: 0px 5px;
+            width: 100%;
+
+            &:focus {
+                // Remove the highlight
+                border: 0;
+                outline: 0;
+            }
         }
     }
 
-    .label, .unit {
-        flex: 0 0 auto;
-        padding: 5px 5px;
-    }
-
-    .label {
-        font: 600 14px "Open Sans";
-    }
-
-    .unit {
+    & > .unit {
         font-size: 13px;
-    }
-
-    label {
-        margin: 0;
     }
 }
