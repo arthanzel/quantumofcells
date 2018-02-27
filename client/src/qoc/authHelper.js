@@ -20,6 +20,7 @@ export function accessToken() {
 export function checkSession(force) {
     const leeway = 5 * 60 * 1000; // 5 minutes
     if (isLoggedIn()) {
+        // TODO: expireDate is a String. Debug auto-logout.
         const expiresIn = store.getState().user.expireDate - new Date(); // Milliseconds
         if (expiresIn < leeway || force === true) {
             console.log("Re-authenticate!");
