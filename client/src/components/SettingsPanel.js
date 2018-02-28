@@ -59,6 +59,7 @@ export default class SettingsPanel extends React.Component {
                 value={this.state.resolution}
                 unit="samples/time"
                 name="resolution"
+                min={1}
                 onChange={this.onChange} />
 
             <div className="controls">
