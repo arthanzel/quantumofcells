@@ -2,8 +2,15 @@ import React from "react";
 import request from "superagent";
 
 import { accessToken } from "qoc/authHelper";
+import actions from "reducers/actions";
+import store from "qoc/store";
 
 export default class ProjectList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { dialogShown: false, projects: [] };
+    }
+
     componentDidMount() {
         /*
         This isn't well-documented in the Superagent API.
@@ -15,33 +22,63 @@ export default class ProjectList extends React.Component {
          */
 
         // TODO: Hardcoded URL
-        request.get("http://lvh.me:5000/projects")
+        request.get(process.env.SERVER_URL + "/projects")
             .set("Authorization", "Bearer " + accessToken())
             .then((res) => {
-
+                store.dispatch({ type: actions.LOAD_PROJECTS, projects: res.projects });
             })
-            .catch((err) =>{
+            .catch((err) => {
 
             });
+
+        this.unsubscribe = store.subscribe(() => {
+            const state = store.getState();
+            if (state.projects !== this.state.projects) {
+                this.setState({ projects: state.projects });
+            }
+        });
     }
 
-    onAddProject = () => {
-        request.post("http://lvh.me:5000/projects")
-            .set("Authorization", "Bearer " + accessToken())
-            .then((res) => {
-                console.log(res.body);
-            })
-            .catch((err) =>{
+    componentWillUnmount() {
+        if (this.unsubscribe) {
+            this.unsubscribe();
+        }
+    }
 
+    showNewProjectDialog = () => {
+        this.setState({ dialogShown: true });
+    };
+
+    createProject = (name) => {
+        const me = this;
+        request.post(process.env.SERVER_URL + "/projects")
+            .set("Authorization", "Bearer " + accessToken())
+            .send({ name: name })
+            .then((res) => {
+                me.setState({ dialogShown: false });
+                store.dispatch({ type: actions.LOAD_PROJECTS, projects: res.body.projects });
+            })
+            .catch((err) => {
+                console.error("Can't create project!");
+                console.error(err);
+                me.setState({ dialogShown: false });
+                // TODO: Show message
             });
     };
 
     render() {
-        return <div>
+        return <div className="equationContainer">
             <header>
                 <h2>Projects</h2>
-                <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddProject}>Add Equation</a>
+                <a href="#" className="btn btn-primary btn-sm" onClick={this.showNewProjectDialog}>New Project</a>
             </header>
+            <div className="projects">
+                {this.state.projects.length === 0 ?
+                    <div>empty</div>
+                    :
+                    <div>{this.state.projects}</div>
+                }
+            </div>
         </div>
     }
 }

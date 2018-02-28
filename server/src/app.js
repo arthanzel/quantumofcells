@@ -54,8 +54,10 @@ app.stop = function(done) {
         server.close.bind(server),
         mongoose.disconnect.bind(mongoose)
     ], () => {
-        console.log("Server stopped");
-        done();
+        if (typeof done === "function") {
+            console.log("Server stopped");
+            done();
+        }
     })
 };
 

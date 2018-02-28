@@ -23,13 +23,14 @@ export function checkSession(force) {
         // TODO: expireDate is a String. Debug auto-logout.
         const expiresIn = store.getState().user.expireDate - new Date(); // Milliseconds
         if (expiresIn < leeway || force === true) {
-            console.log("Re-authenticate!");
+            console.log("Refreshing session");
             webAuth.checkSession({}, (err, result) => {
                 if (!err) {
                     result.expireDate = new Date();
                     result.expireDate.setSeconds(result.expireDate.getSeconds() + result.expiresIn);
                     window.localStorage.setItem("auth0", JSON.stringify(result));
                     login(result.accessToken, result.expireDate, result.idTokenPayload.given_name);
+                    console.log("Session refreshed");
                 }
                 else {
                     logout();
@@ -40,6 +41,7 @@ export function checkSession(force) {
         }
         return true;
     }
+    logout();
     return false;
 }
 

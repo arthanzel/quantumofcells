@@ -30,12 +30,25 @@ describe("Projects routes", function() {
             });
     });
 
+    it("Should return an empty list if there are no projets", function(done) {
+        Project.remove({ user: USER.sub }, function(err) {
+            assert.isNull(err);
+            request.get(prefix("/projects"))
+                .set("Authorization", "Bearer " + ACCESS_TOKEN)
+                .then((res) => {
+                    assert.isArray(res.body.projects);
+                    assert.isEmpty(res.body.projects);
+                    done();
+                });
+        });
+    });
+
     it("Should create projects and drop non-schema fields", function(done) {
         request.post(prefix("/projects"))
             .set("Authorization", "Bearer " + ACCESS_TOKEN)
             .send({ name: "A New Project", time: 9, equations: { symbol: "v", expression: "x" } })
             .then((res) => {
-                assert.equal(res.status, 200);
+                assert.equal(res.status, 200); // TODO: Response CREATED instead of 200
                 assert.isString(res.body._id);
                 assert.equal(res.body.name, "A New Project");
                 assert.equal(res.body.time, 1);         // Default time

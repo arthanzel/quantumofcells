@@ -9,6 +9,8 @@ export default {
     LOAD_PARAMS: "LOAD_PARAMS",
     UPDATE_PARAM: "UPDATE_PARAM",
 
+    LOAD_PROJECTS: "LOAD_PROJECTS",
+
     LOGIN: "LOGIN",
     LOGOUT: "LOGOUT",
 

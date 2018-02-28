@@ -9,6 +9,8 @@ import rootReducer from "reducers";
 
     EQUATION: { symbol: String(1..2), expression: String, id: Integer }
 
+    PROJECT: { name: String, _id: String }
+
     {
         equations: [
             EQUATION
@@ -16,6 +18,10 @@ import rootReducer from "reducers";
         ],
         parameters: [
             EQUATION,
+            ...
+        ],
+        projects: [
+            PROJECT,
             ...
         ],
         resolution: Integer,
@@ -31,6 +37,7 @@ import rootReducer from "reducers";
 let initialState = {
     equations: [],
     parameters: [],
+    projects: [],
     resolution: 100,
     time: 10,
     user: {}
