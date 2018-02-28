@@ -42,7 +42,7 @@ module.exports = {
     plugins: [
         extractCSS,
         new Dotenv({
-            path: env === "production" ? "./.env.production" : ".env"
+            systemvars: true // Required for Webpack to see variables in Travis
         })
         //new UglifyJSPlugin()
     ]

@@ -10,7 +10,7 @@ install:
   - npm install
 before_script:
   - sleep 3 # Give Mongo some time to initialize. https://docs.travis-ci.com/user/database-setup/#MongoDB
-  - mongo qocdb-test --eval 'db.createUser({ user:"travis", pwd:"test", roles:["readWrite"] });'
+  - mongo qocdb-test --eval 'db.createUser({ user:"travis", pwd:"test", roles:["readWrite"] });' # TODO: get user/pwd from env vars
 script:
   - NODE_ENV=production npm run build
   - npm test

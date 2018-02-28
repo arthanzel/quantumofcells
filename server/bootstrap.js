@@ -19,7 +19,7 @@ if (configResult.error && process.env.NODE_ENV !== "production") {
 if (process.env.NODE_ENV === "production") {
     console.log("Running in production");
     try {
-        const app = require("./build/server");
+        const app = require("./build/app");
         app.default.start();
     }
     catch (e) {

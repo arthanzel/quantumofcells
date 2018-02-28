@@ -15,7 +15,8 @@ import "qoc.styl"
 
 // Ensure environment is good
 if (process.env.EDITOR_URL === undefined ||
-    process.env.CALLBACK_URI === undefined) {
+    process.env.CALLBACK_URL === undefined ||
+    process.env.SERVER_URL === undefined) {
     console.error("Missing environment variables! Did you forget to copy .env.defaults to .env ?")
 }
 
