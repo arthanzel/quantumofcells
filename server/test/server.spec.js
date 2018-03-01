@@ -33,7 +33,7 @@ describe("QOC API Server", function() {
     });
 
     it("should serve 401s", function(done) {
-        request.get(prefix("/projects"))
+        request.get(prefix("/protected"))
             .catch((err) => {
                 assert.equal(err.status, 401);
                 assert.equal(err.response.body.error, "401 Not Authorized");

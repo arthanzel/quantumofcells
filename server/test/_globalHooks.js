@@ -31,7 +31,7 @@ describe("The test harness", function() {
         // Auth tokens have the format [header].[body].[checksum]
         assert.equal(auth().split(".").length, 3);
 
-        request.get(prefix("/projects"))
+        request.get(prefix("/protected"))
             .set("Authorization", "Bearer " + auth())
             .then((res) => {
                 assert.equal(res.status, 200);

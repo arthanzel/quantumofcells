@@ -4,6 +4,7 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 
+import checkJwt from "./auth/checkJwt";
 import projectsRouter from "./routes/projectsRouter";
 
 const app = express();
@@ -69,6 +70,9 @@ function setupPaths() {
 
     app.get("/", (req, res) => {
         res.json({ message: "Quantum of Cells API Server" });
+    });
+    app.get("/protected", checkJwt, (req, res) => {
+        res.json({ message: "Protected Endpoint" })
     });
 
     app.use("/projects", projectsRouter);
