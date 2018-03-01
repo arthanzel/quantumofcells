@@ -6,14 +6,17 @@ Building
 Make sure that `NODE_ENV` is not `production`.
 
     npm install
+    cp .env.defaults .env
+    cp .env.test.defaults .env.test
     
-Copy `.env.defaults` to `.env` and fill in your database credentials.
+You'll  need to have an instance of [MongoDB](https://www.mongodb.com/) running locally, on the default port, with no authentication.
+To use different settings, or to use a remote database such as [mLab](https://mlab.com/), tweak the variables in `.env`.
 
-    npm start
+`npm test` runs server tests.
     
-This runs a development server on whichever port is specified in the `.env` file.
+`npm start` runs a development server on whichever port is specified in the `.env` file.
 
-If you want changes to the code to take effect without a restart, run `npm run monitor` instead of `npm start`.
+If you want changes to take effect without a restart, run `npm run monitor` instead of `npm start`.
 
 Production
 ----------
