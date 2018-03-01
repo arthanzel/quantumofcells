@@ -1,8 +1,10 @@
+import PropTypes from "prop-types";
 import React from "react";
 import request from "superagent";
 
 import { accessToken } from "qoc/authHelper";
 import actions from "reducers/actions";
+import sampleProjects from "sampleProjects";
 import store from "qoc/store";
 
 export default class ProjectList extends React.Component {
@@ -67,6 +69,15 @@ export default class ProjectList extends React.Component {
     };
 
     render() {
+        const projects = this.state.projects.map((project) => {
+            return <Project name={project.name} _id={project._id} />;
+        });
+        const samples = [];
+        for (const key in sampleProjects) {
+            const project = sampleProjects[key];
+            samples.push(<Project name={project.name} _id={project._id} key={key}/>);
+        }
+
         return <div className="equationContainer">
             <header>
                 <h2>Projects</h2>
@@ -76,9 +87,30 @@ export default class ProjectList extends React.Component {
                 {this.state.projects.length === 0 ?
                     <div>empty</div>
                     :
-                    <div>{this.state.projects}</div>
+                    <div>{projects}</div>
                 }
+                <div>{samples}</div>
             </div>
         </div>
+    }
+}
+
+class Project extends React.Component {
+    static defaultProps = {
+        name: "",
+        _id: ""
+    };
+
+    static propTypes = {
+        name: PropTypes.string,
+        _id: PropTypes.string
+    };
+
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return <div>{this.props.name}</div>
     }
 }
