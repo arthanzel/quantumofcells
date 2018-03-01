@@ -21,10 +21,11 @@ export default function auth(callback) {
     request.post("https://qoc.auth0.com/oauth/token")
         .set("Content-Type", "application/json")
         .send({
-            client_id: "LpQnxgyKxQm2oJaPABp2OCJANNrQY3NC",
+            client_id: process.env.TEST_CLIENT_ID,
             client_secret: process.env.TEST_CLIENT_SECRET,
-            audience: "https://api.quantumofcells.com",
-            grant_type: "client_credentials"
+            audience: process.env.AUTH_AUDIENCE,
+            grant_type: "client_credentials",
+            scope: "test"
         })
         .then((res) => {
             token = res.body.access_token;

@@ -24,5 +24,26 @@ export default function checkJwt(req, res, next) {
         })
     });
 
-    jwtMiddleware(req, res, next);
+    jwtMiddleware(req, res, function(err) {
+        // The `next` function in middlewares takes a single argument: an error object.
+        // If a middleware encounters an error, the error should be passed into the callback for proper routing.
+        // Don't throw errors here - Express might not handle them.
+
+        if (err) {
+            next(err);
+            return;
+        }
+
+        if (process.env.NODE_ENV !== "test" &&
+                req.user &&
+                req.user.azp === process.env.TEST_CLIENT_ID) {
+            // IMPORTANT!
+            // Do not accept tokens requested by TEST_CLIENT_ID unless we are testing.
+            // Otherwise, an attacker can request an access token through the test harness and use it to access the API.
+            next({ status: 401 });
+            return;
+        }
+
+        next();
+    });
 }
