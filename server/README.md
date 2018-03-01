@@ -22,17 +22,15 @@ If you want changes to take effect without a restart, run `npm run monitor` inst
 ### Internet Connection Required
 The server requires an active internet connection to validate requests through Auth0's API. If the internet is unavailable, requests that access privileged resources may fail.
 
-The server 
-
 ### Database
 Quantum of Cells uses [MongoDB](https://www.mongodb.com/) to store data. You can use either a local instance, or connect to a service such as [mLab](https://mlab.com/).
 
 #### Local Database
 By default, the server will try to connect to a database on `localhost:27017` (the default port) with no user or password. If you need to tweak these settings, do so in the `.env` and `.env.test` files.
 
-If you have docker, get a database up and running quickly with:
+If you have Docker, get a database up and running quickly with:
 
-    docker run -p 127.0.0.1:27017:27017 -d mongo
+    docker run -d -p 127.0.0.1:27017:27017 --name qoc-mongo mongo
     
 #### Remote Database
 To connect to a remote database, change the `DB_URI`, `DB_USER`, and `DB_PASSWORD` in `.env` and `.env.test`. If you're using mLab, the format for `DB_URI` is `ab12345.mlab.com:port/database-name`.
