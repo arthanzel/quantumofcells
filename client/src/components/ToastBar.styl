@@ -1,0 +1,36 @@
+.toastContainer {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+
+    .toastInnerContainer {
+        box-shadow: 0 0 7px black;
+        margin: auto;
+        max-width: 35%;
+    }
+
+    .toast {
+        align-items: center;
+        background: #283848;
+        border-bottom: 1px solid darken(#283848, 30%);
+        border-top: 1px solid lighten(#283848, 8%);
+        color: white;
+        display: flex;
+        font-size: 14px;
+        padding: 10px 30px;
+
+        .toast-message {
+            flex: 1 1 100%;
+        }
+
+        code {
+            color: #ccf;
+            font-size: inherit;
+        }
+
+        a.toast-close {
+            color: #ccf;
+            flex: 0 0 0;
+        }
+    }
+}

@@ -1,10 +1,15 @@
 import { checkSession, login } from "./authHelper";
+import channel from "./channel";
 import store from "./store";
 
 window.checkSession = checkSession;
 
 window.printAuth = function printAuth() {
     console.log(JSON.parse(localStorage.getItem("auth0")));
+};
+
+window.sendMessage = function sendMessage(msg) {
+    channel.publish(channel.TOAST, msg);
 };
 
 window.setReauth = function setReauth() {
