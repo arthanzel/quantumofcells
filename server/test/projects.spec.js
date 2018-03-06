@@ -8,6 +8,12 @@ import prefix from "./util/prefix";
 
 import Project from "../src/model/Project";
 
+const newEquations = [
+    { symbol: "A", expression: "1" },
+    { symbol: "B", expression: "2" }
+];
+const newParameters = [{ symbol: "c", expression: "3" }];
+
 describe("Projects routes", function() {
     beforeEach(bootstrap.setup);
     afterEach(bootstrap.restore);
@@ -48,7 +54,7 @@ describe("Projects routes", function() {
             .set("Authorization", "Bearer " + ACCESS_TOKEN)
             .send({ name: "A New Project", time: 9, equations: { symbol: "v", expression: "x" } })
             .then((res) => {
-                assert.equal(res.status, 200); // TODO: Response CREATED instead of 200
+                assert.equal(res.status, 201);
                 assert.isString(res.body._id);
                 assert.equal(res.body.name, "A New Project");
                 assert.equal(res.body.time, 1);         // Default time
@@ -99,5 +105,84 @@ describe("Projects routes", function() {
                 assert.equal(err.status, 404);
                 done();
             });
+    });
+
+    it("Should throw a 404 if updating a missing project", function(done) {
+        request.put(prefix("/projects/doesNotExist"))
+            .set("Authorization", "Bearer " + ACCESS_TOKEN)
+            .send({ time: 9, resolution: 9, equations: newEquations, parameters: newParameters })
+            .catch((err) => {
+                assert.equal(err.status, 404);
+                done();
+            });
+    });
+
+    it("Should deny updating other users' projects", function(done) {
+        Project.findOne({ user: "another user" }, (err, doc) => {
+            assert.isNull(err);
+            assert.isNotNull(doc);
+            request.put(prefix("/projects/" + doc._id))
+                .set("Authorization", "Bearer " + ACCESS_TOKEN)
+                .send({ time: 9, resolution: 9, equations: newEquations, parameters: newParameters })
+                .catch((err) => {
+                    assert.equal(err.status, 404);
+                    done();
+                });
+        });
+    });
+
+    it("Should update projects", function(done) {
+        const newParams = {
+            time: 9,
+            resolution: 9,
+            equations: newEquations,
+            parameters: newParameters,
+            name: "New Name",
+            shouldNotSave: 100
+        };
+
+        async.waterfall([
+            (cb) => {
+                // 1. Find a proper document
+                Project.findOne({ user: USER.sub }, cb);
+            },
+            (doc, cb) => {
+                // 2. Check the document and send a PUT request
+                assert.isNotNull(doc);
+
+                request.put(prefix("/projects/" + doc._id))
+                    .set("Authorization", "Bearer " + ACCESS_TOKEN)
+                    .send(newParams)
+                    .then((res) => cb(null, res));
+            },
+            (res, cb) => {
+                // 3. Check the response and retrieve the document from the DB
+                const project = res.body.project;
+                assert.equal(res.status, 200);
+                assert.equal(project.name, newParams.name);
+                assert.equal(project.time, newParams.time);
+                assert.equal(project.resolution, newParams.resolution);
+                assert.equal(project.equations.length, 2);
+                assert.equal(project.parameters.length, 1);
+                assert.equal(project.equations[0].symbol, "A");
+                assert.equal(project.parameters[0].symbol, "c");
+                assert.isUndefined(project.shouldNotSave);
+
+
+                Project.findOne({ user: USER.sub, _id: project._id }, cb);
+            },
+            (doc, cb) => {
+                // 4. Check that the document was persisted properly
+                assert.equal(doc.name, newParams.name);
+                assert.equal(doc.time, newParams.time);
+                assert.equal(doc.resolution, newParams.resolution);
+                assert.equal(doc.equations.length, 2);
+                assert.equal(doc.parameters.length, 1);
+                assert.equal(doc.equations[0].symbol, "A");
+                assert.equal(doc.parameters[0].symbol, "c");
+                assert.isUndefined(doc.shouldNotSave);
+                cb(null);
+            }
+        ], done);
     });
 });

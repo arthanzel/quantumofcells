@@ -3,6 +3,7 @@ import express from "express";
 import checkJwt from "../auth/checkJwt";
 import checkOwnership from "../auth/checkOwnership";
 import Project from "../model/Project";
+import whitelist from "../util/whitelist";
 
 const router = express.Router();
 export default router;
@@ -36,15 +37,34 @@ router.post("/", (req, res) => {
             console.error(err);
         }
         else {
-            res.send(doc.toJSON());
+            res.status(201).send(doc.toJSON());
         }
     });
 });
 
-router.put("/projects/:id", (req, res) => {
-    res.json("update project");
+router.put("/:id", (req, res) => {
+    const obj = whitelist(req.body, ["name", "equations", "parameters", "time", "resolution"]);
+    Project.findOne({ _id: req.params.id, user: req.user.sub }, (err, doc) => {
+        if (err) {
+            res.sendStatus(500);
+            return;
+        }
+        if (!doc) {
+            res.sendStatus(404);
+            return;
+        }
+
+        doc.set(obj);
+        doc.save((err, updatedDoc) => {
+            if (err) {
+                res.send(500);
+                return;
+            }
+            res.json({ project: updatedDoc.toJSON() });
+        });
+    });
 });
 
-router.delete("/projects/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     res.json("create project");
 });
