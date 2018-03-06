@@ -3,7 +3,7 @@ import async from "async";
 import { describe, it, beforeEach, afterEach } from "mocha";
 import request from "superagent";
 
-import bootstrap from "./util/bootstrap";
+import bootstrap from "./util/dbBootstrap";
 import prefix from "./util/prefix";
 
 import Project from "../src/model/Project";
@@ -36,7 +36,7 @@ describe("Projects routes", function() {
             });
     });
 
-    it("Should return an empty list if there are no projets", function(done) {
+    it("Should return an empty list if there are no projects", function(done) {
         Project.remove({ user: USER.sub }, function(err) {
             assert.isNull(err);
             request.get(prefix("/projects"))

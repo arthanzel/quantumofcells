@@ -1,3 +1,5 @@
+import config from "config";
+
 /**
  * Prefixes the server's root URL to a path.
  * Example: `prefix("/projects")` might return `http://localhost:8080/projects`.
@@ -6,8 +8,8 @@
  * @returns {String} The full URL.
  */
 export default function prefix(path) {
-    if (!process.env.ROOT_URL) {
+    if (!config.get("rootUrl")) {
         console.warn("ROOT_URL is unset!");
     }
-    return process.env.ROOT_URL + path;
+    return config.get("rootUrl") + path;
 }
