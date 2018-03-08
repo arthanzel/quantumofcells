@@ -11,5 +11,5 @@ webAuth.parseHash((err, result) => {
     result.expireDate = new Date();
     result.expireDate.setSeconds(result.expireDate.getSeconds() + result.expiresIn);
     window.localStorage.setItem("auth0", JSON.stringify(result));
-    window.location.href = process.env.EDITOR_URL;
+    window.location.href = CONFIG.editorUrl;
 });
