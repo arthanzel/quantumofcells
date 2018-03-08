@@ -47,6 +47,8 @@
         "@fortawesome/fontawesome-free-solid": "^5.0.6",
         "@fortawesome/react-fontawesome": "0.0.17",
         "auth0-js": "^9.2.2",
+        "config": "^1.30.0",
+        "config-webpack": "^1.0.3",
         "cuid": "^2.1.0",
         "highcharts": "^6.0.7",
         "postal": "^2.0.5",
