@@ -1,3 +1,4 @@
+import config from "config";
 import request from "superagent";
 
 let token;
@@ -14,16 +15,12 @@ export default function auth(callback) {
         return token;
     }
 
-    if (!process.env.TEST_CLIENT_SECRET) {
-        console.error("TEST_CLIENT_SECRET is unset!");
-    }
-
     request.post("https://qoc.auth0.com/oauth/token")
         .set("Content-Type", "application/json")
         .send({
-            client_id: process.env.TEST_CLIENT_ID,
-            client_secret: process.env.TEST_CLIENT_SECRET,
-            audience: process.env.AUTH_AUDIENCE,
+            client_id: config.get("auth.clientId"),
+            client_secret: config.get("auth.clientSecret"),
+            audience: config.get("auth.audience"),
             grant_type: "client_credentials",
             scope: "test"
         })

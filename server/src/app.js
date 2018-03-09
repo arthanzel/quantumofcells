@@ -1,5 +1,6 @@
 import async from "async";
 import bodyParser from "body-parser";
+import config from "config";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
@@ -20,25 +21,21 @@ app.start = function(done) {
     if (process.env.DEBUG) {
         mongoose.set("debug", true);
     }
-    mongoose.connect(`mongodb://${ process.env.DB_URI }`, {
-        user: process.env.DB_USER,
-        pass: process.env.DB_PASSWORD
+    const dbUri = `mongodb://${ config.get("db.host") }:${ config.get("db.port") }/${ config.get("db.name") }`;
+    mongoose.connect(dbUri, {
+        user: config.get("db.user"),
+        pass: config.get("db.password")
     }).then(() => {
         console.log("Connected to database");
     }, (err) => {
-        console.error(`Error connecting to database ${ process.env.DB_URI }`);
+        console.error(`Error connecting to database`);
         console.error(err);
     });
 
-    if (process.env.PORT === undefined) {
-        process.env.PORT = "5000";
-        console.warn("PORT not specified. Defaulting to 5000.");
-    }
-
     setupPaths();
 
-    server = app.listen(process.env.PORT, () => {
-        console.log(`Listening on ${process.env.PORT}`);
+    server = app.listen(config.get("port"), () => {
+        console.log(`Listening on ${ config.get("port") }`);
         if (typeof done === "function") {
             done();
         }
@@ -65,7 +62,7 @@ app.stop = function(done) {
 function setupPaths() {
     app.use(bodyParser.json());
     app.use(cors({
-        origin: process.env.CORS_ORIGIN
+        origin: config.get("corsOrigin")
     }));
 
     app.get("/", (req, res) => {

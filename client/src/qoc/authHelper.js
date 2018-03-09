@@ -2,6 +2,31 @@ import actions from "reducers/actions";
 import store from "./store";
 import webAuth from "./webAuth";
 
+/*
+Login flow
+==========
+1. Page load
+2. Does localStorage have login info?
+    - No: Do nothing; stay logged out
+3. Is the stored login info valid and current?
+    - No: Remove the stored login info
+4. Copy login to application state
+5. Do checkSession every minute
+
+Check session flow
+==================
+1. Is the user's login valid?
+    - No: logout()
+2. Is the user's login less than 5 minutes from expiring?
+    - No: Do nothing
+3. Try to refresh the session.
+    - Error: Notify, logout and remove stored login
+4. Update the stored login and the application state; reset interval
+ */
+
+let checkSessionInterval = 0;
+const CHECK_SESSION_INTERVAL_MS = 60 * 1000;
+
 /**
  * Returns the current access token.
  */
@@ -20,16 +45,15 @@ export function accessToken() {
 export function checkSession(force) {
     const leeway = 5 * 60 * 1000; // 5 minutes
     if (isLoginValid()) {
-        // TODO: expireDate is a String. Debug auto-logout.
         const expiresIn = store.getState().user.expireDate - new Date(); // Milliseconds
         if (expiresIn < leeway || force === true) {
             console.log("Refreshing session");
             webAuth.checkSession({}, (err, result) => {
                 if (!err && result) {
                     // Refresh successful
-                    const userToken = parseAuth0Result(result);
-                    window.localStorage.setItem("auth0", JSON.stringify(userToken));
-                    login(userToken.accessToken, userToken.expireDate, userToken.name);
+                    const userObject = parseAuth0Result(result);
+                    window.localStorage.setItem("auth0", JSON.stringify(userObject));
+                    login(userObject);
                     console.log("Session refreshed");
                 }
                 else {
@@ -41,6 +65,7 @@ export function checkSession(force) {
         }
         return true;
     }
+    clearInterval(checkSessionInterval);
     logout();
     return false;
 }
@@ -52,18 +77,15 @@ export function checkSession(force) {
  * @param name Given name of the user.
  * @returns {boolean} True if the information was set, false otherwise (e.g. if the information is expired).
  */
-export function login(accessToken, expireDate, name) {
-    if (expireDate < new Date()) {
+export function login(userObject) {
+    if (!isLoginValid(userObject)) {
         return false;
     }
 
-    const user = {
-        accessToken: accessToken,
-        expireDate: expireDate,
-        name: name
-    };
-
-    store.dispatch({ type: actions.LOGIN, user: user });
+    clearInterval(checkSessionInterval);
+    checkSessionInterval = setTimeout(checkSession, CHECK_SESSION_INTERVAL_MS);
+    store.dispatch({ type: actions.LOGIN, user: userObject });
+    checkSession();
     return true;
 }
 
@@ -72,9 +94,10 @@ export function login(accessToken, expireDate, name) {
  */
 export function logout() {
     if (store.getState().user.accessToken) {
-        // Avoid polluting the Redux history if the user is logged out
+        // Avoid polluting the Redux history if the user is already logged out
         store.dispatch({ type: actions.LOGOUT });
     }
+    clearInterval(checkSessionInterval);
     window.localStorage.removeItem("auth0");
 }
 
@@ -87,16 +110,25 @@ export function logout() {
 export function isLoginValid(user = store.getState().user) {
     return Boolean(user.expireDate &&
         user.accessToken &&
-        user.name &&
+        user.name !== undefined &&
         user.expireDate > new Date());
 }
 
 export function parseAuth0Result(result) {
     const expireDate = new Date();
-    expireDate.setSeconds(result.expireDate.getSeconds() + result.expiresIn);
+    expireDate.setSeconds(expireDate.getSeconds() + result.expiresIn);
     return {
         accessToken: result.accessToken,
         expireDate: expireDate,
         name: result.idTokenPayload.given_name
     };
+}
+
+/**
+ * Retrieves and parses the stored user object from localStorage.
+ */
+export function getSavedLogin() {
+    const userObject = JSON.parse(window.localStorage.getItem("auth0"));
+    userObject.expireDate = new Date(userObject.expireDate);
+    return userObject;
 }

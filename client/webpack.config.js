@@ -1,11 +1,14 @@
 const path = require("path");
 
+const ConfigWebpackPlugin = require("config-webpack");
 const Dotenv = require("dotenv-webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const extractCSS = new ExtractTextPlugin("build/qoc.css");
-const UglifyJSPlugin = require ("uglifyjs-webpack-plugin");
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const webpack = require("webpack");
 
 const env = process.env.NODE_ENV;
+const config = require("config");
 
 module.exports = {
     entry: {
@@ -41,9 +44,6 @@ module.exports = {
     },
     plugins: [
         extractCSS,
-        new Dotenv({
-            systemvars: true // Required for Webpack to see variables in Travis
-        })
-        //new UglifyJSPlugin()
+        new ConfigWebpackPlugin()
     ]
 };

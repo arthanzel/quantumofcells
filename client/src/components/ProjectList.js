@@ -25,8 +25,7 @@ export default class ProjectList extends React.Component {
         The error doesn't log well, so to inspect it, do `console.dir(err)`.
          */
 
-        // TODO: Hardcoded URL
-        request.get(process.env.SERVER_URL + "/projects")
+        request.get(CONFIG.serverUrl + "/projects")
             .set("Authorization", "Bearer " + accessToken())
             .then((res) => {
                 store.dispatch({ type: actions.LOAD_PROJECTS, projects: res.projects });
@@ -55,7 +54,7 @@ export default class ProjectList extends React.Component {
 
     createProject = (name) => {
         const me = this;
-        request.post(process.env.SERVER_URL + "/projects")
+        request.post(CONFIG.serverUrl + "/projects")
             .set("Authorization", "Bearer " + accessToken())
             .send({ name: name })
             .then((res) => {

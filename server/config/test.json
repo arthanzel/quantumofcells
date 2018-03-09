@@ -1,0 +1,8 @@
+{
+    "auth": {
+        "clientId": "LpQnxgyKxQm2oJaPABp2OCJANNrQY3NC",
+        "clientSecret": "U6W2EfbS4JkPS-JbwyRXgTWphI8RPzxKBCURVoHHZK_3z2ftwPkieFjcSOtR3jA7"
+    },
+    "port": 5001,
+    "rootUrl": "http://localhost:5001"
+}
