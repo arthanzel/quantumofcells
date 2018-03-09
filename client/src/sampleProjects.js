@@ -1,13 +1,13 @@
 const sampleProjects = {};
 export default sampleProjects;
 
-sampleProjects.geneticNetwork1 = {
-    name: "Genetic Network 1"
-};
+// sampleProjects.geneticNetwork1 = {
+//     name: "Genetic Network 1"
+// };
 
-sampleProjects.geneticNetwork2 = {
-    name: "Genetic Network 2"
-};
+// sampleProjects.geneticNetwork2 = {
+//     name: "Genetic Network 2"
+// };
 
 sampleProjects.harmonicOscillator = {
     name: "Harmonic Oscillator",
@@ -24,7 +24,7 @@ sampleProjects.harmonicOscillator = {
     time: 25
 };
 
-sampleProjects.logisticGrowth = {};
+// sampleProjects.logisticGrowth = {};
 
 sampleProjects.lotkaVolterra = {
     name: "Lotka-Volterra",
@@ -39,7 +39,9 @@ sampleProjects.lotkaVolterra = {
         { symbol: "b", expression: "1.3" },
         { symbol: "c", expression: "1" },
         { symbol: "d", expression: "1" }
-    ]
+    ],
+    time: 50,
+    resolution: 100
 };
 
 sampleProjects.mixingProblem = {
@@ -52,7 +54,9 @@ sampleProjects.mixingProblem = {
         { symbol: "k", expression: "10" },
         { symbol: "c", expression: "0.7" },
         { symbol: "v", expression: "500" },
-    ]
+    ],
+    time: 250,
+    resolution: 20
 };
 
 sampleProjects.trampoline = {
@@ -63,8 +67,9 @@ sampleProjects.trampoline = {
     ],
     parameters: [
         { symbol: "V", expression: "0" },
-        { symbol: "Y", expression: "-0.5" }
+        { symbol: "Y", expression: "-0.5" },
+        { symbol: "k", expression: "150" }
     ],
-    resolution: 100,
-    time: 10
+    time: 10,
+    resolution: 100
 };

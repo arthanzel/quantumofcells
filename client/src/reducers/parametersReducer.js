@@ -7,21 +7,24 @@ export default function(parameters = [], action) {
     switch (action.type) {
         case actions.ADD_PARAM:
             copy = parameters.slice();
-            copy.push({ symbol: "", expression: "", id: uid() });
+            copy.push({ symbol: "", expression: "", _id: uid() });
             return copy;
         case actions.DELETE_PARAM:
             return parameters.filter(eqn => {
-                return eqn.id !== action.id;
+                return eqn._id !== action._id;
             });
         case actions.LOAD_PARAMS:
-            return action.parameters;
+            return action.parameters.map((param) => {
+                param._id = param._id || uid();
+                return param;
+            });
         case actions.UPDATE_PARAM:
             return parameters.map(param => {
-                if (action.id && param.id === action.id) {
+                if (action._id && param._id === action._id) {
                     return {
                         symbol: action.symbol !== undefined ? action.symbol : param.symbol,
                         expression: action.expression !== undefined ? action.expression : param.expression,
-                        id: action.id
+                        _id: action._id
                     };
                 }
                 return param;

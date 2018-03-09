@@ -19,17 +19,17 @@ export function accessToken() {
  */
 export function checkSession(force) {
     const leeway = 5 * 60 * 1000; // 5 minutes
-    if (isLoggedIn()) {
+    if (isLoginValid()) {
         // TODO: expireDate is a String. Debug auto-logout.
         const expiresIn = store.getState().user.expireDate - new Date(); // Milliseconds
         if (expiresIn < leeway || force === true) {
             console.log("Refreshing session");
             webAuth.checkSession({}, (err, result) => {
-                if (!err) {
-                    result.expireDate = new Date();
-                    result.expireDate.setSeconds(result.expireDate.getSeconds() + result.expiresIn);
-                    window.localStorage.setItem("auth0", JSON.stringify(result));
-                    login(result.accessToken, result.expireDate, result.idTokenPayload.given_name);
+                if (!err && result) {
+                    // Refresh successful
+                    const userToken = parseAuth0Result(result);
+                    window.localStorage.setItem("auth0", JSON.stringify(userToken));
+                    login(userToken.accessToken, userToken.expireDate, userToken.name);
                     console.log("Session refreshed");
                 }
                 else {
@@ -71,14 +71,32 @@ export function login(accessToken, expireDate, name) {
  * Removes login information from the global state.
  */
 export function logout() {
-    store.dispatch({ type: actions.LOGOUT });
+    if (store.getState().user.accessToken) {
+        // Avoid polluting the Redux history if the user is logged out
+        store.dispatch({ type: actions.LOGOUT });
+    }
     window.localStorage.removeItem("auth0");
 }
 
 /**
- * Returns true if a user is logged in, false otherwise.
+ * Checks if the given user object represents a valid login.
+ * If a user object is not provided, the one from the Redux state is used.
+ * @param user User objects, containing expireDate, accessToken, and name fields.
+ * @returns {boolean} True
  */
-export function isLoggedIn() {
-    const user = store.getState().user;
-    return user.expireDate && user.expireDate > new Date();
+export function isLoginValid(user = store.getState().user) {
+    return Boolean(user.expireDate &&
+        user.accessToken &&
+        user.name &&
+        user.expireDate > new Date());
+}
+
+export function parseAuth0Result(result) {
+    const expireDate = new Date();
+    expireDate.setSeconds(result.expireDate.getSeconds() + result.expiresIn);
+    return {
+        accessToken: result.accessToken,
+        expireDate: expireDate,
+        name: result.idTokenPayload.given_name
+    };
 }

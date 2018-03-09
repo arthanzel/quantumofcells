@@ -7,6 +7,8 @@ import actions from "reducers/actions";
 import sampleProjects from "sampleProjects";
 import store from "qoc/store";
 
+import "./ProjectList.styl";
+
 export default class ProjectList extends React.Component {
     constructor(props) {
         super(props);
@@ -68,14 +70,20 @@ export default class ProjectList extends React.Component {
             });
     };
 
+    selectProject = (project) => {
+        console.log(project);
+        store.dispatch({ type: actions.LOAD_PROJECT, project: project });
+    };
+
     render() {
         const projects = this.state.projects.map((project) => {
-            return <Project name={project.name} _id={project._id} />;
+            return <Project name={project.name} id={project._id} key={project._id} />;
         });
         const samples = [];
         for (const key in sampleProjects) {
             const project = sampleProjects[key];
-            samples.push(<Project name={project.name} _id={project._id} key={key}/>);
+            samples.push(<Project name={project.name} id={key} key={key}
+                            onSelect={() => { this.selectProject(project); }}/>);
         }
 
         return <div className="equationContainer">
@@ -98,12 +106,14 @@ export default class ProjectList extends React.Component {
 class Project extends React.Component {
     static defaultProps = {
         name: "",
-        _id: ""
+        id: "",
+        onSelect: () => {}
     };
 
     static propTypes = {
         name: PropTypes.string,
-        _id: PropTypes.string
+        id: PropTypes.string,
+        onSelect: PropTypes.func
     };
 
     constructor(props) {
@@ -111,6 +121,9 @@ class Project extends React.Component {
     }
 
     render() {
-        return <div>{this.props.name}</div>
+        return <a className="project" href="#"
+                onClick={this.props.onSelect}>
+            {this.props.name}
+            </a>
     }
 }

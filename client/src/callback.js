@@ -1,3 +1,4 @@
+import { parseAuth0Result } from "qoc/authHelper";
 import webAuth from "qoc/webAuth";
 
 // TODO: Handle exceptions in the callback
@@ -8,8 +9,7 @@ webAuth.parseHash((err, result) => {
         console.log(err);
     }
 
-    result.expireDate = new Date();
-    result.expireDate.setSeconds(result.expireDate.getSeconds() + result.expiresIn);
-    window.localStorage.setItem("auth0", JSON.stringify(result));
+    const userToken = parseAuth0Result(result);
+    window.localStorage.setItem("auth0", JSON.stringify(userToken));
     window.location.href = process.env.EDITOR_URL;
 });
