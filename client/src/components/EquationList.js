@@ -82,6 +82,7 @@ export default class EquationList extends React.Component {
                                 onChangeSymbol={(sym) => this.onChangeSymbol(eqn, sym)}
                                 onChangeExpression={(expr) => this.onChangeExpression(eqn, expr)}
                                 onDelete={() => this.onDeleteEquation(eqn)}
+                                separator="<strong>'</strong> ="
                                 validate={true} />;
         });
         const parameterBoxes = this.state.parameters.map(param => {
