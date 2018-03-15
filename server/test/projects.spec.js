@@ -179,4 +179,10 @@ describe("Projects routes", function() {
             }
         ], done);
     });
+
+    it("should remove projects", function(done) {
+        findAProject((doc) => {
+            request.delete(prefix("/projects/" + doc._id));
+        });
+    });
 });

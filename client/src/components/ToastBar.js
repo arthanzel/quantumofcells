@@ -50,11 +50,9 @@ export default class ToastBar extends React.Component {
 
     render() {
         return <div className="toastContainer">
-            <div className="toastInnerContainer">
-                {this.state.messages.map((msg) => {
-                    return <Toast key={msg.key}>{msg.text}</Toast>;
-                })}
-            </div>
+            {this.state.messages.map((msg) => {
+                return <Toast key={msg.key}>{msg.text}</Toast>;
+            })}
         </div>
     }
 }
@@ -70,7 +68,8 @@ class Toast extends React.Component {
 
     render() {
         return <div className="toast">
-            <div className="toast-message" dangerouslySetInnerHTML={{__html: this.props.message || this.props.children}} />
+            <div className="toast-message"
+                 dangerouslySetInnerHTML={{ __html: this.props.message || this.props.children }} />
             <a href="#" className="toast-close">Close</a>
         </div>
     }
