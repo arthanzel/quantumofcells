@@ -1,4 +1,4 @@
-const sampleProjects = {};
+const sampleProjects = [];
 export default sampleProjects;
 
 // sampleProjects.geneticNetwork1 = {
@@ -9,7 +9,8 @@ export default sampleProjects;
 //     name: "Genetic Network 2"
 // };
 
-sampleProjects.harmonicOscillator = {
+sampleProjects.push({
+    _id: "harmonicOscillator",
     name: "Harmonic Oscillator",
     equations: [
         { symbol: "V", expression: "-k*X" },
@@ -22,11 +23,12 @@ sampleProjects.harmonicOscillator = {
     ],
     resolution: 100,
     time: 25
-};
+});
 
 // sampleProjects.logisticGrowth = {};
 
-sampleProjects.lotkaVolterra = {
+sampleProjects.push({
+    _id: "lotkaVolterra",
     name: "Lotka-Volterra",
     equations: [
         { symbol: "X", expression: "a*X - b*X*Y" },
@@ -42,9 +44,10 @@ sampleProjects.lotkaVolterra = {
     ],
     time: 50,
     resolution: 100
-};
+});
 
-sampleProjects.mixingProblem = {
+sampleProjects.push({
+    _id: "mixingProblem",
     name: "Mixing Problem",
     equations: [
         { symbol: "X", expression: "c * k - X / v * k" }
@@ -57,9 +60,10 @@ sampleProjects.mixingProblem = {
     ],
     time: 250,
     resolution: 20
-};
+});
 
-sampleProjects.trampoline = {
+sampleProjects.push({
+    _id: "trampoline",
     name: "Trampoline",
     equations: [
         { symbol: "V", expression: "-9.81 + max(0, -k * Y)" },
@@ -72,4 +76,4 @@ sampleProjects.trampoline = {
     ],
     time: 10,
     resolution: 100
-};
+});

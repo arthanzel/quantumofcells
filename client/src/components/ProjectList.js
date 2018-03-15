@@ -2,10 +2,12 @@ import PropTypes from "prop-types";
 import React from "react";
 import request from "superagent";
 
-import { accessToken } from "qoc/authHelper";
+import { accessToken, isLoginValid } from "qoc/authHelper";
 import actions from "reducers/actions";
 import sampleProjects from "sampleProjects";
+import serverPath from "qoc/serverPath";
 import store from "qoc/store";
+import webAuth from "qoc/webAuth";
 
 import "./ProjectList.styl";
 
@@ -25,9 +27,10 @@ export default class ProjectList extends React.Component {
         The error doesn't log well, so to inspect it, do `console.dir(err)`.
          */
 
-        request.get(CONFIG.serverUrl + "/projects")
+        request.get(serverPath("/projects"))
             .set("Authorization", "Bearer " + accessToken())
             .then((res) => {
+                console.log(res);
                 store.dispatch({ type: actions.LOAD_PROJECTS, projects: res.projects });
             })
             .catch((err) => {
@@ -75,29 +78,49 @@ export default class ProjectList extends React.Component {
     };
 
     render() {
-        const projects = this.state.projects.map((project) => {
-            return <Project name={project.name} id={project._id} key={project._id} />;
-        });
-        const samples = [];
-        for (const key in sampleProjects) {
-            const project = sampleProjects[key];
-            samples.push(<Project name={project.name} id={key} key={key}
-                            onSelect={() => { this.selectProject(project); }}/>);
-        }
-
         return <div className="equationContainer">
             <header>
                 <h2>Projects</h2>
                 <a href="#" className="btn btn-primary btn-sm" onClick={this.showNewProjectDialog}>New Project</a>
             </header>
-            <div className="projects">
-                {this.state.projects.length === 0 ?
-                    <div>empty</div>
-                    :
-                    <div>{projects}</div>
-                }
-                <div>{samples}</div>
-            </div>
+            { isLoginValid() ?
+                <InnerProjectList projects={this.state.projects} onSelectProject={this.selectProject} />
+                :
+                <a href="#" onClick={() => webAuth.authorize()} >
+                    Log in to see your projects
+                </a>
+            }
+
+            <h2>Sample Projects</h2>
+            <InnerProjectList projects={sampleProjects} onSelectProject={this.selectProject} />
+        </div>
+    }
+}
+
+class InnerProjectList extends React.Component {
+    static defaultProps = {
+        projects: [],
+        onSelectProject: () => {
+        }
+    };
+
+    static propTypes = {
+        projects: PropTypes.array,
+        onSelectProject: PropTypes.func
+    };
+
+    render() {
+        const projects = this.props.projects.map((project) => {
+            return <Project name={project.name} id={project._id} key={project._id}
+                            onSelect={() => this.props.onSelectProject(project)} />
+        });
+
+        return <div className="projects">
+            {this.props.projects.length === 0 ?
+                "empty"
+                :
+                projects
+            }
         </div>
     }
 }
@@ -106,7 +129,8 @@ class Project extends React.Component {
     static defaultProps = {
         name: "",
         id: "",
-        onSelect: () => {}
+        onSelect: () => {
+        }
     };
 
     static propTypes = {
@@ -115,14 +139,10 @@ class Project extends React.Component {
         onSelect: PropTypes.func
     };
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return <a className="project" href="#"
-                onClick={this.props.onSelect}>
+                  onClick={this.props.onSelect}>
             {this.props.name}
-            </a>
+        </a>
     }
 }
