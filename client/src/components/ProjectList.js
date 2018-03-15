@@ -83,15 +83,17 @@ export default class ProjectList extends React.Component {
                 <h2>Projects</h2>
                 <a href="#" className="btn btn-primary btn-sm" onClick={this.showNewProjectDialog}>New Project</a>
             </header>
-            { isLoginValid() ?
+            {isLoginValid() ?
                 <InnerProjectList projects={this.state.projects} onSelectProject={this.selectProject} />
                 :
-                <a href="#" onClick={() => webAuth.authorize()} >
+                <a href="#" onClick={() => webAuth.authorize()}>
                     Log in to see your projects
                 </a>
             }
 
-            <h2>Sample Projects</h2>
+            <header>
+                <h2>Sample Projects</h2>
+            </header>
             <InnerProjectList projects={sampleProjects} onSelectProject={this.selectProject} />
         </div>
     }
