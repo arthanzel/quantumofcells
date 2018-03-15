@@ -4,6 +4,8 @@ import { describe, it, beforeEach, afterEach } from "mocha";
 import request from "superagent";
 
 import bootstrap from "./util/dbBootstrap";
+import findAProject from "./util/findAProject";
+import findAProjectFor from "./util/findAProjectFor";
 import prefix from "./util/prefix";
 
 import Project from "../src/model/Project";
@@ -68,9 +70,7 @@ describe("Projects routes", function() {
     });
 
     it("Should fetch projects", function(done) {
-        Project.findOne({ user: USER.sub }, (err, doc) => {
-            assert.isNull(err);
-            assert.isNotNull(doc);
+        findAProject((doc) => {
             request.get(prefix("/projects/" + doc._id))
                 .set("Authorization", "Bearer " + ACCESS_TOKEN)
                 .then((res) => {
@@ -86,9 +86,7 @@ describe("Projects routes", function() {
     });
 
     it("Should deny access to other users' projects", function(done) {
-        Project.findOne({ user: "another user" }, (err, doc) => {
-            assert.isNull(err);
-            assert.isNotNull(doc);
+        findAProjectFor("another user", (doc) => {
             request.get(prefix("/projects/" + doc._id))
                 .set("Authorization", "Bearer " + ACCESS_TOKEN)
                 .catch((err) => {
@@ -118,9 +116,7 @@ describe("Projects routes", function() {
     });
 
     it("Should deny updating other users' projects", function(done) {
-        Project.findOne({ user: "another user" }, (err, doc) => {
-            assert.isNull(err);
-            assert.isNotNull(doc);
+        findAProjectFor("another user", (doc) => {
             request.put(prefix("/projects/" + doc._id))
                 .set("Authorization", "Bearer " + ACCESS_TOKEN)
                 .send({ time: 9, resolution: 9, equations: newEquations, parameters: newParameters })
@@ -144,12 +140,10 @@ describe("Projects routes", function() {
         async.waterfall([
             (cb) => {
                 // 1. Find a proper document
-                Project.findOne({ user: USER.sub }, cb);
+                findAProject((doc) => cb(null, doc));
             },
             (doc, cb) => {
-                // 2. Check the document and send a PUT request
-                assert.isNotNull(doc);
-
+                // 2. Send a PUT request
                 request.put(prefix("/projects/" + doc._id))
                     .set("Authorization", "Bearer " + ACCESS_TOKEN)
                     .send(newParams)
