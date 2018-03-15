@@ -2,7 +2,9 @@
     "auth": {
         "audience": "https://api.quantumofcells.com",
         "issuer": "https://qoc.auth0.com/",
-        "jwksUri": "https://qoc.auth0.com/.well-known/jwks.json"
+        "jwksUri": "https://qoc.auth0.com/.well-known/jwks.json",
+        "clientId": "LpQnxgyKxQm2oJaPABp2OCJANNrQY3NC",
+        "clientSecret": "U6W2EfbS4JkPS-JbwyRXgTWphI8RPzxKBCURVoHHZK_3z2ftwPkieFjcSOtR3jA7"
     },
     "corsOrigin": "http://lvh.me:8080",
     "db": {

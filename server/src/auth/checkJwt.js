@@ -41,6 +41,7 @@ export default function checkJwt(req, res, next) {
             // IMPORTANT!
             // Do not accept tokens requested by TEST_CLIENT_ID unless we are testing.
             // Otherwise, an attacker can request an access token through the test harness and use it to access the API.
+            // TODO: Accept tokens only from the SPA client in production
             next({ status: 401 });
             return;
         }
