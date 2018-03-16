@@ -73,7 +73,6 @@ export default class ProjectList extends React.Component {
     };
 
     selectProject = (project) => {
-        console.log(project);
         store.dispatch({ type: actions.LOAD_PROJECT, project: project });
     };
 
