@@ -25,7 +25,8 @@ Check session flow
  */
 
 let checkSessionInterval = 0;
-const CHECK_SESSION_INTERVAL_MS = 60 * 1000;
+const CHECK_SESSION_INTERVAL_MS = CONFIG.debug ? 10 * 1000 : 60 * 1000; // 10 s on debug vs 60 s prod
+const CHECK_SESSION_LEEWAY = 5 * 60 * 1000; // 5 minutes
 
 /**
  * Returns the current access token.
@@ -43,10 +44,11 @@ export function accessToken() {
  * @returns {boolean} True if the user is logged in, false otherwise.
  */
 export function checkSession(force) {
-    const leeway = 5 * 60 * 1000; // 5 minutes
+    console.debug("Checking session");
+
     if (isLoginValid()) {
         const expiresIn = store.getState().user.expireDate - new Date(); // Milliseconds
-        if (expiresIn < leeway || force === true) {
+        if (expiresIn < CHECK_SESSION_LEEWAY || force === true) {
             console.log("Refreshing session");
             webAuth.checkSession({}, (err, result) => {
                 if (!err && result) {

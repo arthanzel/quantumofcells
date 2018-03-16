@@ -24,9 +24,6 @@ window.setReauth = function setReauth() {
     const state = store.getState();
     let soon = new Date();
     soon.setSeconds(soon.getSeconds() + 60);
-    login({
-        accessToken: state.user.accessToken,
-        expireDate: soon,
-        name: state.user.name
-    });
+    store.getState().user.expireDate = soon;
+    // Wait for checkSession
 };
