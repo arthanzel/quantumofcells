@@ -10,11 +10,11 @@ install:
   - npm install
 before_script:
   - sleep 3 # Give Mongo some time to initialize. https://docs.travis-ci.com/user/database-setup/#MongoDB
-  - mongo qocdb-test --eval 'db.createUser({ user:"travis", pwd:"test", roles:["readWrite"] });' # TODO: get user/pwd from env vars
+  - mongo qocdb-test --eval "db.createUser({ user:'$DB_USER', pwd:'$DB_PASSWORD', roles:['readWrite'] }); "
 script:
   - NODE_ENV=production npm run build
   - npm test
-before_deploy: mv .gitignore-deploy .gitignore || true # suppress error silently
+before_deploy: mv .gitignore-deploy .gitignore || true # only exists in client so suppress error silently
 deploy:
   - provider: pages
     skip-cleanup: true
