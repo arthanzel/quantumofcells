@@ -30,7 +30,6 @@ export default class ProjectList extends React.Component {
         request.get(serverPath("/projects"))
             .set("Authorization", "Bearer " + accessToken())
             .then((res) => {
-                console.log(res);
                 store.dispatch({ type: actions.LOAD_PROJECTS, projects: res.projects });
             })
             .catch((err) => {
