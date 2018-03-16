@@ -10,7 +10,7 @@ install:
   - npm install
 before_script:
   - sleep 3 # Give Mongo some time to initialize. https://docs.travis-ci.com/user/database-setup/#MongoDB
-  - mongo $DB_NAME --eval "db.createUser({ user:'$DB_USER', pwd:'$DB_PASSWORD', roles:['readWrite'] }); "
+  - mongo $DB_NAME --eval "db.createUser({ user:'$DB_USER', pwd:'$DB_PASSWORD', roles:['readWrite'] });"
 script:
   - NODE_ENV=production npm run build
   - npm test
