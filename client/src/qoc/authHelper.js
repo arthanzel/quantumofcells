@@ -83,7 +83,7 @@ export function login(userObject) {
     }
 
     clearInterval(checkSessionInterval);
-    checkSessionInterval = setTimeout(checkSession, CHECK_SESSION_INTERVAL_MS);
+    checkSessionInterval = setInterval(checkSession, CHECK_SESSION_INTERVAL_MS);
     store.dispatch({ type: actions.LOGIN, user: userObject });
     checkSession();
     return true;
