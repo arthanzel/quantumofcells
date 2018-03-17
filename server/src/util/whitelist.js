@@ -3,5 +3,5 @@ export default function whitelist(obj, fields) {
     for (const prop of fields) {
         _obj[prop] = obj[prop];
     }
-    return obj;
+    return _obj;
 };

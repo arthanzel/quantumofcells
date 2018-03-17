@@ -1,7 +1,7 @@
 import express from "express";
+import * as statusCodes from "http-status-codes";
 
 import checkJwt from "../auth/checkJwt";
-import checkOwnership from "../auth/checkOwnership";
 import Project from "../model/Project";
 import whitelist from "../util/whitelist";
 
@@ -22,7 +22,8 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
     Project.findOne({ _id: req.params.id, user: req.user.sub }).lean().exec((err, doc) => {
         if (err || !doc) {
-            res.status(404).send({ error: "Can't find project with id " + req.params.id })
+            res.status(statusCodes.NOT_FOUND)
+                .json({ error: { message: `Can't find project with id '${ req.params.id }'.` } });
         }
         else {
             res.json({ project: doc });
@@ -33,18 +34,55 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
     Project.create({ name: req.body.name, user: req.user.sub }, (err, doc) => {
         if (err) {
-            res.status(500).send({ error: "Error while creating project." });
+            if (err.code === 11000) {
+                // Duplicate key error
+                const msg = `A project with the name '${ req.body.name }' already exists.`;
+                res.status(statusCodes.CONFLICT)
+                    .json({ error: { status: statusCodes.CONFLICT, message: msg } });
+                return;
+            }
+            if (err.name === "ValidationError") {
+                // Didn't provide a name
+                const msg = "A project must have a name.";
+                res.status(statusCodes.BAD_REQUEST)
+                    .json({ error: { status: statusCodes.BAD_REQUEST, message: msg } });
+                return;
+            }
+
+            res.status(statusCodes.INTERNAL_SERVER_ERROR).send({ error: "Error while creating project." });
             console.error(err);
         }
         else {
-            res.status(201).send(doc.toJSON());
+            res.status(statusCodes.CREATED).send({ project: doc.toJSON() });
         }
     });
 });
 
 router.put("/:id", (req, res) => {
-    const obj = whitelist(req.body, ["name", "equations", "parameters", "time", "resolution"]);
+    const obj = whitelist(req.body, ["equations", "parameters", "time", "resolution"]);
     Project.findOne({ _id: req.params.id, user: req.user.sub }, (err, doc) => {
+        if (err) {
+            res.sendStatus(statusCodes.INTERNAL_SERVER_ERROR);
+            return;
+        }
+        if (!doc) {
+            res.sendStatus(statusCodes.NOT_FOUND);
+            return;
+        }
+
+        doc.set(obj);
+        doc.save((err, updatedDoc) => {
+            if (err) {
+                res.sendStatus(statusCodes.INTERNAL_SERVER_ERROR);
+                return;
+            }
+            res.sendStatus(statusCodes.NO_CONTENT);
+        });
+    });
+});
+
+router.delete("/:id", (req, res) => {
+    Project.findOneAndRemove({ _id: req.params.id, user: req.user.sub }, (err, doc) => {
         if (err) {
             res.sendStatus(500);
             return;
@@ -53,18 +91,6 @@ router.put("/:id", (req, res) => {
             res.sendStatus(404);
             return;
         }
-
-        doc.set(obj);
-        doc.save((err, updatedDoc) => {
-            if (err) {
-                res.send(500);
-                return;
-            }
-            res.json({ project: updatedDoc.toJSON() });
-        });
+        res.sendStatus(204);
     });
-});
-
-router.delete("/:id", (req, res) => {
-    res.json("create project");
 });
