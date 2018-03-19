@@ -25,6 +25,7 @@ import rootReducer from "reducers";
             PROJECT,
             ...
         ],
+        name: String,
         resolution: Integer,
         time: Decimal,
         user: {
@@ -39,6 +40,7 @@ let initialState = {
     equations: [],
     parameters: [],
     projects: [],
+    name: "",
     resolution: 100,
     time: 10,
     user: {}

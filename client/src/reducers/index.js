@@ -10,6 +10,7 @@ import authReducer from "./authReducer";
 export default function rootReducer(state = {}, action) {
     if (action.type === actions.LOAD_PROJECT) {
         const newState = Object.assign({}, state);
+        newState.name = action.project.name;
         newState.equations = equationsReducer([], { type: actions.LOAD_EQUATIONS, equations: action.project.equations });
         newState.parameters = parametersReducer([], { type: actions.LOAD_PARAMS, parameters: action.project.parameters });
         newState.time = action.project.time || state.time;
@@ -39,7 +40,6 @@ function projectsReducer(projects = [], action) {
         return action.projects;
     }
     else if (action.type === actions.ADD_PROJECT) {
-        console.log(action);
         return _.sortBy(projects.concat(action.project), (project) => project.name);
     }
     else if (action.type === actions.DELETE_PROJECT) {
