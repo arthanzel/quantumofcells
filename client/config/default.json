@@ -1,4 +1,5 @@
 {
+    "debug": false,
     "editorUrl": "http://lvh.me:8080/editor.html",
     "callbackUrl": "http://lvh.me:8080/callback.html",
     "serverUrl": "http://lvh.me:5000"
