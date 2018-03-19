@@ -11,8 +11,6 @@ let config;
 
 before(function(done) {
     config = require("config");
-    console.log("Global configuration:");
-    console.dir(config);
 
     auth(() => {
         // Many tests need easy access to these two objects, so global-scope them for simplicity.

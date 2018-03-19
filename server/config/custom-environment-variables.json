@@ -6,5 +6,6 @@
         "user": "DB_USER",
         "password": "DB_PASSWORD"
     },
-    "port": "PORT"
+    "port": "PORT",
+    "rootUrl": "ROOT_URL"
 }
