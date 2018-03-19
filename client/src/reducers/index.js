@@ -22,6 +22,7 @@ export default function rootReducer(state = {}, action) {
             equations: equationsReducer,
             parameters: parametersReducer,
             projects: projectsReducer,
+            name: identity(""),
             resolution: simpleNumberReducer(actions.SET_RESOLUTION),
             time: simpleNumberReducer(actions.SET_TIME),
             user: authReducer
