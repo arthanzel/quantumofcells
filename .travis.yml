@@ -12,7 +12,7 @@ before_script:
   - sleep 3 # Give Mongo some time to initialize. https://docs.travis-ci.com/user/database-setup/#MongoDB
   - mongo $DB_NAME --eval "db.createUser({ user:'$DB_USER', pwd:'$DB_PASSWORD', roles:['readWrite'] });"
 script:
-  - npm run build
+  - NODE_ENV=production npm run build # Build minified artifacts for gh-pages deployment
   - npm test
 before_deploy: mv .gitignore-deploy .gitignore || true # only exists in client so suppress error silently
 deploy:
