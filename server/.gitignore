@@ -1,4 +1,4 @@
 build
 node_modules
 
-config/local*
+config/local.json

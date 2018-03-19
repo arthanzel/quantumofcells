@@ -1,9 +1,0 @@
-{
-    "db": {
-        "host": "ds151070.mlab.com",
-        "port": 51070,
-        "name": "qocdb-dev",
-        "user": "developer",
-        "password": "The scent of mango pate"
-    }
-}
