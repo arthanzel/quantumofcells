@@ -6,7 +6,7 @@ import channel from "qoc/channel";
 
 import "./ToastBar.styl";
 
-const MESSAGE_DURATION = 10000; // Milliseconds
+const MESSAGE_DURATION = 6000; // Milliseconds
 
 export default class ToastBar extends React.Component {
     constructor(props) {

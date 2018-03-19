@@ -15,7 +15,7 @@ router.use(checkJwt);
 
 router.get("/", (req, res) => {
     Project.find({ user: req.user.sub }).sort({ name: 1 }).lean().exec((err, docs) => {
-        res.json({ projects: docs })
+        res.json({ projects: docs });
     });
 });
 

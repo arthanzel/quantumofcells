@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 import { combineReducers } from "redux";
 
 import actions from "./actions";
@@ -35,6 +37,13 @@ export function identity(defaultValue = {}) {
 function projectsReducer(projects = [], action) {
     if (action.type === actions.LOAD_PROJECTS) {
         return action.projects;
+    }
+    else if (action.type === actions.ADD_PROJECT) {
+        console.log(action);
+        return _.sortBy(projects.concat(action.project), (project) => project.name);
+    }
+    else if (action.type === actions.DELETE_PROJECT) {
+        return projects.filter((project) => project._id !== action._id);
     }
     return projects;
 }

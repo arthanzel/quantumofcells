@@ -51,6 +51,7 @@
         "config-webpack": "^1.0.3",
         "cuid": "^2.1.0",
         "highcharts": "^6.0.7",
+        "lodash": "^4.17.5",
         "postal": "^2.0.5",
         "prop-types": "^15.6.0",
         "react": "^16.2.0",

@@ -4,6 +4,7 @@ import request from "superagent";
 
 import { accessToken, isLoginValid } from "qoc/authHelper";
 import actions from "reducers/actions";
+import makeToast from "qoc/makeToast";
 import sampleProjects from "sampleProjects";
 import serverPath from "qoc/serverPath";
 import store from "qoc/store";
@@ -30,10 +31,10 @@ export default class ProjectList extends React.Component {
         request.get(serverPath("/projects"))
             .set("Authorization", "Bearer " + accessToken())
             .then((res) => {
-                store.dispatch({ type: actions.LOAD_PROJECTS, projects: res.projects });
+                store.dispatch({ type: actions.LOAD_PROJECTS, projects: res.body.projects });
             })
             .catch((err) => {
-
+                // console.error(err);
             });
 
         this.unsubscribe = store.subscribe(() => {
@@ -52,22 +53,36 @@ export default class ProjectList extends React.Component {
 
     showNewProjectDialog = () => {
         this.setState({ dialogShown: true });
+        this.createProject("Project " + Math.random());
     };
 
     createProject = (name) => {
         const me = this;
-        request.post(CONFIG.serverUrl + "/projects")
+        request.post(serverPath("/projects"))
             .set("Authorization", "Bearer " + accessToken())
             .send({ name: name })
             .then((res) => {
                 me.setState({ dialogShown: false });
-                store.dispatch({ type: actions.LOAD_PROJECTS, projects: res.body.projects });
+                store.dispatch({ type: actions.ADD_PROJECT, project: res.body.project });
             })
             .catch((err) => {
                 console.error("Can't create project!");
                 console.error(err);
                 me.setState({ dialogShown: false });
                 // TODO: Show message
+            });
+    };
+
+    deleteProject = (project) => {
+        request.delete(serverPath("/projects/" + project._id))
+            .set("Authorization", "Bearer " + accessToken())
+            .then((res) => {
+                store.dispatch({ type: actions.DELETE_PROJECT, _id: project._id });
+                makeToast(`Project '${ project.name }' was deleted`)
+
+            })
+            .catch((err) => {
+                console.error("Unable to delete project", err);
             });
     };
 
@@ -82,7 +97,9 @@ export default class ProjectList extends React.Component {
                 <a href="#" className="btn btn-primary btn-sm" onClick={this.showNewProjectDialog}>New Project</a>
             </header>
             {isLoginValid() ?
-                <InnerProjectList projects={this.state.projects} onSelectProject={this.selectProject} />
+                <InnerProjectList projects={this.state.projects}
+                                  onSelectProject={this.selectProject}
+                                  onDeleteProject={this.deleteProject} />
                 :
                 <a href="#" onClick={() => webAuth.authorize()}>
                     Log in to see your projects
@@ -100,19 +117,30 @@ export default class ProjectList extends React.Component {
 class InnerProjectList extends React.Component {
     static defaultProps = {
         projects: [],
+        onDeleteProject: null,
         onSelectProject: () => {
         }
     };
 
     static propTypes = {
+        deletable: PropTypes.bool,
         projects: PropTypes.array,
+        onDeleteProject: PropTypes.func,
         onSelectProject: PropTypes.func
+    };
+
+    makeDeleteCallback = (project) => {
+        if (this.props.onDeleteProject === null) {
+            return null;
+        }
+        return () => { this.props.onDeleteProject(project) };
     };
 
     render() {
         const projects = this.props.projects.map((project) => {
             return <Project name={project.name} id={project._id} key={project._id}
-                            onSelect={() => this.props.onSelectProject(project)} />
+                            onSelect={() => this.props.onSelectProject(project)}
+                            onDelete={this.makeDeleteCallback(project)} />
         });
 
         return <div className="projects">
@@ -129,20 +157,27 @@ class Project extends React.Component {
     static defaultProps = {
         name: "",
         id: "",
+        onDelete: null,
         onSelect: () => {
         }
     };
 
     static propTypes = {
+        deletable: PropTypes.bool,
         name: PropTypes.string,
         id: PropTypes.string,
+        onDelete: PropTypes.func,
         onSelect: PropTypes.func
     };
 
     render() {
-        return <a className="project" href="#"
-                  onClick={this.props.onSelect}>
-            {this.props.name}
-        </a>
+        return <div className="project">
+            <a className="project" href="#" onClick={this.props.onSelect}>
+                {this.props.name}
+            </a>
+            {this.props.onDelete === null ? null :
+                <a href="#" onClick={this.props.onDelete}>Delete</a>
+            }
+        </div>
     }
 }
