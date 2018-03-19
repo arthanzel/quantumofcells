@@ -6,6 +6,7 @@ import store from "qoc/store";
 import webAuth from "qoc/webAuth";
 
 import "./LoginBox.styl";
+import LoggedIn from "./LoggedIn";
 
 export default class LoginBox extends React.Component {
     constructor(props) {
@@ -32,16 +33,25 @@ export default class LoginBox extends React.Component {
     }
 
     render() {
-        if (this.state.name) {
-            return <footer>
+        return <footer>
+            <LoggedIn>
                 Hello, {this.state.name}.&nbsp;
                 <a href="#" onClick={this.login}>Not you?</a>
-            </footer>
-        }
-        else {
-            return <footer>
+            </LoggedIn>
+            <LoggedIn.LoggedOut>
                 <a href="#" onClick={this.login}>Log in to save your projects</a>
-            </footer>
-        }
+            </LoggedIn.LoggedOut>
+        </footer>
+        // if (this.state.name) {
+        //     return <footer>
+        //         Hello, {this.state.name}.&nbsp;
+        //         <a href="#" onClick={this.login}>Not you?</a>
+        //     </footer>
+        // }
+        // else {
+        //     return <footer>
+        //         <a href="#" onClick={this.login}>Log in to save your projects</a>
+        //     </footer>
+        // }
     }
 }

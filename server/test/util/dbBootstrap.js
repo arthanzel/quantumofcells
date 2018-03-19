@@ -19,6 +19,7 @@ bootstrap.setup = function bootstrapSetup(done) {
     });
 };
 
+// TODO: Take projects from the sample project list?
 function doSetup(done) {
     const projectsToAdd = [];
     projectsToAdd.push(new Project({

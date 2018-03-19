@@ -4,8 +4,9 @@ import actions from "reducers/actions";
 import store from "qoc/store";
 
 import EquationBox from "./EquationBox";
-import "./EquationList.styl";
 import SimulateButton from "./SimulateButton";
+
+import "./EquationList.styl";
 
 export default class EquationList extends React.Component {
     constructor(props) {
@@ -39,16 +40,16 @@ export default class EquationList extends React.Component {
         store.dispatch({ type: actions.ADD_EQUATION });
     }
 
-    onChangeExpression(id, expression) {
-        store.dispatch({ type: actions.UPDATE_EQUATION, id: id, expression: expression });
+    onChangeExpression(eqn, expression) {
+        store.dispatch({ type: actions.UPDATE_EQUATION, _id: eqn._id, expression: expression });
     }
 
-    onChangeSymbol(id, symbol) {
-        store.dispatch({ type: actions.UPDATE_EQUATION, id: id, symbol: symbol });
+    onChangeSymbol(eqn, symbol) {
+        store.dispatch({ type: actions.UPDATE_EQUATION, _id: eqn._id, symbol: symbol });
     }
 
-    onDeleteEquation(id) {
-        store.dispatch({ type: actions.DELETE_EQUATION, id: id });
+    onDeleteEquation(eqn) {
+        store.dispatch({ type: actions.DELETE_EQUATION, _id: eqn._id });
     }
 
     // endregion
@@ -59,16 +60,16 @@ export default class EquationList extends React.Component {
         store.dispatch({ type: actions.ADD_PARAM });
     }
 
-    onChangeParameterExpression(id, expression) {
-        store.dispatch({ type: actions.UPDATE_PARAM, id: id, expression: expression });
+    onChangeParameterExpression(param, expression) {
+        store.dispatch({ type: actions.UPDATE_PARAM, _id: param._id, expression: expression });
     }
 
-    onChangeParameterSymbol(id, symbol) {
-        store.dispatch({ type: actions.UPDATE_PARAM, id: id, symbol: symbol });
+    onChangeParameterSymbol(param, symbol) {
+        store.dispatch({ type: actions.UPDATE_PARAM, _id: param._id, symbol: symbol });
     }
 
-    onDeleteParameter(id) {
-        store.dispatch({ type: actions.DELETE_PARAM, id: id });
+    onDeleteParameter(param) {
+        store.dispatch({ type: actions.DELETE_PARAM, _id: param._id });
     }
 
     // endregion
@@ -77,19 +78,20 @@ export default class EquationList extends React.Component {
         const equationBoxes = this.state.equations.map(eqn => {
             return <EquationBox symbol={eqn.symbol}
                                 expression={eqn.expression}
-                                key={eqn.id}
-                                onChangeSymbol={(sym) => this.onChangeSymbol(eqn.id, sym)}
-                                onChangeExpression={(expr) => this.onChangeExpression(eqn.id, expr)}
-                                onDelete={() => this.onDeleteEquation(eqn.id)}
+                                key={eqn._id}
+                                onChangeSymbol={(sym) => this.onChangeSymbol(eqn, sym)}
+                                onChangeExpression={(expr) => this.onChangeExpression(eqn, expr)}
+                                onDelete={() => this.onDeleteEquation(eqn)}
+                                separator="<strong>'</strong> ="
                                 validate={true} />;
         });
         const parameterBoxes = this.state.parameters.map(param => {
             return <EquationBox symbol={param.symbol}
                                 expression={param.expression}
-                                key={param.id}
-                                onChangeSymbol={(sym) => this.onChangeParameterSymbol(param.id, sym)}
-                                onChangeExpression={(expr) => this.onChangeParameterExpression(param.id, expr)}
-                                onDelete={() => this.onDeleteParameter(param.id)}
+                                key={param._id}
+                                onChangeSymbol={(sym) => this.onChangeParameterSymbol(param, sym)}
+                                onChangeExpression={(expr) => this.onChangeParameterExpression(param, expr)}
+                                onDelete={() => this.onDeleteParameter(param)}
                                 validate={true} />
         });
 

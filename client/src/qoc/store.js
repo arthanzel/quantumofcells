@@ -1,13 +1,14 @@
 import { createStore } from "redux";
 
-import * as examples from "./examples";
+import actions from "reducers/actions";
+import sampleProjects from "sampleProjects";
 import rootReducer from "reducers";
 
 /*
     State schema:
     ====================
 
-    EQUATION: { symbol: String(1..2), expression: String, id: Integer }
+    EQUATION: { symbol: String(1..2), expression: String, _id: String }
 
     PROJECT: { name: String, _id: String }
 
@@ -24,6 +25,7 @@ import rootReducer from "reducers";
             PROJECT,
             ...
         ],
+        name: String,
         resolution: Integer,
         time: Decimal,
         user: {
@@ -38,16 +40,19 @@ let initialState = {
     equations: [],
     parameters: [],
     projects: [],
+    name: "",
     resolution: 100,
     time: 10,
     user: {}
 };
-initialState = Object.assign(initialState, examples.sir);
 
 const store = createStore(rootReducer,
     initialState,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 export default store;
+
+const initialProject = sampleProjects.find((obj) => obj.name === "Harmonic Oscillator");
+store.dispatch({ type: actions.LOAD_PROJECT, project: initialProject });
 
 // Observable-style function to subscribe to state changes
 export const listen = function(listener) {

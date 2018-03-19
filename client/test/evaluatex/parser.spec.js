@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { describe, it } from "mocha"
+import { describe, it } from "mocha";
 
 import lexer from "evaluatex/lexer";
 import parser from "evaluatex/parser";

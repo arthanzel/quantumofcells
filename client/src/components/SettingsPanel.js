@@ -5,6 +5,12 @@ import LabeledNumberInput from "./LabeledNumberInput";
 import SimulateButton from "./SimulateButton";
 import store from "qoc/store";
 
+/**
+ * If the simulation reaches this number of samples (time * resolution), a warning is shown about degrading performance.
+ * @type {number}
+ */
+const PERFORMANCE_LIMIT = 25000;
+
 export default class SettingsPanel extends React.Component {
     constructor(props) {
         super(props);
@@ -65,6 +71,14 @@ export default class SettingsPanel extends React.Component {
             <div className="controls">
                 <SimulateButton />
             </div>
+
+            {this.state.time * this.state.resolution > PERFORMANCE_LIMIT ?
+                <div className="alert alert-warning">
+                    Running a simulation for too long or at a very high resolution will affect performance. Try lowering the time or resolution if you experience slowdowns.
+                </div>
+                :
+                null
+            }
         </div>
     }
 }

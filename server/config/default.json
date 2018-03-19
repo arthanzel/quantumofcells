@@ -1,0 +1,19 @@
+{
+    "auth": {
+        "audience": "https://api.quantumofcells.com",
+        "issuer": "https://qoc.auth0.com/",
+        "jwksUri": "https://qoc.auth0.com/.well-known/jwks.json",
+        "clientId": "LpQnxgyKxQm2oJaPABp2OCJANNrQY3NC",
+        "clientSecret": "U6W2EfbS4JkPS-JbwyRXgTWphI8RPzxKBCURVoHHZK_3z2ftwPkieFjcSOtR3jA7"
+    },
+    "corsOrigin": "http://lvh.me:8080",
+    "db": {
+        "host": "localhost",
+        "port": 27017,
+        "name": "qocdb-dev",
+        "user": "",
+        "password": ""
+    },
+    "port": 5000,
+    "rootUrl": "http://localhost:5000"
+}

@@ -14,6 +14,7 @@ export default class EquationBox extends React.Component {
         onChangeExpression: () => undefined,
         onChangeSymbol: () => undefined,
         onDelete: () => undefined,
+        separator: "=",
         symbol: "",
         validate: false
     };
@@ -23,6 +24,7 @@ export default class EquationBox extends React.Component {
         onChangeExpression: PropTypes.func,
         onChangeSymbol: PropTypes.func,
         onDelete: PropTypes.func,
+        separator: PropTypes.string,
         symbol: PropTypes.string,
         validate: PropTypes.bool
     };
@@ -71,7 +73,7 @@ export default class EquationBox extends React.Component {
                 <input type="text" maxLength="2" size="4" value={this.props.symbol}
                        onChange={(e) => this.props.onChangeSymbol(e.target.value)} />
             </div>
-            <div className="equals">=</div>
+            <div className="separator" dangerouslySetInnerHTML={{ __html: this.props.separator }} />
             <div className="expression">
                 <input type="text" value={this.props.expression}
                        onChange={(e) => this.props.onChangeExpression(e.target.value)} />

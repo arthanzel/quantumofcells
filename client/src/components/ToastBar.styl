@@ -1,0 +1,39 @@
+.toastContainer {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    margin: 0 auto;
+    pointer-events: none; // Prevent the container from blocking input on elements below it
+
+    .toast {
+        align-items: center;
+        background: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        font-size: 14px;
+        margin: 10px auto;
+        max-width: 33%;
+        padding: 10px 30px;
+        pointer-events: all;
+
+        // Dark theme
+        //background: #283848;
+        //border-bottom: 1px solid darken(#283848, 30%);
+        //border-top: 1px solid lighten(#283848, 8%);
+        //color: white;
+
+        .toast-message {
+            flex: 1 1 100%;
+        }
+
+        code {
+            color: #ccf;
+            font-size: inherit;
+        }
+
+        a.toast-close {
+            color: #ccf;
+            flex: 0 0 0;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { describe, it } from "mocha"
+import { describe, it } from "mocha";
 
 import evaluatex from "evaluatex/evaluatex";
 import eqns from "../testEquations";

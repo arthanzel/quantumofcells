@@ -1,3 +1,4 @@
+import config from "config";
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
 
@@ -12,15 +13,15 @@ import jwksRsa from "jwks-rsa";
  */
 export default function checkJwt(req, res, next) {
     const jwtMiddleware = jwt({
-        audience: process.env.AUTH_AUDIENCE,
-        issuer: process.env.AUTH_ISSUER,
+        audience: config.get("auth.audience"),
+        issuer: config.get("auth.issuer"),
         algorithms: ["RS256"],
 
         secret: jwksRsa.expressJwtSecret({
             cache: true,
             rateLimit: true,
             jwksRequestsPerMinute: 5,
-            jwksUri: process.env.AUTH_JWKS_URI
+            jwksUri: config.get("auth.jwksUri")
         })
     });
 
@@ -36,10 +37,11 @@ export default function checkJwt(req, res, next) {
 
         if (process.env.NODE_ENV !== "test" &&
                 req.user &&
-                req.user.azp === process.env.TEST_CLIENT_ID) {
+                req.user.azp === config.get("auth.clientId")) {
             // IMPORTANT!
             // Do not accept tokens requested by TEST_CLIENT_ID unless we are testing.
             // Otherwise, an attacker can request an access token through the test harness and use it to access the API.
+            // TODO: Accept tokens only from the SPA client in production
             next({ status: 401 });
             return;
         }

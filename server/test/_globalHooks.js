@@ -1,5 +1,4 @@
 import { assert } from "chai";
-import dotenv from "dotenv";
 import { describe, it, before, after } from "mocha";
 import request from "superagent";
 
@@ -8,10 +7,11 @@ import auth from "./util/auth";
 import prefix from "./util/prefix";
 import decode from "jwt-decode";
 
+let config;
+
 before(function(done) {
-    dotenv.config({
-        path: ".env.test"
-    });
+    config = require("config");
+
     auth(() => {
         // Many tests need easy access to these two objects, so global-scope them for simplicity.
         global.ACCESS_TOKEN = auth();
@@ -40,7 +40,7 @@ describe("The test harness", function() {
     });
 
     it("should decode JWTs", function() {
-        assert.equal(USER.iss, process.env.AUTH_ISSUER);
-        assert.equal(USER.aud, process.env.AUTH_AUDIENCE);
+        assert.equal(USER.iss, config.get("auth.issuer"));
+        assert.equal(USER.aud, config.get("auth.audience"));
     });
 });
