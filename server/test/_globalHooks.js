@@ -10,9 +10,9 @@ import decode from "jwt-decode";
 let config;
 
 before(function(done) {
-    process.env.NODE_ENV = "test";
     config = require("config");
-    // TODO: Make the config parse later, somehow
+    console.log("Global configuration:");
+    console.dir(config);
 
     auth(() => {
         // Many tests need easy access to these two objects, so global-scope them for simplicity.
