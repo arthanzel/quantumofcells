@@ -2,6 +2,8 @@
 - Midpoint and trapezoid
 - Simpson with 2 or 3 different precisions
 - RK
+- A stochastic approach like Gillespie where the next point is where the derivative changes over a certain threshold.
+    - Binary search lookahead to find the threshold abscissa
 
 https://en.wikipedia.org/wiki/Stiff_equation
 https://en.wikipedia.org/wiki/Linear_multistep_method
