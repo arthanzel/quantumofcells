@@ -6,8 +6,8 @@
     "scripts": {
         "build": "babel src -d build",
         "monitor": "nodemon bootstrap.js",
-        "start": "node bootstrap.js",
-        "test": "NODE_ENV=test mocha --require babel-register --recursive test",
+        "start": "node $NODE_DEBUG_OPTION bootstrap.js",
+        "test": "NODE_ENV=test mocha $NODE_DEBUG_OPTION --require babel-register --recursive test",
         "heroku-postbuild": "npm run build"
     },
     "keywords": [],
