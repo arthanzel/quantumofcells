@@ -39,6 +39,10 @@ export default class QChart extends React.Component {
         });
     };
 
+    openSamples() {
+        channel.publish(channel.CHANGE_SIDEBAR_TAB, 0);
+    }
+
     render() {
         let inner;
         if (this.state.solution.data === undefined) {
@@ -47,7 +51,9 @@ export default class QChart extends React.Component {
                     <h1>Run a simulation to see results</h1>
                     <p>Punch in some equations in the <strong>Equations</strong> panel on the left and
                         click <SimulateButton /></p>
-                    <p>Need help? Look at the <a href="#">sample projects</a> or <a href="#">read the docs</a>.</p>
+                    <p>Need help? Look at the <a href="#" onClick={this.openSamples}>sample projects</a>.
+                        {/*or <a href="#">read the docs</a>.*/}
+                    </p>
                 </div>
             </div>
         }

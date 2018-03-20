@@ -56,7 +56,7 @@ const store = createStore(rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 export default store;
 
-const initialProject = sampleProjects.find((obj) => obj.name === "Harmonic Oscillator");
+const initialProject = sampleProjects[3];
 store.dispatch({ type: actions.LOAD_PROJECT, project: initialProject });
 
 // Observable-style function to subscribe to state changes

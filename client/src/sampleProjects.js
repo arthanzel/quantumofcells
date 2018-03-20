@@ -11,7 +11,7 @@ export default sampleProjects;
 
 sampleProjects.push({
     _id: "harmonicOscillator",
-    name: "Harmonic Oscillator",
+    name: "Sample: Harmonic Oscillator",
     equations: [
         { symbol: "V", expression: "-k*X" },
         { symbol: "X", expression: "V" }
@@ -29,7 +29,7 @@ sampleProjects.push({
 
 sampleProjects.push({
     _id: "lotkaVolterra",
-    name: "Lotka-Volterra",
+    name: "Sample: Lotka-Volterra",
     equations: [
         { symbol: "X", expression: "a*X - b*X*Y" },
         { symbol: "Y", expression: "c*X*Y - d*Y" }
@@ -48,7 +48,7 @@ sampleProjects.push({
 
 sampleProjects.push({
     _id: "mixingProblem",
-    name: "Mixing Problem",
+    name: "Sample: Mixing Problem",
     equations: [
         { symbol: "X", expression: "c * k - X / v * k" }
     ],
@@ -64,7 +64,7 @@ sampleProjects.push({
 
 sampleProjects.push({
     _id: "trampoline",
-    name: "Trampoline",
+    name: "Sample: Trampoline",
     equations: [
         { symbol: "V", expression: "-9.81 + max(0, -k * Y)" },
         { symbol: "Y", expression: "V" }
