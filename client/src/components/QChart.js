@@ -44,7 +44,6 @@ export default class QChart extends React.Component {
     }
 
     render() {
-        let inner;
         if (this.state.solution.data === undefined) {
             return <div className="qChart" id={this.elementId}>
                 <div className="empty">
