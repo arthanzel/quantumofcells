@@ -10,6 +10,7 @@ import authReducer from "./authReducer";
 export default function rootReducer(state = {}, action) {
     if (action.type === actions.LOAD_PROJECT) {
         const newState = Object.assign({}, state);
+        newState.projectId = action.project._id;
         newState.name = action.project.name;
         newState.equations = equationsReducer([], { type: actions.LOAD_EQUATIONS, equations: action.project.equations });
         newState.parameters = parametersReducer([], { type: actions.LOAD_PARAMS, parameters: action.project.parameters });
@@ -23,6 +24,7 @@ export default function rootReducer(state = {}, action) {
             parameters: parametersReducer,
             projects: projectsReducer,
             name: identity(""),
+            projectId: identity(""),
             resolution: simpleNumberReducer(actions.SET_RESOLUTION),
             time: simpleNumberReducer(actions.SET_TIME),
             user: authReducer

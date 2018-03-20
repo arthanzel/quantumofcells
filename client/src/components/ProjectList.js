@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { Modal } from "reactstrap";
 import request from "superagent";
 
 import { accessToken, isLoginValid } from "qoc/authHelper";
@@ -11,11 +12,13 @@ import store from "qoc/store";
 import webAuth from "qoc/webAuth";
 
 import "./ProjectList.styl";
+import LoggedIn from "./LoggedIn";
+import CreateProjectForm from "./CreateProjectForm";
 
 export default class ProjectList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { dialogShown: false, projects: [] };
+        this.state = { dialogOpen: false, projects: [] };
     }
 
     componentDidMount() {
@@ -51,24 +54,19 @@ export default class ProjectList extends React.Component {
         }
     }
 
-    showNewProjectDialog = () => {
-        this.setState({ dialogShown: true });
-        this.createProject("Project " + Math.random());
-    };
-
     createProject = (name) => {
         const me = this;
         request.post(serverPath("/projects"))
             .set("Authorization", "Bearer " + accessToken())
             .send({ name: name })
             .then((res) => {
-                me.setState({ dialogShown: false });
+                me.setState({ dialogOpen: false });
                 store.dispatch({ type: actions.ADD_PROJECT, project: res.body.project });
             })
             .catch((err) => {
                 console.error("Can't create project!");
                 console.error(err);
-                me.setState({ dialogShown: false });
+                me.setState({ dialogOpen: false });
                 // TODO: Show message
             });
     };
@@ -90,11 +88,23 @@ export default class ProjectList extends React.Component {
         store.dispatch({ type: actions.LOAD_PROJECT, project: project });
     };
 
+    toggleDialog = () => {
+        this.setState({
+            dialogOpen: !this.state.dialogOpen
+        });
+    };
+
+    handleCreateProject = (name) => {
+        this.createProject(name);
+    };
+
     render() {
         return <div className="equationContainer">
             <header>
                 <h2>Projects</h2>
-                <a href="#" className="btn btn-primary btn-sm" onClick={this.showNewProjectDialog}>New Project</a>
+                <LoggedIn>
+                    <a href="#" className="btn btn-primary btn-sm" onClick={this.toggleDialog}>New Project</a>
+                </LoggedIn>
             </header>
             {isLoginValid() ?
                 <InnerProjectList projects={this.state.projects}
@@ -110,6 +120,10 @@ export default class ProjectList extends React.Component {
                 <h2>Sample Projects</h2>
             </header>
             <InnerProjectList projects={sampleProjects} onSelectProject={this.selectProject} />
+
+            <Modal isOpen={this.state.dialogOpen} toggle={this.toggleDialog}>
+                <CreateProjectForm onSubmit={this.handleCreateProject} />
+            </Modal>
         </div>
     }
 }
@@ -133,7 +147,9 @@ class InnerProjectList extends React.Component {
         if (this.props.onDeleteProject === null) {
             return null;
         }
-        return () => { this.props.onDeleteProject(project) };
+        return () => {
+            this.props.onDeleteProject(project)
+        };
     };
 
     render() {

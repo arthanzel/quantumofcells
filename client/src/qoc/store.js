@@ -1,8 +1,12 @@
 import { createStore } from "redux";
+import request from "superagent";
 
 import actions from "reducers/actions";
 import sampleProjects from "sampleProjects";
 import rootReducer from "reducers";
+import { isLoginValid } from "./authHelper";
+import serverPath from "./serverPath";
+import { accessToken } from "./authHelper";
 
 /*
     State schema:
@@ -41,6 +45,7 @@ let initialState = {
     parameters: [],
     projects: [],
     name: "",
+    projectId: "",
     resolution: 100,
     time: 10,
     user: {}
@@ -60,3 +65,36 @@ export const listen = function(listener) {
         listener(store.getState());
     });
 };
+
+// Save project
+let saveTimeout = 0;
+store.subscribe(() => {
+    // TODO: Optimize project saving
+    // TODO: How to tell if loaded project is a sample?
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(saveProject, 1000);
+});
+
+function saveProject() {
+    console.log("Saving");
+
+    const state = store.getState();
+    if (state.projectId && isLoginValid()) {
+        const body = {
+            equations: state.equations,
+            parameters: state.parameters,
+            time: state.time,
+            resolution: state.resolution
+        };
+
+        request.put(serverPath("/projects/" + state.projectId))
+            .set("Authorization", "Bearer " + accessToken())
+            .send(body)
+            .then((res) => {
+                console.log("Saved!", res);
+            })
+            .catch((err) => {
+                console.error("Save Error!", err);
+            });
+    }
+}

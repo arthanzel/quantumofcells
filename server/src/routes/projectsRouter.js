@@ -60,6 +60,16 @@ router.post("/", (req, res) => {
 
 router.put("/:id", (req, res) => {
     const obj = whitelist(req.body, ["equations", "parameters", "time", "resolution"]);
+
+    // Sanitize equations and parameters
+    obj.equations = obj.equations.map((eqn) => {
+        return whitelist(eqn, ["expression", "symbol"]);
+    });
+    obj.parameters = obj.parameters.map((param) => {
+        return whitelist(param, ["expression", "symbol"]);
+    });
+
+    // TODO: Collapse to findOneAndUpdate?
     Project.findOne({ _id: req.params.id, user: req.user.sub }, (err, doc) => {
         if (err) {
             res.sendStatus(statusCodes.INTERNAL_SERVER_ERROR);
@@ -73,6 +83,7 @@ router.put("/:id", (req, res) => {
         doc.set(obj);
         doc.save((err, updatedDoc) => {
             if (err) {
+                console.error(err);
                 res.sendStatus(statusCodes.INTERNAL_SERVER_ERROR);
                 return;
             }
