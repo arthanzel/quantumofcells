@@ -4,6 +4,7 @@ import config from "config";
 import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
+import request from "superagent";
 
 import checkJwt from "./auth/checkJwt";
 import projectsRouter from "./routes/projectsRouter";
@@ -40,6 +41,11 @@ app.start = function(done) {
             done();
         }
     });
+
+    // Keep the Heroku app alive
+    if (config.keepAlive) {
+        setInterval(() => { request.get(config.keepAlive).then(() => {}) }, 60 * 1000);
+    }
 };
 
 /**
