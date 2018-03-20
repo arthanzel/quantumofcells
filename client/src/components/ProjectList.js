@@ -115,13 +115,14 @@ export default class ProjectList extends React.Component {
                 {this.state.projects === null ?
                     // Projects haven't been fetched yet
                     <p style={{ textAlign: "center" }}>
-                        Loading...<br />< br/>
+                        Loading...<br />< br />
                         <Icon icon="spinner" pulse />
                     </p>
                     :
                     <InnerProjectList projects={this.state.projects}
                                       onSelectProject={this.selectProject}
-                                      onDeleteProject={this.deleteProject} />
+                                      onDeleteProject={this.deleteProject}
+                                      onCreateProject={this.toggleDialog} />
                 }
             </LoggedIn>
             <LoggedIn.LoggedOut>
@@ -145,6 +146,7 @@ export default class ProjectList extends React.Component {
 class InnerProjectList extends React.Component {
     static defaultProps = {
         projects: [],
+        onCreateProject: null,
         onDeleteProject: null,
         onSelectProject: () => {
         }
@@ -153,6 +155,7 @@ class InnerProjectList extends React.Component {
     static propTypes = {
         deletable: PropTypes.bool,
         projects: PropTypes.array,
+        onCreateProject: PropTypes.func,
         onDeleteProject: PropTypes.func,
         onSelectProject: PropTypes.func
     };
@@ -175,7 +178,14 @@ class InnerProjectList extends React.Component {
 
         return <div className="projects">
             {this.props.projects.length === 0 ?
-                "empty"
+                <p>
+                    You have no projects.&nbsp;
+                    {this.props.onCreateProject ?
+                        <a href="#" onClick={this.props.onCreateProject}>Create one!</a>
+                        :
+                        null
+                    }
+                </p>
                 :
                 projects
             }
