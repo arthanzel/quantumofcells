@@ -1,11 +1,23 @@
 import React from "react";
 
+import channel from "qoc/channel";
+
 import "./TabToolbox.styl";
 
 export default class TabToolbox extends React.Component {
     constructor(props) {
         super(props);
         this.state = { selectedIndex: props.selectedIndex || 0 };
+    }
+
+    componentDidMount() {
+        this.subscription = channel.subscribe(channel.CHANGE_SIDEBAR_TAB, (index) => {
+            this.setState({ selectedIndex: index })
+        });
+    }
+
+    componentWillUnmount() {
+        this.subscription.unsubscribe();
     }
 
     componentWillReceiveProps(next) {

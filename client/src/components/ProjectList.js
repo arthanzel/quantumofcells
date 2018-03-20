@@ -6,6 +6,7 @@ import request from "superagent";
 
 import { accessToken, isLoginValid } from "qoc/authHelper";
 import actions from "reducers/actions";
+import channel from "qoc/channel";
 import makeToast from "qoc/makeToast";
 import sampleProjects from "sampleProjects";
 import serverPath from "qoc/serverPath";
@@ -63,6 +64,7 @@ export default class ProjectList extends React.Component {
             .then((res) => {
                 me.setState({ dialogOpen: false });
                 store.dispatch({ type: actions.ADD_PROJECT, project: res.body.project });
+                channel.publish(channel.CHANGE_SIDEBAR_TAB, 1);
             })
             .catch((err) => {
                 console.error("Can't create project!");
@@ -87,6 +89,7 @@ export default class ProjectList extends React.Component {
 
     selectProject = (project) => {
         store.dispatch({ type: actions.LOAD_PROJECT, project: project });
+        channel.publish(channel.CHANGE_SIDEBAR_TAB, 1);
     };
 
     toggleDialog = () => {
