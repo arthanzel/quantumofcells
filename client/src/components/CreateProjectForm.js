@@ -4,11 +4,14 @@ import PropTypes from "prop-types";
 
 export default class CreateProjectForm extends React.Component {
     static defaultProps = {
+        onCancel: () => {
+        },
         onSubmit: () => {
         }
     };
 
     static propTypes = {
+        onCancel: PropTypes.func,
         onSubmit: PropTypes.func
     };
 
@@ -38,12 +41,19 @@ export default class CreateProjectForm extends React.Component {
                        id="name"
                        className="form-control"
                        placeholder="Name"
-                       ref={(me) => { this.input = me; }}
+                       ref={(me) => {
+                           this.input = me;
+                       }}
                        value={this.state.value} onChange={this.handleChange} />
                 <small className="form-text text-muted">Choose wisely, because the name can't be changed later.</small>
             </div>
             <div className="form-group">
                 <input type="submit" className="btn btn-primary" value="Create" />
+                &nbsp;
+                <button className="btn btn-outline-secondary" style={{ float: "right" }}
+                        onClick={this.props.onCancel}>
+                    Cancel
+                </button>
             </div>
         </form>
     }

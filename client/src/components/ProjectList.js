@@ -137,7 +137,7 @@ export default class ProjectList extends React.Component {
             <InnerProjectList projects={sampleProjects} onSelectProject={this.selectProject} />
 
             <Modal isOpen={this.state.dialogOpen} toggle={this.toggleDialog}>
-                <CreateProjectForm onSubmit={this.handleCreateProject} />
+                <CreateProjectForm onSubmit={this.handleCreateProject} onCancel={this.toggleDialog} />
             </Modal>
         </div>
     }
