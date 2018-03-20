@@ -64,6 +64,7 @@ export default class ProjectList extends React.Component {
             .then((res) => {
                 me.setState({ dialogOpen: false });
                 store.dispatch({ type: actions.ADD_PROJECT, project: res.body.project });
+                store.dispatch({ type: actions.LOAD_PROJECT, project: res.body.project });
                 channel.publish(channel.CHANGE_SIDEBAR_TAB, 1);
             })
             .catch((err) => {
