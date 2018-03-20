@@ -14,7 +14,8 @@ export default class EquationList extends React.Component {
         const state = store.getState();
         this.state = {
             equations: state.equations,
-            parameters: state.parameters
+            parameters: state.parameters,
+            name: state.name
         };
     }
 
@@ -23,7 +24,8 @@ export default class EquationList extends React.Component {
             // TODO: check equality?
             this.setState({
                 equations: store.getState().equations,
-                parameters: store.getState().parameters
+                parameters: store.getState().parameters,
+                name: store.getState().name
             });
         });
     }
@@ -96,9 +98,11 @@ export default class EquationList extends React.Component {
         });
 
         return <div className="equationContainer">
+            <h2>{this.state.name}</h2>
+
             <section>
                 <header>
-                    <h2>Equations</h2>
+                    <h3>Equations</h3>
                     <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddEquation}>Add Equation</a>
                 </header>
                 <div className="equationList">
@@ -108,7 +112,7 @@ export default class EquationList extends React.Component {
 
             <section>
                 <header>
-                    <h2>Constants</h2>
+                    <h3>Constants</h3>
                     <a href="#" className="btn btn-primary btn-sm" onClick={this.onAddParameter}>Add Constant</a>
                 </header>
                 <div className="parameterList">

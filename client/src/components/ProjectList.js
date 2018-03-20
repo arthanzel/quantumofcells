@@ -105,7 +105,7 @@ export default class ProjectList extends React.Component {
     render() {
         return <div className="equationContainer">
             <header>
-                <h2>Projects</h2>
+                <h3>Projects</h3>
                 <LoggedIn>
                     <a href="#" className="btn btn-primary btn-sm" onClick={this.toggleDialog}>New Project</a>
                 </LoggedIn>
@@ -130,7 +130,7 @@ export default class ProjectList extends React.Component {
             </LoggedIn.LoggedOut>
 
             <header>
-                <h2>Sample Projects</h2>
+                <h3>Sample Projects</h3>
             </header>
             <InnerProjectList projects={sampleProjects} onSelectProject={this.selectProject} />
 

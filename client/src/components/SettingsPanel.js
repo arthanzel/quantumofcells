@@ -52,7 +52,7 @@ export default class SettingsPanel extends React.Component {
     render() {
         return <div className="equationContainer">
             <header>
-                <h2>Settings</h2>
+                <h3>Settings</h3>
             </header>
             <LabeledNumberInput
                 label="Time"
