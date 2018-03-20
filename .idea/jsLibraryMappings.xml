@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/client" libraries="{qoc-csi3540/client/node_modules}" />
-    <file url="file://$PROJECT_DIR$/server" libraries="{qoc-csi3540/server/node_modules}" />
-    <includedPredefinedLibrary name="Node.js Core" />
+    <file url="file://$PROJECT_DIR$" libraries="{Node.js Core}" />
   </component>
 </project>
