@@ -1,60 +1,74 @@
-# csi3540-project
-Term project for CSI3540
-
+# Quantum of Cells
 [![Build Status](https://travis-ci.org/arthanzel/csi3540-project.svg?branch=master)](https://travis-ci.org/arthanzel/csi3540-project)
 
-## What is Quantum of Cells?
+Quantum of Cells (QoC) is a nifty differential equation solver. You type your equations in a box, click a button, and QoC will evaluate them and display a graph of the solution. It's very handy for prototyping and troubleshooting dynamical systems without the hassle of buying and learning Matlab.
 
-Quantum of Cells, or QoC, is a nifty differential equation solver. You plug your equations in a box, click a button, and QoC will evaluate them and print out a graph of the solution.
-
-Why would you ever want to make differential equations? Perhaps you're a physics student who's studying the swinging motion of a pendulum. Or maybe you're a biologist and you need to see how a substrate enters a cell. Both of these problems can be described using differential equations. You simply plug them in to QoC and it'll do all the hard work for you.
-
-The neatest thing about QoC is that it lets you rapidly prototype *dynamical systems*, or sets of differential equations that interact with each other. These kinds of systems can be notoriously unpredictable and difficult to study. Normally, scientists, engineers, and other nerds make these systems in specialized software like Matlab, which can be pretty expensive and time-consuming. Quantum of Cells works right in your browser, and you can tweak the equations and see results right away. No more expensive Matlab licenses!
-
-*Note for smart people:* Quantum of Cells is limited to non-stiff, initial value problems. The differential equations must be first-order, but the system itself needn't necessarily be first-order.
-
-## Features
-
-Here's a list of features that (supposedly) will be complete soon:
-
-- Write systems of differential equations and solve them using a variety of integration methods
-- Create an account and save projects to play with later
-- Study a handful of sample projects on physics, chemistry, ecology, population dynamics, and genetic engineering.
-
-Here's a list of features that might be implemented at some point. Maybe.
-
-- Rendering parametric plots of two variables
-
-## Technology
-
-Quantum of Cells runs separate client and server applications. They communicate through a REST API.
-
-### Client
-
-- Single-page React app
-- ES6 + Babel + Webpack
-- Hosted on Github Pages
-
-### Server
-
-- Grails or Node.js (to be decided)
-- Hosted on Heroku free tier
-- MongoDB databased hosted by mLab free tier
+QoC was originally written to allow [iGEM](http://igem.org) teams to create and test genetic networks. However, it can solve many other non-stiff, higher-order, initial-value problems as well.
 
 ## Building
+This app contains a `client` module and a `server` module.
 
-See client/README.md and server/README.md for building instructions
+Building the client:
 
-# Notes
+    cd client
+    npm install
+    npm start
+    
+Building the server:
 
-## Numerical Integration Methods
+    cd server
+    npm install
+    npm start
+    
+Point your browser to `http://lvh.me:8080`.
 
-- Euler (done)
-- Midpoint and trapezoid
-- Simpson with 2 or 3 different precisions
-- RK
+**Note:** `lvh.me` (**L**ocal **V**irtual **H**ost) is a domain that resolves to `127.0.0.1`. This is necessary to avoid issues with Auth0 and CORS. You can edit your `hosts` file to point `lvh.me` to `127.0.0.1` and avoid the DNS lookup.
+    
+### Database
+Quantum of Cells uses [MongoDB](https://www.mongodb.com/). You can use either a local instance, or connect to a service such as [mLab](https://mlab.com/).
 
-https://en.wikipedia.org/wiki/Stiff_equation
-https://en.wikipedia.org/wiki/Linear_multistep_method
-https://en.wikipedia.org/wiki/Trapezoidal_rule_(differential_equations)
-https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods
+If you have Docker, get a database up and running quickly with:
+
+    docker run -d -p 127.0.0.1:27017:27017 --name qoc-mongo mongo
+    
+If you want to use your own database, or if you want to use a service like mLab, paste the following in `client/config/local.json`:
+
+    {
+        "db": {
+            "host": "my.database.host.com",
+            "port": 27017,
+            "name": "my-database-name",
+            "user": "myUser",
+            "password": "myPassword"
+        }
+    }
+    
+You can override any of the database parameters with the following environment variables: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`. Environment variables take precedence over any config.
+
+**Note**: Some services (like mLab) use uncommon ports, which are blocked on some organizations' networks (like uOttawa's). Therefore, you'll need to use a VPN if you want to use uncommon ports.
+
+### Internet Connection Required
+Quantum of Cells depends on external APIs, so an internet connection is required when developing.
+
+## Technology
+Quantum of Cells consists of a client, which is a React single-page application (SPA), and a Node.js API server. They communicate through a REST API.
+
+**Client:**
+- React/Redux SPA
+- ES6 + Babel + Webpack
+- Stylus
+- [Auth0](https://auth0.com/)
+- Hosted on Github Pages
+- Accessible at `https://quantumofcells.com`
+
+**Server:**
+- Node.js + ES6 + Babel
+- Hosted on Heroku free tier
+- MongoDB database hosted by mLab free tier
+
+## Roadmap
+List of future features:
+
+- Solving systems using a variety of integration methods (currently, only the Euler method is available)
+- Comprehensive and documented sample projects on physics, chemistry, ecology, population dynamics, and genetic engineering
+- Rendering of two-variable parametric plots
