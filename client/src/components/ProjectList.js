@@ -1,3 +1,4 @@
+import Icon from "@fortawesome/react-fontawesome"
 import PropTypes from "prop-types";
 import React from "react";
 import { Modal } from "reactstrap";
@@ -18,7 +19,7 @@ import CreateProjectForm from "./CreateProjectForm";
 export default class ProjectList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { dialogOpen: false, projects: [] };
+        this.state = { dialogOpen: false, projects: null };
     }
 
     componentDidMount() {
@@ -106,15 +107,24 @@ export default class ProjectList extends React.Component {
                     <a href="#" className="btn btn-primary btn-sm" onClick={this.toggleDialog}>New Project</a>
                 </LoggedIn>
             </header>
-            {isLoginValid() ?
-                <InnerProjectList projects={this.state.projects}
-                                  onSelectProject={this.selectProject}
-                                  onDeleteProject={this.deleteProject} />
-                :
+            <LoggedIn>
+                {this.state.projects === null ?
+                    // Projects haven't been fetched yet
+                    <p style={{ textAlign: "center" }}>
+                        Loading...<br />< br/>
+                        <Icon icon="spinner" pulse />
+                    </p>
+                    :
+                    <InnerProjectList projects={this.state.projects}
+                                      onSelectProject={this.selectProject}
+                                      onDeleteProject={this.deleteProject} />
+                }
+            </LoggedIn>
+            <LoggedIn.LoggedOut>
                 <a href="#" onClick={() => webAuth.authorize()}>
                     Log in to see your projects
                 </a>
-            }
+            </LoggedIn.LoggedOut>
 
             <header>
                 <h2>Sample Projects</h2>
@@ -188,7 +198,7 @@ class Project extends React.Component {
 
     render() {
         return <div className="project">
-            <a className="project" href="#" onClick={this.props.onSelect}>
+            <a href="#" onClick={this.props.onSelect}>
                 {this.props.name}
             </a>
             {this.props.onDelete === null ? null :

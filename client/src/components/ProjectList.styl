@@ -1,10 +1,23 @@
 .projects {
     .project {
         border-top: 1px solid #aaa;
+        display: flex;
         padding: 7px;
 
         &:last-child {
             border-bottom: 1px solid #aaa;
         }
+
+        *:nth-child(1) {
+            flex: 1 0 auto;
+        }
+
+        *:nth-child(2) {
+            flex: 0 0 auto;
+        }
+    }
+
+    p {
+        text-align: center;
     }
 }

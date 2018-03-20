@@ -25,11 +25,11 @@ export default class CreateProjectForm extends React.Component {
     };
 
     render() {
-        return <form>
+        return <form onSubmit={this.handleSubmit}>
             <h2>Create a Project</h2>
             <input type="text" value={this.state.value} onChange={this.handleChange} />
             <div>
-                <button onClick={this.handleSubmit}>Submit</button>
+                <input type="submit" className="btn btn-primary" value="Create" />
             </div>
         </form>
     }
