@@ -40,7 +40,7 @@ export default class SettingsPanel extends React.Component {
     }
 
     onChange = (e) => {
-        const value = parseInt(e.target.value);
+        const value = parseFloat(e.target.value);
         if (e.target.name === "time") {
             store.dispatch({ type: actions.SET_TIME, value: value })
         }

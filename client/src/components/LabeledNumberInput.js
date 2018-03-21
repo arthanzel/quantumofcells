@@ -33,9 +33,12 @@ export default class LabeledNumberInput extends React.Component {
     }
 
     handleChange = (ev) => {
-        if (ev.target.value === "") {
-            ev.target.value = "0";
-        }
+        // Strip leading zeros
+        // Workaround for https://github.com/facebook/react/issues/9402
+        // TODO: Solidify this. Currently fails when typing things like 0.0.
+        const value = parseFloat(ev.target.value)|| 0;
+        ev.target.value = value.toString();
+
         this.props.onChange(ev);
     };
 
@@ -47,6 +50,7 @@ export default class LabeledNumberInput extends React.Component {
             <div className="expression">
             <input type="number"
                    id={this.id}
+                   className={this.props.value}
                    max={this.props.max}
                    min={this.props.min}
                    name={this.props.name}
