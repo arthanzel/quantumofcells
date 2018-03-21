@@ -1,3 +1,4 @@
+import _ from "lodash";
 import channel from "qoc/channel";
 import solve from "qoc/solver";
 import store from "qoc/store";
@@ -32,10 +33,8 @@ export default function simulate(errorCallback) {
         return evaluatex(expr, constantsMap);
     });
 
-
     // TODO: Solver should run in a worker
     const result = solve(
-        // equationsMap,
         compiledEquations,
         initialValuesMap,
         state.time,

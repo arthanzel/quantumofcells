@@ -1,5 +1,3 @@
-import evaluatex from "evaluatex/evaluatex";
-
 /**
  *
  * @param eqns Map of differential equations.
@@ -10,8 +8,7 @@ import evaluatex from "evaluatex/evaluatex";
  * @returns {{t: *[], series: {}}}
  */
 export default function solver(eqns, variables, time, resolution) {
-    // Variables may vary over the course of the simulation.
-    // Constants do not; they are compiled into the AST.
+    // Clone objects to avoid side-effects
     let vars = Object.assign({}, variables);
     if (!vars.t) {
         vars.t = 0;
@@ -40,18 +37,18 @@ export default function solver(eqns, variables, time, resolution) {
         const t = step / resolution;
         tValues.push(t);
 
-        const newVars = Object.assign(vars);
-        newVars.t = t;
+        const state = Object.assign({}, vars); // Current state of all variables
+        state.t = t;
 
         for (const v in eqns) {
             const fn = eqns[v];
-            const rate = fn(vars);
-            const result = vars[v] + rate / resolution;
-            newVars[v] = result;
+            const rate = fn(state);
+            const result = state[v] + rate / resolution;
+            state[v] = result;
             data[v].push([t, result]);
         }
 
-        vars = newVars;
+        vars = state;
     }
 
     return { t: tValues, series: data };
