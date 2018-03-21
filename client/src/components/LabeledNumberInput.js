@@ -14,7 +14,7 @@ export default class LabeledNumberInput extends React.Component {
         min: -Infinity,
         onChange: () => undefined,
         unit: "",
-        value: "",
+        value: 1,
     };
 
     static propTypes = {
@@ -32,6 +32,13 @@ export default class LabeledNumberInput extends React.Component {
         this.id = "input" + cuid();
     }
 
+    handleChange = (ev) => {
+        if (ev.target.value === "") {
+            ev.target.value = "0";
+        }
+        this.props.onChange(ev);
+    };
+
     render() {
         return <div className="labeledInput">
             <div className="label">
@@ -43,7 +50,7 @@ export default class LabeledNumberInput extends React.Component {
                    max={this.props.max}
                    min={this.props.min}
                    name={this.props.name}
-                   onChange={this.props.onChange}
+                   onChange={this.handleChange}
                    value={this.props.value} />
             </div>
             {this.props.unit ?
