@@ -2,6 +2,8 @@ import channel from "qoc/channel";
 import solve from "qoc/solver";
 import store from "qoc/store";
 
+import evaluatex from "evaluatex/evaluatex";
+
 // TODO: Add error callback to simulator
 export default function simulate(errorCallback) {
     const state = store.getState();
@@ -26,13 +28,18 @@ export default function simulate(errorCallback) {
         }
     });
 
+    const compiledEquations = _.mapValues(equationsMap, (expr) => {
+        return evaluatex(expr, constantsMap);
+    });
+
+
     // TODO: Solver should run in a worker
     const result = solve(
-        equationsMap,
+        // equationsMap,
+        compiledEquations,
         initialValuesMap,
         state.time,
-        state.resolution,
-        constantsMap);
+        state.resolution);
 
     channel.publish(channel.SIMULATE, result);
 
