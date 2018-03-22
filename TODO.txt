@@ -6,6 +6,8 @@
     - Binary search lookahead to find the threshold abscissa
 - Detect domain error, like log(-1) which returns NaN
 - Impose limits on number of projects, equations, and parameters
+- Clean up CSS and Open Sans import
+- Callback page error handler
 
 
 https://en.wikipedia.org/wiki/Stiff_equation
