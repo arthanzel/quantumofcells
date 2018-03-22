@@ -36,8 +36,16 @@ export default class LabeledNumberInput extends React.Component {
         // Strip leading zeros
         // Workaround for https://github.com/facebook/react/issues/9402
         // TODO: Solidify this. Currently fails when typing things like 0.0.
-        const value = parseFloat(ev.target.value)|| 0;
-        ev.target.value = value.toString();
+        ev.target.value = ev.target.value.replace(/^0+/, "");
+        if (ev.target.value.charAt(0) === ".") {
+            ev.target.value = "0" + ev.target.value;
+        }
+        else if (ev.target.value === "") {
+            ev.target.value = "0";
+        }
+
+        // const value = parseFloat(ev.target.value)|| 0;
+        // ev.target.value = value.toString();
 
         this.props.onChange(ev);
     };
