@@ -8,6 +8,7 @@
 - Impose limits on number of projects, equations, and parameters
 - Clean up CSS and Open Sans import
 - Callback page error handler
+- Refactor library of utility functions
 
 
 https://en.wikipedia.org/wiki/Stiff_equation
