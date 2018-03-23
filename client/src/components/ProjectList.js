@@ -7,7 +7,7 @@ import request from "superagent";
 import { accessToken, webAuth } from "qoc/util/authUtils";
 import actions from "reducers/actions";
 import { makeToast, messageChannel as channel, MESSAGE_CHANGE_SIDEBAR_TAB } from "qoc/util/notifyUtils";
-import sampleProjects from "sampleProjects";
+import sampleProjects from "qoc/sampleProjects";
 import { serverPath } from "qoc/util/dataUtils";
 import store from "qoc/store";
 

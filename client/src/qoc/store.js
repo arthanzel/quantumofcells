@@ -2,7 +2,7 @@ import { createStore } from "redux";
 import request from "superagent";
 
 import actions from "reducers/actions";
-import sampleProjects from "sampleProjects";
+import sampleProjects from "qoc/sampleProjects";
 import rootReducer from "reducers";
 import { isLoginValid } from "./util/authUtils";
 import { serverPath } from "qoc/util/dataUtils";
@@ -56,7 +56,7 @@ const store = createStore(rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 export default store;
 
-const initialProject = sampleProjects[3];
+const initialProject = sampleProjects.find((proj) => proj.name === "Logistic Growth");
 store.dispatch({ type: actions.LOAD_PROJECT, project: initialProject });
 
 // Observable-style function to subscribe to state changes

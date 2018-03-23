@@ -10,6 +10,36 @@ export default sampleProjects;
 // };
 
 sampleProjects.push({
+    _id: "logisticGrowth",
+    name: "Logistic Growth",
+    equations: [
+        { symbol: "N", expression: "r * N * (k - N) / k" }
+    ],
+    parameters: [
+        { symbol: "N", expression: "1" },
+        { symbol: "r", expression: "7" },
+        { symbol: "k", expression: "500" }
+    ],
+    resolution: 100,
+    time: 2
+});
+
+sampleProjects.push({
+    _id: "cooling",
+    name: "Newton's Law of Cooling",
+    equations: [
+        { symbol: "T", expression: "k * (Ta - T)" }
+    ],
+    parameters: [
+        { symbol: "T", expression: "60" },
+        { symbol: "Ta", expression: "23" },
+        { symbol: "k", expression: "0.15" }
+    ],
+    resolution: 50,
+    time: 30
+});
+
+sampleProjects.push({
     _id: "harmonicOscillator",
     name: "Sample: Harmonic Oscillator",
     equations: [
