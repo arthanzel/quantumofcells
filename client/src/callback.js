@@ -1,5 +1,4 @@
-import { parseAuth0Result } from "qoc/authHelper";
-import webAuth from "qoc/webAuth";
+import { parseAuth0Result, webAuth } from "qoc/util/authUtils";
 
 // TODO: Handle exceptions in the callback
 

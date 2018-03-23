@@ -1,6 +1,7 @@
+import { WebAuth } from "auth0-js";
+
 import actions from "reducers/actions";
-import store from "./store";
-import webAuth from "./webAuth";
+import store from "../store";
 
 /*
 Login flow
@@ -73,6 +74,28 @@ export function checkSession(force) {
 }
 
 /**
+ * Retrieves and parses the stored user object from localStorage.
+ */
+export function getSavedLogin() {
+    const userObject = JSON.parse(window.localStorage.getItem("auth0"));
+    userObject.expireDate = new Date(userObject.expireDate);
+    return userObject;
+}
+
+/**
+ * Checks if the given user object represents a valid login.
+ * If a user object is not provided, the one from the Redux state is used.
+ * @param user User objects, containing expireDate, accessToken, and name fields.
+ * @returns {boolean} True
+ */
+export function isLoginValid(user = store.getState().user) {
+    return Boolean(user.expireDate &&
+        user.accessToken &&
+        user.name !== undefined &&
+        user.expireDate > new Date());
+}
+
+/**
  * Persists login information to the global state.
  * @param accessToken Auth0 JWT access token.
  * @param expireDate Date on which the token expires.
@@ -103,19 +126,6 @@ export function logout() {
     window.localStorage.removeItem("auth0");
 }
 
-/**
- * Checks if the given user object represents a valid login.
- * If a user object is not provided, the one from the Redux state is used.
- * @param user User objects, containing expireDate, accessToken, and name fields.
- * @returns {boolean} True
- */
-export function isLoginValid(user = store.getState().user) {
-    return Boolean(user.expireDate &&
-        user.accessToken &&
-        user.name !== undefined &&
-        user.expireDate > new Date());
-}
-
 export function parseAuth0Result(result) {
     const expireDate = new Date();
     expireDate.setSeconds(expireDate.getSeconds() + result.expiresIn);
@@ -126,11 +136,11 @@ export function parseAuth0Result(result) {
     };
 }
 
-/**
- * Retrieves and parses the stored user object from localStorage.
- */
-export function getSavedLogin() {
-    const userObject = JSON.parse(window.localStorage.getItem("auth0"));
-    userObject.expireDate = new Date(userObject.expireDate);
-    return userObject;
-}
+export const webAuth = new WebAuth({
+    audience: "https://api.quantumofcells.com",
+    clientID: "IIlRrl3lLjVaHqJezrqVN3C3YoM1x5Fw",
+    domain: "qoc.auth0.com",
+    redirectUri: CONFIG.callbackUrl,
+    responseType: "token id_token",
+    scope: "openid email profile"
+});

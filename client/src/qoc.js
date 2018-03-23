@@ -3,11 +3,12 @@ import ReactDOM from "react-dom";
 
 import "qoc/icons";
 import QOCApplication from "components/QOCApplication";
-import { login, getSavedLogin, logout } from "qoc/authHelper";
+import { login, getSavedLogin, logout } from "qoc/util/authUtils";
 
 if (CONFIG.debug) {
-    console.log("Debug mode! Importing debug methods.")
-    require("./qoc/debugActions");
+    // TODO: Find a way not to require this file at compile-time in production
+    console.log("Debug mode! Importing debug methods.");
+    require("./qoc/util/debugUtil");
     document.title = "DEV " + document.title;
 }
 

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import channel from "qoc/channel";
+import { messageChannel as channel, MESSAGE_SIMULATE } from "qoc/util/notifyUtils";
 import solve from "qoc/solver";
 import store from "qoc/store";
 
@@ -40,7 +40,7 @@ export default function simulate(errorCallback) {
         state.time,
         state.resolution);
 
-    channel.publish(channel.SIMULATE, result);
+    channel.publish(MESSAGE_SIMULATE, result);
 
     return result;
 };

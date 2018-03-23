@@ -1,6 +1,6 @@
 import React from "react";
 
-import { isLoginValid } from "../qoc/authHelper";
+import { isLoginValid } from "qoc/util/authUtils";
 
 /**
  * Component that renders its children only if a user is logged in.

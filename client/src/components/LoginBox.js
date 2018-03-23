@@ -1,9 +1,8 @@
 import React from "react";
 
 import actions from "reducers/actions";
-import { getProfile, isLoggedIn } from "qoc/authHelper";
+import { webAuth } from "qoc/util/authUtils";
 import store from "qoc/store";
-import webAuth from "qoc/webAuth";
 
 import "./LoginBox.styl";
 import LoggedIn from "./LoggedIn";

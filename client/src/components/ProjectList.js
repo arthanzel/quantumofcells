@@ -4,14 +4,12 @@ import React from "react";
 import { Modal } from "reactstrap";
 import request from "superagent";
 
-import { accessToken, isLoginValid } from "qoc/authHelper";
+import { accessToken, webAuth } from "qoc/util/authUtils";
 import actions from "reducers/actions";
-import channel from "qoc/channel";
-import makeToast from "qoc/makeToast";
+import { makeToast, messageChannel as channel, MESSAGE_CHANGE_SIDEBAR_TAB } from "qoc/util/notifyUtils";
 import sampleProjects from "sampleProjects";
 import serverPath from "qoc/serverPath";
 import store from "qoc/store";
-import webAuth from "qoc/webAuth";
 
 import "./ProjectList.styl";
 import LoggedIn from "./LoggedIn";
@@ -65,7 +63,7 @@ export default class ProjectList extends React.Component {
                 me.setState({ dialogOpen: false });
                 store.dispatch({ type: actions.ADD_PROJECT, project: res.body.project });
                 store.dispatch({ type: actions.LOAD_PROJECT, project: res.body.project });
-                channel.publish(channel.CHANGE_SIDEBAR_TAB, 1);
+                channel.publish(MESSAGE_CHANGE_SIDEBAR_TAB, 1);
             })
             .catch((err) => {
                 console.error("Can't create project!");
@@ -90,7 +88,7 @@ export default class ProjectList extends React.Component {
 
     selectProject = (project) => {
         store.dispatch({ type: actions.LOAD_PROJECT, project: project });
-        channel.publish(channel.CHANGE_SIDEBAR_TAB, 1);
+        channel.publish(MESSAGE_CHANGE_SIDEBAR_TAB, 1);
     };
 
     toggleDialog = () => {

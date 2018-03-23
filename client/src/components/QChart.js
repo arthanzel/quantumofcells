@@ -3,7 +3,7 @@ import Icon from "@fortawesome/react-fontawesome";
 import HighCharts from "highcharts";
 import cuid from "cuid";
 
-import channel from "qoc/channel";
+import { messageChannel as channel, MESSAGE_SIMULATE } from "qoc/util/notifyUtils";
 
 import "./QChart.styl";
 import SimulateButton from "./SimulateButton";
@@ -18,7 +18,7 @@ export default class QChart extends React.Component {
     }
 
     componentDidMount() {
-        this.subscription = channel.subscribe(channel.SIMULATE, (data) => {
+        this.subscription = channel.subscribe(MESSAGE_SIMULATE, (data) => {
             this.setState({ solution: data }, this.drawChart);
         });
     }
@@ -40,7 +40,7 @@ export default class QChart extends React.Component {
     };
 
     openSamples() {
-        channel.publish(channel.CHANGE_SIDEBAR_TAB, 0);
+        channel.publish(MESSAGE_CHANGE_SIDEBAR_TAB, 0);
     }
 
     render() {

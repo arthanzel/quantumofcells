@@ -1,4 +1,4 @@
-import webAuth from "qoc/webAuth";
+import { webAuth } from "./qoc/util/authUtils";
 
 window.login = function() {
     webAuth.authorize();

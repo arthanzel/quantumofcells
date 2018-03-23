@@ -4,9 +4,9 @@ import request from "superagent";
 import actions from "reducers/actions";
 import sampleProjects from "sampleProjects";
 import rootReducer from "reducers";
-import { isLoginValid } from "./authHelper";
+import { isLoginValid } from "./util/authUtils";
 import serverPath from "./serverPath";
-import { accessToken } from "./authHelper";
+import { accessToken } from "./util/authUtils";
 
 /*
     State schema:

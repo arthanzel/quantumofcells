@@ -1,6 +1,6 @@
 import React from "react";
 
-import channel from "qoc/channel";
+import { messageChannel as channel, MESSAGE_CHANGE_SIDEBAR_TAB } from "qoc/util/notifyUtils";
 
 import "./TabToolbox.styl";
 
@@ -11,7 +11,7 @@ export default class TabToolbox extends React.Component {
     }
 
     componentDidMount() {
-        this.subscription = channel.subscribe(channel.CHANGE_SIDEBAR_TAB, (index) => {
+        this.subscription = channel.subscribe(MESSAGE_CHANGE_SIDEBAR_TAB, (index) => {
             this.setState({ selectedIndex: index })
         });
     }

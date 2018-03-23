@@ -2,7 +2,7 @@ import cuid from "cuid";
 import PropTypes from "prop-types";
 import React from "react";
 
-import channel from "qoc/channel";
+import { messageChannel as channel, MESSAGE_CLEAR_TOASTS, MESSAGE_MAKE_TOAST } from "qoc/util/notifyUtils";
 
 import "./ToastBar.styl";
 
@@ -29,12 +29,12 @@ export default class ToastBar extends React.Component {
     }
 
     componentDidMount() {
-        this.toastSub = channel.subscribe(channel.TOAST, (message) => {
+        this.toastSub = channel.subscribe(MESSAGE_MAKE_TOAST, (message) => {
             const messages = this.state.messages.slice();
             messages.push(this.createMessage(message));
             this.setState({ messages: messages });
         });
-        this.clearSub = channel.subscribe(channel.CLEAR_TOASTS, () => {
+        this.clearSub = channel.subscribe(MESSAGE_CLEAR_TOASTS, () => {
             this.setState({ messages: [] });
         })
     }
