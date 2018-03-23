@@ -1,5 +1,4 @@
 import actions from "./actions";
-import uid from "../qoc/uid";
 
 export default function(user = {}, action) {
     switch (action.type) {

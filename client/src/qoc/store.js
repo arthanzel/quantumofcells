@@ -5,7 +5,7 @@ import actions from "reducers/actions";
 import sampleProjects from "sampleProjects";
 import rootReducer from "reducers";
 import { isLoginValid } from "./util/authUtils";
-import serverPath from "./serverPath";
+import { serverPath } from "qoc/util/dataUtils";
 import { accessToken } from "./util/authUtils";
 
 /*

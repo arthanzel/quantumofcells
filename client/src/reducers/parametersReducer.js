@@ -1,5 +1,5 @@
 import actions from "./actions";
-import uid from "../qoc/uid";
+import { uid } from "qoc/util/dataUtils";
 
 export default function(parameters = [], action) {
     let copy = []; // Prevent duplicate assignment warnings by hoisting the definition here
