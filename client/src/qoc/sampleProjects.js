@@ -11,7 +11,7 @@ export default sampleProjects;
 
 sampleProjects.push({
     _id: "logisticGrowth",
-    name: "Logistic Growth",
+    name: "Sample: Logistic Growth",
     equations: [
         { symbol: "N", expression: "r * N * (k - N) / k" }
     ],
@@ -26,7 +26,7 @@ sampleProjects.push({
 
 sampleProjects.push({
     _id: "cooling",
-    name: "Newton's Law of Cooling",
+    name: "Sample: Newton's Law of Cooling",
     equations: [
         { symbol: "T", expression: "k * (Ta - T)" }
     ],
