@@ -1,6 +1,8 @@
 import React from "react";
 import Icon from "@fortawesome/react-fontawesome";
 
+import { version } from "../../package";
+
 import MiniSidebar from "./MiniSidebar";
 import TabToolbox from "./TabToolbox";
 import ProjectList from "./ProjectList";
@@ -41,6 +43,7 @@ export default class Sidebar extends React.Component {
                 <header>
                     <h1>
                         Quantum of Cells
+                        <small style={{ fontSize: "0.5em" }}> {version}</small>
                         <a href="#" onClick={this.onHide}>
                             <Icon icon="bars" />
                         </a>
