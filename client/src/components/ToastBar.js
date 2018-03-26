@@ -48,10 +48,14 @@ export default class ToastBar extends React.Component {
         }
     }
 
+    closeMessage = (messageToRemove) => {
+        this.setState({ messages: this.state.messages.filter((msg) => msg !== messageToRemove) });
+    };
+
     render() {
         return <div className="toastContainer">
             {this.state.messages.map((msg) => {
-                return <Toast key={msg.key}>{msg.text}</Toast>;
+                return <Toast key={msg.key} onClose={() => this.closeMessage(msg)}>{msg.text}</Toast>;
             })}
         </div>
     }
@@ -59,18 +63,22 @@ export default class ToastBar extends React.Component {
 
 class Toast extends React.Component {
     static defaultProps = {
-        message: ""
+        message: "",
+        onClose: () => {}
     };
 
     static propTypes = {
-        message: PropTypes.string
+        message: PropTypes.string,
+        onClose: PropTypes.func
     };
 
     render() {
         return <div className="toast">
             <div className="toast-message"
                  dangerouslySetInnerHTML={{ __html: this.props.message || this.props.children }} />
-            <a href="#" className="toast-close">Close</a>
+            <div className="toast-close">
+                <a href="#" className="btn btn-outline-danger" onClick={this.props.onClose}>Close</a>
+            </div>
         </div>
     }
 }
