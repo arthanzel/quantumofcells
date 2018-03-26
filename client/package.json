@@ -1,6 +1,6 @@
 {
     "name": "qoc-client",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Quantum of Cells SPA Client",
     "repository": "https://github.com/arthanzel/csi3540-project.git",
     "scripts": {
