@@ -30,9 +30,11 @@ export default class ToastBar extends React.Component {
 
     componentDidMount() {
         this.toastSub = channel.subscribe(MESSAGE_MAKE_TOAST, (message) => {
-            const messages = this.state.messages.slice();
-            messages.push(this.createMessage(message));
-            this.setState({ messages: messages });
+            this.setState((prevState) => {
+                const messages = prevState.messages.slice();
+                messages.push(this.createMessage(message));
+                return { messages: messages };
+            });
         });
         this.clearSub = channel.subscribe(MESSAGE_CLEAR_TOASTS, () => {
             this.setState({ messages: [] });

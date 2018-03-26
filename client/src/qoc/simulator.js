@@ -29,11 +29,20 @@ export default function simulate(errorCallback) {
         }
     });
 
+    // Check initial values
+    state.equations.forEach((eqn) => {
+        if (!state.parameters.find((param) => param.symbol === eqn.symbol)) {
+            makeToast(`Missing an initial condition for <code>${ eqn.symbol }</code>.`);
+        }
+    });
+
     const compiledEquations = _.mapValues(equationsMap, (expr) => {
         return evaluatex(expr, constantsMap);
     });
 
     // TODO: Solver should run in a worker
+    // TODO: Add error/warning callback
+    // TODO: Check for the presence of initial values in the solve() function
     try {
         const solution = solve(
             compiledEquations,
