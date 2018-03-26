@@ -11,6 +11,10 @@ export const MESSAGE_DURATION_SHORT = 4000;
 
 export const messageChannel = postal.channel("qoc");
 
+export function clearToasts() {
+    messageChannel.publish(MESSAGE_CLEAR_TOASTS, null);
+}
+
 /**
  * Displays a toast notification with a provided message.
  * @param message {string} Message to display.

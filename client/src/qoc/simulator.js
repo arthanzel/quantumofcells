@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { messageChannel as channel, MESSAGE_SIMULATE, makeToast } from "qoc/util/notifyUtils";
+import { messageChannel as channel, MESSAGE_SIMULATE, clearToasts, makeToast } from "qoc/util/notifyUtils";
 import solve from "qoc/solver";
 import store from "qoc/store";
 
@@ -7,6 +7,8 @@ import evaluatex from "evaluatex/evaluatex";
 
 // TODO: Add error callback to simulator
 export default function simulate(errorCallback) {
+    clearToasts();
+
     const state = store.getState();
 
     // Transform the equations list into an object indexed by the symbol field.
@@ -32,7 +34,7 @@ export default function simulate(errorCallback) {
     // Check initial values
     state.equations.forEach((eqn) => {
         if (!state.parameters.find((param) => param.symbol === eqn.symbol)) {
-            makeToast(`Missing an initial condition for <code>${ eqn.symbol }</code>.`);
+            makeToast(`Missing an initial condition for <code>${ eqn.symbol }</code>`);
         }
     });
 
