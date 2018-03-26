@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { messageChannel as channel, MESSAGE_SIMULATE } from "qoc/util/notifyUtils";
+import { messageChannel as channel, MESSAGE_SIMULATE, makeToast } from "qoc/util/notifyUtils";
 import solve from "qoc/solver";
 import store from "qoc/store";
 
@@ -34,13 +34,17 @@ export default function simulate(errorCallback) {
     });
 
     // TODO: Solver should run in a worker
-    const solution = solve(
-        compiledEquations,
-        initialValuesMap,
-        state.time,
-        state.resolution);
+    try {
+        const solution = solve(
+            compiledEquations,
+            initialValuesMap,
+            state.time,
+            state.resolution);
 
-    channel.publish(MESSAGE_SIMULATE, { title: store.getState().name, solution: solution });
-
-    return result;
+        channel.publish(MESSAGE_SIMULATE, { title: store.getState().name, solution: solution });
+    }
+    catch (e) {
+        console.error(e);
+        makeToast("Something went wrong with running your equations. Make sure that there aren't any typos, divide-by-zeros, or domain errors.");
+    }
 };
