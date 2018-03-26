@@ -13,13 +13,14 @@ export default class QChart extends React.Component {
         super(props);
         this.elementId = "chart-" + cuid();
         this.state = {
+            title: "",
             solution: {}
         }
     }
 
     componentDidMount() {
         this.subscription = channel.subscribe(MESSAGE_SIMULATE, (data) => {
-            this.setState({ solution: data }, this.drawChart);
+            this.setState({ title: data.title, solution: data.solution }, this.drawChart);
         });
     }
 
@@ -35,7 +36,10 @@ export default class QChart extends React.Component {
         }
 
         HighCharts.chart(this.elementId, {
-            series: series
+            title: { text: this.state.title },
+            series: series,
+            xAxis: { title: { text: "Time <i>t</i>" } },
+            yAxis: { title: null }
         });
     };
 

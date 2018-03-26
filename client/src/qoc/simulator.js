@@ -34,13 +34,13 @@ export default function simulate(errorCallback) {
     });
 
     // TODO: Solver should run in a worker
-    const result = solve(
+    const solution = solve(
         compiledEquations,
         initialValuesMap,
         state.time,
         state.resolution);
 
-    channel.publish(MESSAGE_SIMULATE, result);
+    channel.publish(MESSAGE_SIMULATE, { title: store.getState().name, solution: solution });
 
     return result;
 };
