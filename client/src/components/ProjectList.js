@@ -124,7 +124,7 @@ export default class ProjectList extends React.Component {
                 }
             </LoggedIn>
             <LoggedIn.LoggedOut>
-                <a href="#" onClick={() => webAuth.authorize()}>
+                <a href="#" onClick={() => webAuth.authorize()} style={{ padding: 7 }}>
                     Log in to see your projects
                 </a>
             </LoggedIn.LoggedOut>
