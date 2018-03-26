@@ -3,7 +3,7 @@ import Icon from "@fortawesome/react-fontawesome";
 import HighCharts from "highcharts";
 import cuid from "cuid";
 
-import { messageChannel as channel, MESSAGE_SIMULATE } from "qoc/util/notifyUtils";
+import { messageChannel as channel, MESSAGE_SIMULATE, MESSAGE_CHANGE_SIDEBAR_TAB } from "qoc/util/notifyUtils";
 
 import "./QChart.styl";
 import SimulateButton from "./SimulateButton";
