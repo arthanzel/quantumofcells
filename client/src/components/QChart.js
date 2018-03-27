@@ -36,6 +36,7 @@ export default class QChart extends React.Component {
         }
 
         HighCharts.chart(this.elementId, {
+            chart: { backgroundColor: "#f8fcff" },
             title: { text: this.state.title },
             series: series,
             xAxis: { title: { text: "Time <i>t</i>" } },
