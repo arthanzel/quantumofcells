@@ -5,6 +5,8 @@ import store from "qoc/store";
 
 import evaluatex from "evaluatex/evaluatex";
 
+const MAX_DATA_POINTS = 2001; // The extra 1 fits the very last data point at the upper bound
+
 // TODO: Add error callback to simulator
 export default function simulate(errorCallback) {
     clearToasts();
@@ -46,11 +48,30 @@ export default function simulate(errorCallback) {
     // TODO: Add error/warning callback
     // TODO: Check for the presence of initial values in the solve() function
     try {
-        const solution = solve(
+        let solution = solve(
             compiledEquations,
             initialValuesMap,
             state.time,
             state.resolution);
+
+        if (solution.t.length > MAX_DATA_POINTS) {
+            const newSolution = { t: [], series: {} };
+            for (const key in solution.series) {
+                newSolution.series[key] = [];
+            }
+
+            for (let i = 0; i <= MAX_DATA_POINTS; i++) {
+                // Condense very large solutions into at most MAX_DATA_POINTS points.
+                const index = Math.floor(i / MAX_DATA_POINTS * (solution.t.length - 1));
+                const t = solution.t[index];
+                newSolution.t.push(t);
+                for (const key in solution.series) {
+                    newSolution.series[key].push(solution.series[key][index]);
+                }
+            }
+
+            solution = newSolution;
+        }
 
         channel.publish(MESSAGE_SIMULATE, { title: store.getState().name, solution: solution });
     }

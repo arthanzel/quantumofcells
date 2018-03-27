@@ -4,7 +4,6 @@
  * @param variables Map of initial values and variables.
  * @param time How many time units to run the simulation.
  * @param resolution How many calculations per time unit. Higher is more accurate, but slower.
- * @param constants Map of any constant values to be compiled into the function.
  * @returns {{t: *[], series: {}}}
  */
 export default function solver(eqns, variables, time, resolution) {
