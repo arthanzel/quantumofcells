@@ -9,9 +9,19 @@ import { equationSchema } from "./Equation";
  * which is provided by clients in the request's <code>Authorization</code> header.
  */
 const projectSchema = mongoose.Schema({
-    name: { type: String, required: true },
-    equations: { type: [equationSchema], required: true, default: [] },
-    parameters: { type: [equationSchema], required: true, default: [] },
+    name: { type: String, required: true, maxlength: 100 },
+    equations: {
+        type: [equationSchema],
+        required: true,
+        default: [],
+        validate: [arrayMaxLength(10), "A project can't have more than 10 equations."]
+    },
+    parameters: {
+        type: [equationSchema],
+        required: true,
+        default: [],
+        validate: [arrayMaxLength(30), "A project can't have more than 30 parameters."]
+    },
     resolution: { type: Number, required: true, default: 100 },
     time: { type: Number, required: true, default: 1},
     user: { type: String, required: true }
@@ -22,3 +32,7 @@ const projectSchema = mongoose.Schema({
 projectSchema.index({ user: 1, name: 1 }, { unique: true });
 
 export default mongoose.model("Project", projectSchema);
+
+function arrayMaxLength(max) {
+    return (val) => val.length <= max;
+}

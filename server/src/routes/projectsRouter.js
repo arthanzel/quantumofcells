@@ -3,6 +3,7 @@ import * as statusCodes from "http-status-codes";
 
 import checkJwt from "../auth/checkJwt";
 import Project from "../model/Project";
+import projectLimit from "./middleware/projectLimit";
 import whitelist from "../util/whitelist";
 
 const router = express.Router();
@@ -31,7 +32,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", projectLimit, (req, res) => {
     Project.create({ name: req.body.name, user: req.user.sub }, (err, doc) => {
         if (err) {
             if (err.code === 11000) {

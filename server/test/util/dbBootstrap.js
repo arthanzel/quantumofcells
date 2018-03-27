@@ -94,7 +94,7 @@ function doSetup(done) {
  * @param done Callback for when the database restore operation completes.
  */
 bootstrap.restore = function bootstrapRestore(done) {
-    Project.remove({ $or: [{ user: "another user" }, { user: USER.sub }] }, (err, docs) => {
+    Project.remove({}, (err, docs) => {
         if (typeof done === "function") {
             done();
         }

@@ -5,8 +5,8 @@ import mongoose from "mongoose";
  * the right-hand side of an equation.
  */
 export const equationSchema = mongoose.Schema({
-    symbol: String,
-    expression: String
+    symbol: { type: String, default: "", maxlength: 10 },
+    expression: { type: String, default: "", maxlength: 500 }
 });
 
 export default mongoose.model("Equation", equationSchema);

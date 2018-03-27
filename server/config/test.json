@@ -1,4 +1,7 @@
 {
+    "db": {
+        "name": "qocdb-test"
+    },
     "port": 5001,
     "rootUrl": "http://localhost:5001"
 }

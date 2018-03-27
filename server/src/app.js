@@ -27,7 +27,7 @@ app.start = function(done) {
         user: config.get("db.user"),
         pass: config.get("db.password")
     }).then(() => {
-        console.log("Connected to database");
+        console.log(`Connected to database ${ config.get("db.name") }`);
     }, (err) => {
         console.error(`Error connecting to database`);
         console.error(err);
