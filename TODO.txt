@@ -5,10 +5,10 @@
 - A stochastic approach like Gillespie where the next point is where the derivative changes over a certain threshold.
     - Binary search lookahead to find the threshold abscissa
 - Detect domain error, like log(-1) which returns NaN
-- Impose limits on number of projects, equations, and parameters
 - Clean up CSS and Open Sans import
 - Callback page error handler
-- Enable source maps again
+- !!!Enable source maps again
+- PREVENT SAVING ON SAMPLE PROJECTS
 
 
 Multiple helper functions in modules might have been a mistake. Webpack bundles the entire module's dependency tree in the final bundle, which makes small files very large.
