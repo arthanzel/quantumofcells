@@ -22,7 +22,7 @@ Building the server:
     
 Point your browser to `http://lvh.me:8080`.
 
-**Note:** `lvh.me` (**L**ocal **V**irtual **H**ost) is a domain that resolves to `127.0.0.1`. This is necessary to avoid issues with Auth0 and CORS. You can edit your `hosts` file to point `lvh.me` to `127.0.0.1` and avoid the DNS lookup.
+**Note:** `lvh.me` (**L**ocal **V**irtual **H**ost) is a domain that resolves to `127.0.0.1`. This is necessary to avoid issues with authentication and CORS. You can edit your `hosts` file to point `lvh.me` to `127.0.0.1` and avoid the DNS lookup.
     
 ### Database
 Quantum of Cells uses [MongoDB](https://www.mongodb.com/). You can use either a local instance, or connect to a service such as [mLab](https://mlab.com/).
@@ -43,9 +43,11 @@ If you want to use your own database, or if you want to use a service like mLab,
         }
     }
     
+**Warning:** The default database name for development is `qocdb-dev`, and the default name for testing is `qocdb-test`. Don't use the same database name for both environments - you'll end up losing all data. To override database settings for testing only, paste the above JSON into `client/config/local-test.json`.
+    
 You can override any of the database parameters with the following environment variables: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`. Environment variables take precedence over any config.
 
-**Note**: Some services (like mLab) use uncommon ports, which are blocked on some organizations' networks (like uOttawa's). Therefore, you'll need to use a VPN if you want to use uncommon ports.
+**Note:** Some services (like mLab) use uncommon ports, which are blocked on some organizations' networks (like uOttawa's). Therefore, you'll need to use a VPN if you want to use uncommon ports.
 
 ### Internet Connection Required
 Quantum of Cells depends on external APIs, so an internet connection is required when developing.
@@ -59,7 +61,7 @@ Quantum of Cells consists of a client, which is a React single-page application 
 - Stylus
 - [Auth0](https://auth0.com/)
 - Hosted on Github Pages
-- Accessible at `https://quantumofcells.com`
+- Accessible at [http://quantumofcells.com](http://quantumofcells.com)
 
 **Server:**
 - Node.js + ES6 + Babel
