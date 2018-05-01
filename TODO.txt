@@ -9,6 +9,8 @@
 - Callback page error handler
 - !!!Enable source maps again
 - PREVENT SAVING ON SAMPLE PROJECTS
+- Validation and error message on create project
+- Firebase hosting with SSL and custom domain?
 
 
 Multiple helper functions in modules might have been a mistake. Webpack bundles the entire module's dependency tree in the final bundle, which makes small files very large.

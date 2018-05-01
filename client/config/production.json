@@ -1,5 +1,5 @@
 {
-    "editorUrl": "https://arthanzel.github.io/csi3540-project/editor.html",
-    "callbackUrl": "https://arthanzel.github.io/csi3540-project/callback.html",
+    "editorUrl": "https://arthanzel.github.io/quantumofcells/editor.html",
+    "callbackUrl": "https://arthanzel.github.io/quantumofcells/callback.html",
     "serverUrl": "https://qoc.herokuapp.com"
 }
