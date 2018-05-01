@@ -1,0 +1,294 @@
+.qoc-mini-sidebar {
+  background: linear-gradient(to left, #364c62, #283848);
+  color: #fff;
+  font-size: 20px;
+  flex: 0 0 auto;
+}
+.qoc-mini-sidebar a,
+.qoc-mini-sidebar p {
+  color: #fff;
+  display: block;
+  font: oblique 600 20px "Open Sans";
+  padding: 15px;
+  text-align: center;
+}
+.qoc-tab-toolbox > nav {
+  background: linear-gradient(#546d85, #4f657c);
+  display: flex;
+}
+.qoc-tab-toolbox > nav a {
+  box-sizing: border-box;
+  color: #f8fcff;
+  font-size: 13px;
+  flex: 1 0 auto;
+  letter-spacing: 0.1em;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  border-right: 1px solid #384858;
+  border-left: 1px solid #637f9b;
+}
+.qoc-tab-toolbox > nav a:first-child {
+  border-left: 0;
+}
+.qoc-tab-toolbox > nav a:last-child {
+  border-right: 0;
+}
+.qoc-tab-toolbox > nav a.active {
+  background: #3f5163;
+  box-shadow: inset 0 0 5px 3px #354454;
+  border-color: #384858;
+}
+.qoc-tab-toolbox > nav a:not(.active):hover {
+  background: linear-gradient(#5c7690, #465a6e);
+}
+.projects .project {
+  border-top: 1px solid #aaa;
+  display: flex;
+  padding: 7px;
+}
+.projects .project:last-child {
+  border-bottom: 1px solid #aaa;
+}
+.projects .project *:nth-child(1) {
+  flex: 1 0 auto;
+}
+.projects .project *:nth-child(2) {
+  flex: 0 0 auto;
+}
+.projects p {
+  text-align: center;
+}
+.equationBox {
+  background: #fff;
+  border-left: 3px solid transparent;
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px #aaa;
+  background: linear-gradient(#fff, #fbfbfb);
+}
+.equationBox.error {
+  border-left-color: #f00;
+  padding-left: -10px;
+}
+.equationBox.error .expression input {
+  text-decoration: underline;
+  text-decoration-color: #f00;
+}
+.equationBox i,
+.equationBox .icon {
+  cursor: pointer;
+  margin: auto 7px;
+}
+.equationBox > .symbol {
+  flex: 0 1 auto;
+}
+.equationBox > .symbol input {
+  font: 400 16px "Open Sans";
+  padding: 5px 0;
+  text-align: center;
+}
+.equationBox > .separator {
+  cursor: default;
+  font-weight: 300;
+  padding: 5px 3px 5px 0;
+}
+.equationBox > .expression {
+  flex: 1 1 auto;
+}
+.equationBox > .expression input {
+  font: 300 14px "Open Sans";
+  padding: 0 5px;
+}
+.equationBox input {
+  background: transparent;
+  border: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+.equationBox input:focus {
+  border: 0;
+  outline: 0;
+}
+.equationContainer h2 {
+  margin-top: 15px !important;
+  text-align: center;
+}
+.equationContainer header {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+}
+.equationContainer header h3 {
+  font-size: 16px;
+  flex: 1 1 auto;
+  margin: 0;
+}
+.equationContainer header a {
+  flex: 0 0 auto;
+}
+.equationContainer .controls {
+  padding: 15px;
+  text-align: center;
+}
+.labeledInput {
+  align-items: center;
+  background: linear-gradient(#fff, #fbfbfb);
+  border-left: 3px solid transparent;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px #aaa;
+  display: flex;
+  flex-direction: row;
+  height: 32px;
+  margin: 5px;
+  padding: 0 5px;
+}
+.labeledInput > .label {
+  flex: 0 0 auto;
+  font: 600 14px "Open Sans";
+  margin-right: 5px;
+}
+.labeledInput > .label label {
+  margin: 0;
+}
+.labeledInput > .expression {
+  flex: 1 1 auto;
+}
+.labeledInput > .expression input {
+  background: transparent;
+  border: 0;
+  box-sizing: border-box;
+  display: block;
+  height: 100%;
+  padding: 0px 5px;
+  width: 100%;
+}
+.labeledInput > .expression input:focus {
+  border: 0;
+  outline: 0;
+}
+.labeledInput > .unit {
+  font-size: 13px;
+}
+.qoc-sidebar footer {
+  border-top: 1px solid #aaa;
+  flex: 0 1 auto;
+  font-size: 13px;
+  text-align: center;
+  padding: 10px;
+}
+.qoc-sidebar-container {
+  display: flex;
+  flex: 0 0 auto;
+}
+.qoc-sidebar {
+  background: #e8ecee;
+  box-shadow: 0 0 10px #aaaab8;
+  display: flex;
+  flex: 0 0 320px;
+  flex-direction: column;
+  margin-right: 8px;
+  width: 320px;
+}
+.qoc-sidebar h1 {
+  background: linear-gradient(#2c3e50, #283848);
+  border-bottom: 1px solid #102030;
+  color: #f8fcff;
+  font: oblique 600 20px "Open Sans";
+  margin: 0;
+  padding: 10px 15px;
+  text-shadow: 1px 1px 3px #182028;
+}
+.qoc-sidebar h1 a {
+  color: #f8fcff;
+  float: right;
+}
+.qoc-sidebar > header,
+.qoc-sidebar > footer {
+  flex: 0 0 auto;
+}
+.qoc-sidebar > section,
+.qoc-sidebar > div {
+  flex: 1 0 auto;
+}
+.qChart {
+  flex: 1 0 auto;
+}
+.qChart .empty {
+  color: #444;
+  margin: 40px;
+  text-align: center;
+}
+.qChart .empty h1 {
+  margin-bottom: 15px;
+}
+.qChart .empty .btn {
+  margin: 0 5px;
+  vertical-align: baseline;
+}
+.toastContainer {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  margin: 0 auto;
+  pointer-events: none;
+}
+.toastContainer .toast {
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  font-size: 14px;
+  margin: 10px auto;
+  max-width: 33%;
+  padding: 10px 30px;
+  pointer-events: all;
+}
+.toastContainer .toast .toast-message {
+  flex: 1 1 100%;
+}
+.toastContainer .toast code {
+  border: 1px solid #596d91;
+  color: #596d91;
+  font-size: 0.9em;
+  padding: 1px 5px;
+}
+.toastContainer .toast .toast-close {
+  flex: 0 0 0;
+  margin-left: 15px;
+}
+.qoc-app-container {
+  align-content: stretch;
+  display: flex;
+  height: 100%;
+}
+html,
+body {
+  background: #f8fcff;
+  font: 500 14px "Open Sans", sans-serif;
+  height: 100%;
+  margin: 0;
+  width: 100%;
+}
+h2 {
+  color: #2070a8;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 10px 0 5px 0;
+  text-align: left;
+}
+h2:first-child {
+  margin-top: 5px;
+}
+a:hover {
+  text-decoration: none;
+}
+.hidden {
+  display: none;
+}
+form {
+  padding: 10px;
+}
