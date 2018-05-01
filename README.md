@@ -1,5 +1,5 @@
 # Quantum of Cells
-[![Build Status](https://travis-ci.org/arthanzel/csi3540-project.svg?branch=master)](https://travis-ci.org/arthanzel/csi3540-project)
+[![Build Status](https://travis-ci.org/arthanzel/quantumofcells.svg?branch=master)](https://travis-ci.org/arthanzel/csi3540-project)
 
 Quantum of Cells (QoC) is a nifty differential equation solver. You type your equations in a box, click a button, and QoC will evaluate them and display a graph of the solution. It's very handy for prototyping and troubleshooting dynamical systems without the hassle of buying and learning Matlab.
 
